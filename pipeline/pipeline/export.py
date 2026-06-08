@@ -59,11 +59,23 @@ def export_conventions() -> Path:
             _write(out, data)
             return out
 
-        cur.execute("SELECT idcc, slug, name, factors FROM conventions ORDER BY idcc")
+        cur.execute(
+            "SELECT idcc, slug, name, full_name, legifrance_url, effectif, factors "
+            "FROM conventions ORDER BY idcc"
+        )
         rows = cur.fetchall()
         data["count"] = len(rows)
         data["conventions"] = [
-            {"idcc": r[0], "slug": r[1], "name": r[2], "factors": r[3] or []} for r in rows
+            {
+                "idcc": r[0],
+                "slug": r[1],
+                "name": r[2],
+                "full_name": r[3],
+                "legifrance_url": r[4],
+                "effectif": r[5],
+                "factors": r[6] or [],
+            }
+            for r in rows
         ]
 
         cur.execute("SELECT max(updated_at) FROM conventions")

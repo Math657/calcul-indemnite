@@ -1,15 +1,15 @@
-"""Conventions collectives scraper (list + decision factors).
+"""Conventions collectives scraper (official metadata + decision factors).
 
-Source: the SocialGouv/code-du-travail-numerique GitHub repo. Lists every
-convention collective covered by the official (government-maintained)
-publicodes models, and for each one extracts the *decision factors* of its
-indemnité-conventionnelle model — the user-facing parameters (``question`` /
-``titre``) that determine the conventional amount in that convention.
+Sources (both government-maintained, machine-readable, refreshed on schedule):
+  - SocialGouv/code-du-travail-numerique GitHub tree → the list of conventions
+    covered by the official publicodes models, and each model's *decision
+    factors* (the user-facing parameters that drive the conventional amount).
+  - SocialGouv/kali-data → the official KALI/Légifrance metadata per IDCC:
+    accented short title, full title, Légifrance URL, effectif.
 
 No legal VALUE is computed (publicodes is a rule engine; reducing it to prose
-would be unreliable). We surface the authoritative *list* + per-convention
-*factors*, refreshed on a schedule — each detail page links to the official
-calculator for the exact amount.
+would be unreliable). Each detail page links to the official calculator for the
+exact amount.
 """
 from __future__ import annotations
 
@@ -31,6 +31,7 @@ RAW_BASE = (
     "https://raw.githubusercontent.com/SocialGouv/code-du-travail-numerique/"
     "master/packages/code-du-travail-modeles/src/modeles/conventions"
 )
+KALI_URL = "https://raw.githubusercontent.com/SocialGouv/kali-data/master/data/index.json"
 CONV_RE = re.compile(
     r"packages/code-du-travail-modeles/src/modeles/conventions/(\d+)_([^/]+)/"
 )
@@ -41,7 +42,7 @@ def _extract_factors(yaml_text: str) -> list[str]:
 
     A rule with a ``question`` field is a user input. We keep its ``titre``
     (or leaf name) when it's a short, label-like string — long sentence titres
-    are skipped to keep the displayed factor list clean.
+    are skipped so the displayed factor list stays clean.
     """
     try:
         doc = yaml.safe_load(yaml_text)
@@ -55,9 +56,7 @@ def _extract_factors(yaml_text: str) -> list[str]:
         if not isinstance(val, dict) or not val.get("question"):
             continue
         titre = str(val.get("titre") or key.split(".")[-1]).strip()
-        if not titre or len(titre) > 80:
-            continue
-        if titre in seen:
+        if not titre or len(titre) > 80 or titre in seen:
             continue
         seen.add(titre)
         out.append(titre)
@@ -66,6 +65,20 @@ def _extract_factors(yaml_text: str) -> list[str]:
 
 class CdtnConventionsScraper(BaseScraper):
     source_name = "cdtn_conventions"
+
+    def _kali_index(self, ua: dict[str, str]) -> dict[int, dict[str, Any]]:
+        try:
+            r = requests.get(KALI_URL, headers=ua, timeout=60)
+            if r.status_code != 200:
+                return {}
+            out: dict[int, dict[str, Any]] = {}
+            for rec in r.json():
+                num = rec.get("num")
+                if num and str(num).isdigit():
+                    out[int(num)] = rec
+            return out
+        except (requests.RequestException, ValueError):
+            return {}
 
     def fetch(self) -> dict[str, Any]:
         settings = load()
@@ -85,8 +98,23 @@ class CdtnConventionsScraper(BaseScraper):
                 "No conventions parsed from the GitHub tree — the SocialGouv "
                 "modeles layout may have changed; verify the path regex."
             )
+
+        kali = self._kali_index(ua)
+        self.log.info("kali-data: %d official entries", len(kali))
+
         convs: list[dict[str, Any]] = []
         for idcc, slug in sorted(seen.items()):
+            meta = kali.get(idcc, {})
+            official = str(meta.get("shortTitle") or "").strip()
+            name = official or slug.replace("_", " ").strip().capitalize()
+            full_name = str(meta.get("title") or "").strip() or None
+            kid = meta.get("id")
+            legifrance_url = (
+                f"https://www.legifrance.gouv.fr/conv_coll/id/{kid}" if kid else None
+            )
+            eff = meta.get("effectif")
+            effectif = int(eff) if isinstance(eff, (int, float)) and eff else None
+
             factors: list[str] = []
             url = f"{RAW_BASE}/{idcc}_{slug}/indemnite-licenciement.yaml"
             try:
@@ -95,15 +123,19 @@ class CdtnConventionsScraper(BaseScraper):
                     factors = _extract_factors(d.text)
             except requests.RequestException as e:
                 self.log.warning("factors fetch failed for %s: %s", idcc, e)
+
             convs.append(
                 {
                     "idcc": idcc,
                     "slug": slug,
-                    "name": slug.replace("_", " ").strip().capitalize(),
+                    "name": name,
+                    "full_name": full_name,
+                    "legifrance_url": legifrance_url,
+                    "effectif": effectif,
                     "factors": factors,
                 }
             )
-        self.log.info("parsed %d conventions (with decision factors)", len(convs))
+        self.log.info("parsed %d conventions (meta + factors)", len(convs))
         return {"conventions": convs}
 
     def write(self, raw: dict[str, Any]) -> tuple[int, str]:
@@ -114,15 +146,27 @@ class CdtnConventionsScraper(BaseScraper):
             for c in convs:
                 cur.execute(
                     """
-                    INSERT INTO conventions (idcc, slug, name, factors, updated_at)
-                    VALUES (%s, %s, %s, %s, now())
+                    INSERT INTO conventions
+                        (idcc, slug, name, full_name, legifrance_url, effectif, factors, updated_at)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, now())
                     ON CONFLICT (idcc) DO UPDATE
                        SET slug = EXCLUDED.slug,
                            name = EXCLUDED.name,
+                           full_name = EXCLUDED.full_name,
+                           legifrance_url = EXCLUDED.legifrance_url,
+                           effectif = EXCLUDED.effectif,
                            factors = EXCLUDED.factors,
                            updated_at = now()
                     """,
-                    (c["idcc"], c["slug"], c["name"], Json(c["factors"])),
+                    (
+                        c["idcc"],
+                        c["slug"],
+                        c["name"],
+                        c["full_name"],
+                        c["legifrance_url"],
+                        c["effectif"],
+                        Json(c["factors"]),
+                    ),
                 )
             cur.execute("SELECT count(*) FROM conventions")
             after = cur.fetchone()[0]
