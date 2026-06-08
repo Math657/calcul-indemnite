@@ -4,7 +4,7 @@
  */
 export const SITE = {
   url: 'https://calcul-indemnite.fr',
-  name: 'CalculIndemnité',
+  name: 'Calcul Indemnité',
   tagline: 'Calcul des indemnités de licenciement, rupture conventionnelle et barème prud’hommes',
   description:
     'Simulateurs et barèmes à jour : indemnité de licenciement (légale et conventionnelle), rupture conventionnelle, barème Macron aux prud’hommes. Sources Légifrance et Code du travail. Gratuit et sans inscription.',

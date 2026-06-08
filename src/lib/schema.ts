@@ -1,5 +1,5 @@
 const SITE = 'https://calcul-indemnite.fr';
-const BRAND = 'CalculIndemnité';
+const BRAND = 'Calcul Indemnité';
 const LANG = 'fr-FR';
 
 export const organizationSchema = () => ({

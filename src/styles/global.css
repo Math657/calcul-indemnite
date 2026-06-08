@@ -102,7 +102,7 @@
 
   /* Add a printed footer with source URL */
   body::after {
-    content: "Contenu informatif. Ne remplace pas un audit énergétique ni l’avis d’un conseiller France Rénov. calcul-indemnite.fr";
+    content: "Contenu informatif. Ne remplace pas l’avis d’un avocat ou d’un conseiller juridique. calcul-indemnite.fr";
     display: block;
     font-size: 8pt;
     color: #555;

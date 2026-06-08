@@ -111,7 +111,7 @@ const EXCLUDE_PATTERNS = [];
 const CITATIONS_FILE = 'data/verified-citations.txt';
 const CEE_FICHES_FILE = 'data/verified-cee-fiches.txt';
 
-const BRAND = 'MaRénovAide';
+const BRAND = 'Calcul Indemnité';
 const BRAND_SPAM_THRESHOLD = 10;
 
 /**

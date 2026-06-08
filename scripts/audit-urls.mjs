@@ -27,7 +27,7 @@ const ROOT = path.resolve(__dirname, '..');
 const CONCURRENCY = 8;
 const TIMEOUT_MS = 10_000;
 const USER_AGENT =
-  'MaRenovAideUrlAudit/1.0 (+https://ma-renov-aide.fr)';
+  'CalculIndemniteUrlAudit/1.0 (+https://calcul-indemnite.fr)';
 
 const STRICT = process.argv.includes('--strict');
 
