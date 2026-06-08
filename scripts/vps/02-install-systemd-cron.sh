@@ -55,8 +55,8 @@ systemctl enable --now "indemnite-publish.timer"
 systemctl enable --now "indemnite-rebuild.timer"
 systemctl enable --now "indemnite-indexnow.timer"
 # Per-scraper timers are enabled when each scraper is registered.
-# Example after step 13 (ADEME DPE scraper):
-#   sudo systemctl enable --now "indemnite-scrape@ademe_dpe.timer"
+# Currently registered:
+#   sudo systemctl enable --now "indemnite-scrape@cdtn_conventions.timer"
 
 echo "[5/5] Done. Current state:"
 echo ""
@@ -64,7 +64,7 @@ systemctl list-timers --no-pager | grep -E "indemnite|NEXT" | head -10
 
 echo ""
 echo "Test commands (after the first scraper is registered):"
-echo "  sudo systemctl start indemnite-scrape@ademe_dpe.service    # run one scrape now"
+echo "  sudo systemctl start indemnite-scrape@cdtn_conventions.service    # run one scrape now"
 echo "  sudo systemctl start indemnite-publish.service             # publish JSON drift now"
 echo "  sudo systemctl start indemnite-rebuild.service             # trigger drip-publish rebuild now"
 echo "  sudo systemctl start indemnite-health.service              # run health check now"

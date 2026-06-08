@@ -17,5 +17,8 @@ To add a scraper:
 from __future__ import annotations
 
 from .base import BaseScraper
+from .cdtn_conventions import CdtnConventionsScraper
 
-REGISTRY: dict[str, type[BaseScraper]] = {}
+REGISTRY: dict[str, type[BaseScraper]] = {
+    "cdtn_conventions": CdtnConventionsScraper,
+}

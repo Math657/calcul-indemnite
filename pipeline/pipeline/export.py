@@ -3,13 +3,12 @@
 Astro reads these JSON files at build time (no DB connection in CI). Workflow:
 
 1. Scraper writes new records to Postgres on the VPS.
-2. The indemnite-publish.service systemd unit (weekly Fri 02:00 UTC) runs
-   ``python -m pipeline.cli export`` then ``publish.sh`` commits + pushes
-   any JSON drift to origin/main.
+2. The indemnite-publish.service systemd unit runs ``python -m pipeline.cli
+   export`` then ``publish.sh`` commits + pushes any JSON drift to origin/main.
 3. Cloudflare Workers Builds auto-rebuilds Astro with the new data.
 
-Each export function returns the Path of the file written so the publish
-chain can git-add it. ``export_all()`` aggregates every registered export.
+Each export function returns the Path of the file written so the publish chain
+can git-add it. ``export_all()`` aggregates every registered export.
 """
 from __future__ import annotations
 
@@ -24,7 +23,7 @@ OUT_DIR = REPO_ROOT / "src" / "data"
 
 
 def _serialize(value: Any) -> Any:
-    """Generic JSON serializer for Postgres-returned types (Decimal, datetime, date)."""
+    """JSON serializer for Postgres-returned types (datetime, date, Decimal)."""
     if value is None:
         return None
     if hasattr(value, "isoformat"):
@@ -32,82 +31,46 @@ def _serialize(value: Any) -> Any:
     return float(value) if hasattr(value, "as_tuple") else value
 
 
-# Letters in DPE order so the JSON is iterable in display order without re-sorting.
-_DPE_LETTERS = ["A", "B", "C", "D", "E", "F", "G"]
+def _write(path: Path, data: dict[str, Any]) -> None:
+    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def export_dpe() -> Path:
-    """Export aggregate stats from dpe_records to src/data/dpe.json.
+def export_conventions() -> Path:
+    """Export the conventions catalogue to src/data/conventions.json.
 
-    Frontend renders distributions / counts; raw records stay in Postgres
-    (14.7M would be too heavy to ship as JSON).
+    ``source_verified_at`` is the most recent row refresh — the freshness
+    signal surfaced on /conventions-collectives.
     """
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    out = OUT_DIR / "dpe.json"
+    out = OUT_DIR / "conventions.json"
 
     data: dict[str, Any] = {
-        "source": "ADEME — Diagnostic de Performance Énergétique (logements existants)",
-        "source_url": "https://data.ademe.fr/datasets/dpe03existant",
-        "last_updated": None,
-        "total_records": 0,
-        "distribution_by_etiquette_dpe": {letter: 0 for letter in _DPE_LETTERS},
-        "distribution_by_etiquette_ges": {letter: 0 for letter in _DPE_LETTERS},
-        "by_type_batiment": {},
-        "by_zone_climatique": {},
-        "by_periode_construction": {},
+        "source": "SocialGouv — code-du-travail (modèles publicodes)",
+        "source_url": "https://github.com/SocialGouv/code-du-travail-numerique",
+        "source_verified_at": None,
+        "count": 0,
+        "conventions": [],
     }
 
     with connect() as conn, conn.cursor() as cur:
-        cur.execute("SELECT to_regclass('public.dpe_records')")
+        cur.execute("SELECT to_regclass('public.conventions')")
         if cur.fetchone()[0] is None:
-            # Table doesn't exist yet — write the empty shell anyway so the
-            # frontend has a JSON file to load (avoids 404 on first deploys).
+            # Table not migrated yet — keep a valid shell so the build never 404s.
             _write(out, data)
             return out
 
-        cur.execute("SELECT COUNT(*), MAX(scraped_at) FROM dpe_records")
-        total, last = cur.fetchone()
-        data["total_records"] = total or 0
-        data["last_updated"] = _serialize(last)
+        cur.execute("SELECT idcc, slug, name FROM conventions ORDER BY idcc")
+        rows = cur.fetchall()
+        data["count"] = len(rows)
+        data["conventions"] = [{"idcc": r[0], "slug": r[1], "name": r[2]} for r in rows]
 
-        if not total:
-            _write(out, data)
-            return out
-
-        # Letter distributions — keep zero entries for letters with no records
-        # so the frontend can iterate A–G without missing-key checks.
-        for col, key in [
-            ("etiquette_dpe", "distribution_by_etiquette_dpe"),
-            ("etiquette_ges", "distribution_by_etiquette_ges"),
-        ]:
-            cur.execute(
-                f"SELECT {col}, COUNT(*) FROM dpe_records "  # noqa: S608 — col is hardcoded
-                f"WHERE {col} IS NOT NULL GROUP BY {col}"
-            )
-            for letter, count in cur.fetchall():
-                if letter in data[key]:
-                    data[key][letter] = count
-
-        # Free-form group-bys
-        for col, key in [
-            ("type_batiment", "by_type_batiment"),
-            ("zone_climatique", "by_zone_climatique"),
-            ("periode_construction", "by_periode_construction"),
-        ]:
-            cur.execute(
-                f"SELECT {col}, COUNT(*) FROM dpe_records "  # noqa: S608
-                f"WHERE {col} IS NOT NULL GROUP BY {col} ORDER BY {col}"
-            )
-            data[key] = {row[0]: row[1] for row in cur.fetchall()}
+        cur.execute("SELECT max(updated_at) FROM conventions")
+        data["source_verified_at"] = _serialize(cur.fetchone()[0])
 
     _write(out, data)
     return out
 
 
-def _write(path: Path, data: dict[str, Any]) -> None:
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-
-
 def export_all() -> list[Path]:
     """Run every registered export. Returns paths actually written."""
-    return [export_dpe()]
+    return [export_conventions()]

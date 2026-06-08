@@ -41,6 +41,14 @@ export const HUBS: Record<string, Hub> = {
     description:
       'Indemnité minimale de rupture conventionnelle et conséquences de la réforme de l’assurance chômage applicable au 1ᵉʳ septembre 2026 sur la durée d’indemnisation après la rupture.',
   },
+  conventions: {
+    slug: 'conventions-collectives',
+    title: 'Conventions collectives',
+    shortTitle: 'Conventions',
+    path: '/conventions-collectives',
+    description:
+      'Catalogue des conventions collectives couvertes (indemnité conventionnelle, préavis) — liste maintenue à partir des modèles officiels du Code du travail numérique.',
+  },
   dossiers: {
     slug: 'dossiers',
     title: 'Dossiers',
