@@ -18,12 +18,8 @@ PYTHON="${REPO_DIR}/pipeline/.venv/bin/python"
 BOT_NAME="Calcul Indemnité Bot"
 BOT_EMAIL="bot@calcul-indemnite.fr"
 DATA_FILES=(
-  "src/data/dpe.json"
+  "src/data/conventions.json"
   # Add entries as new scrapers + exports are registered in pipeline/export.py.
-  # Examples for future scrapers:
-  #   "src/data/maprimeindemnite.json"
-  #   "src/data/anah_plafonds.json"
-  #   "src/data/cee_baremes.json"
 )
 
 cd "${REPO_DIR}"
