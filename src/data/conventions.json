@@ -1,243 +1,390 @@
 {
   "source": "SocialGouv — code-du-travail (modèles publicodes)",
   "source_url": "https://github.com/SocialGouv/code-du-travail-numerique",
-  "source_verified_at": "2026-06-08T14:20:25.164539+00:00",
+  "source_verified_at": "2026-06-08T14:32:35.184794+00:00",
   "count": 47,
   "conventions": [
     {
       "idcc": 16,
       "slug": "transports_routiers",
-      "name": "Transports routiers"
+      "name": "Transports routiers",
+      "factors": [
+        "Âge du salarié",
+        "Le salarié remplit les conditions pour partir à la retraite",
+        "Catégorie professionnelle",
+        "Date du changement de catégorie",
+        "Le licenciement fait suite à une incapacité à la conduite",
+        "L'incapacité à la conduite est définitive"
+      ]
     },
     {
       "idcc": 44,
       "slug": "industries_chimiques",
-      "name": "Industries chimiques"
+      "name": "Industries chimiques",
+      "factors": [
+        "Catégorie professionnelle",
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 86,
       "slug": "publicite_francaise",
-      "name": "Publicite francaise"
+      "name": "Publicite francaise",
+      "factors": []
     },
     {
       "idcc": 176,
       "slug": "industrie_pharmaceutique",
-      "name": "Industrie pharmaceutique"
+      "name": "Industrie pharmaceutique",
+      "factors": [
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 275,
       "slug": "transport_aerien_personnel_au_sol",
-      "name": "Transport aerien personnel au sol"
+      "name": "Transport aerien personnel au sol",
+      "factors": [
+        "Catégorie professionnelle",
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 292,
       "slug": "plasturgie",
-      "name": "Plasturgie"
+      "name": "Plasturgie",
+      "factors": [
+        "Catégorie professionnelle"
+      ]
     },
     {
       "idcc": 573,
       "slug": "commerces_de_gros",
-      "name": "Commerces de gros"
+      "name": "Commerces de gros",
+      "factors": [
+        "Catégorie professionnelle",
+        "Le salarié a été cadre durant au moins 15 ans",
+        "Âge du salarié",
+        "Licenciement pour motif économique"
+      ]
     },
     {
       "idcc": 675,
       "slug": "habillement_commerce_succursales",
-      "name": "Habillement commerce succursales"
+      "name": "Habillement commerce succursales",
+      "factors": [
+        "Catégorie professionnelle",
+        "Licenciement économique collectif",
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 787,
       "slug": "comptables",
-      "name": "Comptables"
+      "name": "Comptables",
+      "factors": []
     },
     {
       "idcc": 843,
       "slug": "boulangerie_patisserie",
-      "name": "Boulangerie patisserie"
+      "name": "Boulangerie patisserie",
+      "factors": []
     },
     {
       "idcc": 1043,
       "slug": "gardien_concierge",
-      "name": "Gardien concierge"
+      "name": "Gardien concierge",
+      "factors": []
     },
     {
       "idcc": 1090,
       "slug": "automobiles",
-      "name": "Automobiles"
+      "name": "Automobiles",
+      "factors": []
     },
     {
       "idcc": 1147,
       "slug": "cabinets_medicaux",
-      "name": "Cabinets medicaux"
+      "name": "Cabinets medicaux",
+      "factors": []
     },
     {
       "idcc": 1266,
       "slug": "restauration_collectivites",
-      "name": "Restauration collectivites"
+      "name": "Restauration collectivites",
+      "factors": [
+        "Catégorie professionnelle"
+      ]
     },
     {
       "idcc": 1351,
       "slug": "prevention_secu_ent",
-      "name": "Prevention secu ent"
+      "name": "Prevention secu ent",
+      "factors": []
     },
     {
       "idcc": 1404,
       "slug": "sedima",
-      "name": "Sedima"
+      "name": "Sedima",
+      "factors": [
+        "CDI d'opération",
+        "Durée du CDI d'opération",
+        "Total des salaires bruts perçus pendant la 1ère année du contrat",
+        "Total des salaires bruts perçus pendant la 2ème année du contrat",
+        "Total des salaires bruts perçus de la 3ème année jusqu'à la fin du contrat",
+        "Salarié licencié avant la fin de la période d'essai"
+      ]
     },
     {
       "idcc": 1480,
       "slug": "journalisme",
-      "name": "Journalisme"
+      "name": "Journalisme",
+      "factors": []
     },
     {
       "idcc": 1483,
       "slug": "habillement_textiles_commerce_de_detail",
-      "name": "Habillement textiles commerce de detail"
+      "name": "Habillement textiles commerce de detail",
+      "factors": [
+        "Catégorie professionnelle",
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 1486,
       "slug": "bureaux_etudes_techniques",
-      "name": "Bureaux etudes techniques"
+      "name": "Bureaux etudes techniques",
+      "factors": [
+        "Le licenciement fait suite au refus d'une clause de mobilité",
+        "Catégorie professionnelle"
+      ]
     },
     {
       "idcc": 1501,
       "slug": "restauration_rapide",
-      "name": "Restauration rapide"
+      "name": "Restauration rapide",
+      "factors": [
+        "Catégorie professionnelle",
+        "Licenciement pour motif économique",
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 1505,
       "slug": "commerces_detail_fruits_legumes",
-      "name": "Commerces detail fruits legumes"
+      "name": "Commerces detail fruits legumes",
+      "factors": []
     },
     {
       "idcc": 1516,
       "slug": "organismes_formation",
-      "name": "Organismes formation"
+      "name": "Organismes formation",
+      "factors": []
     },
     {
       "idcc": 1517,
       "slug": "commerces_de_detail_non_alimentaires",
-      "name": "Commerces de detail non alimentaires"
+      "name": "Commerces de detail non alimentaires",
+      "factors": []
     },
     {
       "idcc": 1518,
       "slug": "education_loisirs",
-      "name": "Education loisirs"
+      "name": "Education loisirs",
+      "factors": []
     },
     {
       "idcc": 1527,
       "slug": "immobilier",
-      "name": "Immobilier"
+      "name": "Immobilier",
+      "factors": []
     },
     {
       "idcc": 1596,
       "slug": "batiment_ouvriers_employes",
-      "name": "Batiment ouvriers employes"
+      "name": "Batiment ouvriers employes",
+      "factors": [
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 1597,
       "slug": "batiment_employes_ouvriers_bis",
-      "name": "Batiment employes ouvriers bis"
+      "name": "Batiment employes ouvriers bis",
+      "factors": [
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 1606,
       "slug": "bricolage",
-      "name": "Bricolage"
+      "name": "Bricolage",
+      "factors": [
+        "Catégorie professionnelle",
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 1672,
       "slug": "societes_assurances",
-      "name": "Societes assurances"
+      "name": "Societes assurances",
+      "factors": [
+        "Catégorie professionnelle",
+        "Âge du salarié",
+        "Avant d'être cadre, le salarié a été non-cadre dans l’entreprise",
+        "Date du changement de catégorie"
+      ]
     },
     {
       "idcc": 1702,
       "slug": "ouvriers_travaux_public",
-      "name": "Ouvriers travaux public"
+      "name": "Ouvriers travaux public",
+      "factors": [
+        "Licenciement pour motif économique",
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 1740,
       "slug": "batiment_region_parisienne",
-      "name": "Batiment region parisienne"
+      "name": "Batiment region parisienne",
+      "factors": [
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 1979,
       "slug": "hotels_cafes_restaurants",
-      "name": "Hotels cafes restaurants"
+      "name": "Hotels cafes restaurants",
+      "factors": []
     },
     {
       "idcc": 1996,
       "slug": "pharmacie",
-      "name": "Pharmacie"
+      "name": "Pharmacie",
+      "factors": [
+        "Catégorie professionnelle",
+        "Licenciement pour motif économique"
+      ]
     },
     {
       "idcc": 2098,
       "slug": "personnel_presta_service_tertiaire",
-      "name": "Personnel presta service tertiaire"
+      "name": "Personnel presta service tertiaire",
+      "factors": [
+        "Catégorie professionnelle",
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 2120,
       "slug": "banque",
-      "name": "Banque"
+      "name": "Banque",
+      "factors": [
+        "Catégorie professionnelle",
+        "Licenciement pour motif économique",
+        "Licenciement pour motif disciplinaire"
+      ]
     },
     {
       "idcc": 2148,
       "slug": "telecommunications",
-      "name": "Telecommunications"
+      "name": "Telecommunications",
+      "factors": [
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 2216,
       "slug": "commerces_detail_alimentation",
-      "name": "Commerces detail alimentation"
+      "name": "Commerces detail alimentation",
+      "factors": [
+        "Catégorie professionnelle",
+        "Licenciement pour motif économique",
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 2264,
       "slug": "hospitalisation_privees",
-      "name": "Hospitalisation privees"
+      "name": "Hospitalisation privees",
+      "factors": [
+        "Catégorie professionnelle",
+        "Fonctions de non-cadres durant le contrat de travail",
+        "Durée en tant que non-cadres"
+      ]
     },
     {
       "idcc": 2511,
       "slug": "sport",
-      "name": "Sport"
+      "name": "Sport",
+      "factors": [
+        "Catégorie professionnelle"
+      ]
     },
     {
       "idcc": 2596,
       "slug": "coiffure",
-      "name": "Coiffure"
+      "name": "Coiffure",
+      "factors": [
+        "Catégorie professionnelle"
+      ]
     },
     {
       "idcc": 2609,
       "slug": "batiment_etam",
-      "name": "Batiment etam"
+      "name": "Batiment etam",
+      "factors": [
+        "Âge du salarié à la fin de son préavis (exécuté ou non)"
+      ]
     },
     {
       "idcc": 2614,
       "slug": "travaux_publics",
-      "name": "Travaux publics"
+      "name": "Travaux publics",
+      "factors": [
+        "Âge du salarié"
+      ]
     },
     {
       "idcc": 2941,
       "slug": "aide_accompagnement_soins_services_domicile",
-      "name": "Aide accompagnement soins services domicile"
+      "name": "Aide accompagnement soins services domicile",
+      "factors": []
     },
     {
       "idcc": 3043,
       "slug": "entreprises_proprete",
-      "name": "Entreprises proprete"
+      "name": "Entreprises proprete",
+      "factors": []
     },
     {
       "idcc": 3127,
       "slug": "entreprises_services_a_la_personne",
-      "name": "Entreprises services a la personne"
+      "name": "Entreprises services a la personne",
+      "factors": []
     },
     {
       "idcc": 3239,
       "slug": "particuliers_employeurs_domicile",
-      "name": "Particuliers employeurs domicile"
+      "name": "Particuliers employeurs domicile",
+      "factors": [
+        "Catégorie professionnelle",
+        "Total des salaires perçus pendant la totalité du contrat de travail"
+      ]
     },
     {
       "idcc": 3248,
       "slug": "metallurgie",
-      "name": "Metallurgie"
+      "name": "Metallurgie",
+      "factors": [
+        "Catégorie professionnelle",
+        "Le salarié est au forfait jour",
+        "Le salarié a toujours été au forfait jour",
+        "Date du passage au forfait jour du salarié",
+        "Âge du salarié",
+        "Le salarié remplit les conditions pour partir à la retraite"
+      ]
     }
   ]
 }
