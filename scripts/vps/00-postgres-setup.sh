@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Postgres setup for ma-renov-aide.fr on the existing shared Ubuntu VPS.
+# Postgres setup for calcul-indemnite.fr on the existing shared Ubuntu VPS.
 # Coexists alongside calc + concursoja databases on the same Postgres instance.
 # Idempotent: safe to re-run.
 # Listens on localhost only — connect from dev via SSH tunnel.
@@ -7,7 +7,7 @@
 # Usage on the VPS:
 #   sudo bash 00-postgres-setup.sh
 #
-# Optional: pre-set RENOV_DB_PASS to use a known password instead of generating one.
+# Optional: pre-set INDEMNITE_DB_PASS to use a known password instead of generating one.
 
 set -euo pipefail
 
@@ -16,9 +16,9 @@ if [[ "$(id -u)" -ne 0 ]]; then
   exec sudo -E bash "$0" "$@"
 fi
 
-DB_NAME="renov"
-APP_ROLE="renov_app"
-RO_ROLE="renov_ro"
+DB_NAME="indemnite"
+APP_ROLE="indemnite_app"
+RO_ROLE="indemnite_ro"
 
 if command -v psql >/dev/null 2>&1; then
   echo "[1/6] Postgres already installed: $(psql --version)"
@@ -31,7 +31,7 @@ fi
 echo "[2/6] Ensuring service is enabled and running..."
 systemctl enable --now postgresql
 
-APP_PASS="${RENOV_DB_PASS:-$(openssl rand -base64 24 | tr -d '/+=' | head -c 32)}"
+APP_PASS="${INDEMNITE_DB_PASS:-$(openssl rand -base64 24 | tr -d '/+=' | head -c 32)}"
 RO_PASS="$(openssl rand -base64 24 | tr -d '/+=' | head -c 32)"
 
 echo "[3/6] Creating roles and database (idempotent)..."
@@ -73,7 +73,7 @@ chmod 700 /var/backups/postgres
 
 echo ""
 echo "=========================================="
-echo "  SUCCESS — renov Postgres is ready."
+echo "  SUCCESS — indemnite Postgres is ready."
 echo "=========================================="
 echo ""
 echo "Database:      ${DB_NAME}"

@@ -1,5 +1,5 @@
 [Unit]
-Description=MaRénovAide scraper: %i
+Description=Calcul Indemnité scraper: %i
 Wants=network-online.target
 After=network-online.target postgresql.service
 
@@ -7,9 +7,9 @@ After=network-online.target postgresql.service
 Type=oneshot
 User=ubuntu
 Group=ubuntu
-WorkingDirectory=/home/ubuntu/renov/pipeline
-EnvironmentFile=/home/ubuntu/renov/.env.local
-ExecStart=/home/ubuntu/renov/pipeline/.venv/bin/python -m pipeline.cli scrape %i
+WorkingDirectory=/home/ubuntu/indemnite/pipeline
+EnvironmentFile=/home/ubuntu/indemnite/.env.local
+ExecStart=/home/ubuntu/indemnite/pipeline/.venv/bin/python -m pipeline.cli scrape %i
 StandardOutput=journal
 StandardError=journal
 # Don't restart automatically; the timer schedules retries.

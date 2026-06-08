@@ -1,16 +1,16 @@
 [Unit]
-Description=Weekly MaRénovAide publish: refresh static data on the live site
-Documentation=https://github.com/mathieu.dessaint10/ma-renov-aide
+Description=Weekly Calcul Indemnité publish: refresh static data on the live site
+Documentation=https://github.com/Math657/calcul-indemnite
 
 [Timer]
-# Fridays at 02:00 UTC — 1 h after the scrapers fire (Fri 01:00 UTC).
+# Tuesdays at 03:00 UTC — 1 h after the scrapers fire (Tue 02:00 UTC).
 # Slot distinct from calc (Sun 04:00 UTC) and concursoja (Wed 06:30 UTC)
 # per footprint-hygiene staggering. Persistent=true catches up missed
 # runs (e.g. after VPS reboot) on next boot.
-OnCalendar=Fri 02:00:00 UTC
+OnCalendar=Tue 03:00:00 UTC
 RandomizedDelaySec=300
 Persistent=true
-Unit=renov-publish.service
+Unit=indemnite-publish.service
 
 [Install]
 WantedBy=timers.target

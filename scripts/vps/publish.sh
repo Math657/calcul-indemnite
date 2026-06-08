@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
-# MaRénovAide auto-publish: export DB → JSON → git push (if drift).
+# Calcul Indemnité auto-publish: export DB → JSON → git push (if drift).
 #
-# Runs weekly via renov-publish.timer, after the scrapers complete.
+# Runs weekly via indemnite-publish.timer, after the scrapers complete.
 # Refreshes the static JSON files from Postgres, and only commits + pushes
 # when values actually drift from HEAD — so no commit churn on quiet weeks.
 #
 # On push success, Cloudflare Workers Builds auto-redeploys from main.
 #
 # Manual one-off:
-#   sudo systemctl start renov-publish.service
-#   journalctl -u renov-publish.service -n 50
+#   sudo systemctl start indemnite-publish.service
+#   journalctl -u indemnite-publish.service -n 50
 
 set -euo pipefail
 
-REPO_DIR="/home/ubuntu/renov"
+REPO_DIR="/home/ubuntu/indemnite"
 PYTHON="${REPO_DIR}/pipeline/.venv/bin/python"
-BOT_NAME="MaRénovAide Bot"
-BOT_EMAIL="bot@ma-renov-aide.fr"
+BOT_NAME="Calcul Indemnité Bot"
+BOT_EMAIL="bot@calcul-indemnite.fr"
 DATA_FILES=(
   "src/data/dpe.json"
   # Add entries as new scrapers + exports are registered in pipeline/export.py.
   # Examples for future scrapers:
-  #   "src/data/maprimerenov.json"
+  #   "src/data/maprimeindemnite.json"
   #   "src/data/anah_plafonds.json"
   #   "src/data/cee_baremes.json"
 )
@@ -30,7 +30,7 @@ cd "${REPO_DIR}"
 
 if [ "${#DATA_FILES[@]}" -eq 0 ]; then
   echo "No scraper-fed data files registered yet. Nothing to export or push."
-  echo "Add entries to DATA_FILES once pipeline/export.py exports renov scrapers."
+  echo "Add entries to DATA_FILES once pipeline/export.py exports indemnite scrapers."
   exit 0
 fi
 

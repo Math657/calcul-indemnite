@@ -7,24 +7,24 @@ Scripts run **on the shared Ubuntu VPS**, not locally. Coexist with calc's
 
 ```
 ssh ubuntu@51.91.78.189
-mkdir -p ~/renov-bootstrap && cd ~/renov-bootstrap
+mkdir -p ~/indemnite-bootstrap && cd ~/indemnite-bootstrap
 
 # Copy scripts here, then:
 sudo bash 00-postgres-setup.sh
 sudo bash 01-postgres-backup-cron.sh
-# Then clone the repo to ~/renov before running 02:
-git clone git@github.com-mathieu:mathieu.dessaint10/ma-renov-aide.git ~/renov
-sudo bash ~/renov/scripts/vps/02-install-systemd-cron.sh
+# Then clone the repo to ~/indemnite before running 02:
+git clone git@github.com-mathieu:Math657/calcul-indemnite.git ~/indemnite
+sudo bash ~/indemnite/scripts/vps/02-install-systemd-cron.sh
 ```
 
 ## What each script does
 
 | Script | What it does | Idempotent |
 |---|---|---|
-| `00-postgres-setup.sh` | Installs Postgres 16 (if absent), creates `renov` DB + `renov_app` (rw) + `renov_ro` (read-only) roles, locks listener to localhost. Coexists with `calculify` + `concursoja` DBs on the same instance. | Yes |
-| `01-postgres-backup-cron.sh` | Installs `/usr/local/sbin/renov-pg-backup` + `/etc/cron.d/renov-pg-backup` for daily 04:42 UTC dumps with 14-day retention. Staggered against calc's 03:17 UTC. | Yes |
-| `02-install-systemd-cron.sh` | Installs systemd timers (renov-*): weekly scrape (Fri 01:00 UTC), weekly publish (Fri 02:00 UTC) that pushes JSON drift to git, daily rebuild (13:30 UTC), daily IndexNow (14:00 UTC), daily health check (18:00 UTC). | Yes |
-| `publish.sh` | Auto-publish script — called by `renov-publish.service`. Pulls main, exports DB → JSON, commits + pushes only if files actually drifted. Empty `DATA_FILES` list initially — add entries once scrapers register exports in `pipeline/export.py`. | Yes |
+| `00-postgres-setup.sh` | Installs Postgres 16 (if absent), creates `indemnite` DB + `indemnite_app` (rw) + `indemnite_ro` (read-only) roles, locks listener to localhost. Coexists with `calculify` + `concursoja` DBs on the same instance. | Yes |
+| `01-postgres-backup-cron.sh` | Installs `/usr/local/sbin/indemnite-pg-backup` + `/etc/cron.d/indemnite-pg-backup` for daily 05:30 UTC dumps with 14-day retention. Staggered against calc's 03:17 UTC. | Yes |
+| `02-install-systemd-cron.sh` | Installs systemd timers (indemnite-*): weekly scrape (Tue 02:00 UTC), weekly publish (Tue 03:00 UTC) that pushes JSON drift to git, daily rebuild (16:00 UTC), daily IndexNow (16:30 UTC), daily health check (20:00 UTC). | Yes |
+| `publish.sh` | Auto-publish script — called by `indemnite-publish.service`. Pulls main, exports DB → JSON, commits + pushes only if files actually drifted. Empty `DATA_FILES` list initially — add entries once scrapers register exports in `pipeline/export.py`. | Yes |
 | `daily-rebuild.sh` | Empty-commit + push to trigger Cloudflare Workers rebuild — surfaces scheduled drip-publish content on its publication date. | Yes |
 | `indexnow-ping.sh` | Submits today's surfaced URLs to IndexNow API (Bing, Yandex, DDG, Seznam, Naver). Reads lastmod from the live sitemap. Key: `33b7a5fe9fdca653d276366a5d3b653a` (matches `public/33b7a5fe9fdca653d276366a5d3b653a.txt`). | Yes |
 
@@ -37,16 +37,16 @@ To connect from local dev (port 5434 since 5433 is in use by calc's tunnel):
 ```
 ssh -L 5434:localhost:5432 ubuntu@51.91.78.189
 # in another shell:
-psql -h localhost -p 5434 -U renov_app -d renov
+psql -h localhost -p 5434 -U indemnite_app -d indemnite
 ```
 
 ## Optional: alerting webhook
 
-The health-check service reads `ALERT_WEBHOOK_URL` from `~/renov/.env.local`.
+The health-check service reads `ALERT_WEBHOOK_URL` from `~/indemnite/.env.local`.
 Add a line and it'll auto-detect the format:
 
 ```
-ALERT_WEBHOOK_URL=https://ntfy.sh/renov-alerts-<random-suffix>
+ALERT_WEBHOOK_URL=https://ntfy.sh/indemnite-alerts-<random-suffix>
 ```
 
 ntfy.sh is free, no signup needed — install the mobile app, subscribe to the
@@ -57,19 +57,19 @@ webhook. Leave unset to log-only (visible in journal).
 
 ```bash
 # Latest run per source
-psql -U renov_app -d renov -c "
+psql -U indemnite_app -d indemnite -c "
   SELECT DISTINCT ON (source) source, status, started_at, finished_at, rows_written, error_message
     FROM scrape_runs ORDER BY source, started_at DESC"
 
 # All failed runs in the last 30 days
-psql -U renov_app -d renov -c "
+psql -U indemnite_app -d indemnite -c "
   SELECT source, started_at, error_message
     FROM scrape_runs
    WHERE status='failed' AND started_at > now() - interval '30 days'
    ORDER BY started_at DESC"
 
 # When does each timer fire next?
-systemctl list-timers renov-*
+systemctl list-timers indemnite-*
 ```
 
 ## Auto-publish chain
@@ -77,17 +77,17 @@ systemctl list-timers renov-*
 The data flow from scraper to live site:
 
 ```
-renov-scrape@*.timer    Fri 01:00 UTC   → updates Postgres
-renov-publish.timer     Fri 02:00 UTC   → exports DB → src/data/*.json
+indemnite-scrape@*.timer    Tue 02:00 UTC   → updates Postgres
+indemnite-publish.timer     Tue 03:00 UTC   → exports DB → src/data/*.json
                                          → git diff: pushes only on drift
                                          → Cloudflare auto-redeploys on push
-renov-rebuild.timer     Daily 13:30 UTC → empty commit, triggers drip-publish
-renov-indexnow.timer    Daily 14:00 UTC → pings Bing/Yandex/etc.
-renov-health.timer      Daily 18:00 UTC → checks scrape_runs for stuck/failed
+indemnite-rebuild.timer     Daily 16:00 UTC → empty commit, triggers drip-publish
+indemnite-indexnow.timer    Daily 16:30 UTC → pings Bing/Yandex/etc.
+indemnite-health.timer      Daily 20:00 UTC → checks scrape_runs for stuck/failed
 ```
 
-The publish + rebuild units use the bot identity `MaRénovAide Bot
-<bot@ma-renov-aide.fr>` for commits, so auto-refreshes are visually
+The publish + rebuild units use the bot identity `Calcul Indemnité Bot
+<bot@calcul-indemnite.fr>` for commits, so auto-refreshes are visually
 distinct from human commits in `git log`.
 
 **Required setup**: the GitHub deploy key on the VPS must have **write
@@ -98,8 +98,8 @@ See [[reference-github-identity]] for setup.
 
 **Test the chain end-to-end after install:**
 ```bash
-sudo systemctl start renov-publish.service
-journalctl -u renov-publish.service -n 50 --no-pager
+sudo systemctl start indemnite-publish.service
+journalctl -u indemnite-publish.service -n 50 --no-pager
 ```
 Expected output is "No scraper-fed data files registered yet" until step 13
 adds the first scraper + export entry to `DATA_FILES` in `publish.sh`.

@@ -1,14 +1,14 @@
 [Unit]
-Description=MaRénovAide IndexNow ping — submit today's newly-surfaced URLs to Bing/Yandex/DDG
+Description=Calcul Indemnité IndexNow ping — submit today's newly-surfaced URLs to Bing/Yandex/DDG
 Wants=network-online.target
-After=network-online.target renov-rebuild.service
+After=network-online.target indemnite-rebuild.service
 
 [Service]
 Type=oneshot
 User=ubuntu
 Group=ubuntu
-WorkingDirectory=/home/ubuntu/renov
-ExecStart=/home/ubuntu/renov/scripts/vps/indexnow-ping.sh
+WorkingDirectory=/home/ubuntu/indemnite
+ExecStart=/home/ubuntu/indemnite/scripts/vps/indexnow-ping.sh
 StandardOutput=journal
 StandardError=journal
 Restart=no

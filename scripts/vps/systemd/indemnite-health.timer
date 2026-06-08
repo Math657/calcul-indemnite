@@ -1,0 +1,13 @@
+[Unit]
+Description=Daily Calcul Indemnité health check
+
+[Timer]
+# Daily at 20:00 UTC — well after the weekly publish (Fri 02:00) and the
+# daily rebuild (13:30) windows. Catches stuck/failed runs the same day.
+OnCalendar=*-*-* 20:00:00 UTC
+RandomizedDelaySec=300
+Persistent=true
+Unit=indemnite-health.service
+
+[Install]
+WantedBy=timers.target

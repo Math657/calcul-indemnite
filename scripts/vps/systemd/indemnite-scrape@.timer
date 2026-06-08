@@ -1,0 +1,16 @@
+[Unit]
+Description=Weekly Calcul Indemnité scrape: %i
+Documentation=https://github.com/Math657/calcul-indemnite
+
+[Timer]
+# Tuesdays at 02:00 UTC, jittered up to 10 min. Publish.timer fires at
+# Tue 03:00 UTC, giving 50-60 min for scrapers to finish. Slot distinct
+# from calc (Mon 03:00 UTC) per footprint-hygiene staggering.
+# Persistent=true catches up missed runs (e.g. after VPS reboot) on next boot.
+OnCalendar=Tue 02:00:00 UTC
+RandomizedDelaySec=600
+Persistent=true
+Unit=indemnite-scrape@%i.service
+
+[Install]
+WantedBy=timers.target

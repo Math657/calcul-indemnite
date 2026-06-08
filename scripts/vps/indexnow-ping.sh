@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # IndexNow ping for newly-surfaced URLs.
 #
-# Runs after the daily rebuild (renov-rebuild.service). Fetches the live
+# Runs after the daily rebuild (indemnite-rebuild.service). Fetches the live
 # sitemap, filters URLs whose <lastmod> equals today (UTC), and submits
 # them to the IndexNow API. Bing, Yandex, DuckDuckGo, Seznam and Naver
 # consume these pings and trigger fresh crawls within hours.
@@ -20,7 +20,7 @@
 set -euo pipefail
 
 KEY="33b7a5fe9fdca653d276366a5d3b653a"
-HOST="ma-renov-aide.fr"
+HOST="calcul-indemnite.fr"
 SITEMAP_URL="https://${HOST}/sitemap-0.xml"
 KEY_LOCATION="https://${HOST}/${KEY}.txt"
 INDEXNOW_ENDPOINT="https://api.indexnow.org/IndexNow"

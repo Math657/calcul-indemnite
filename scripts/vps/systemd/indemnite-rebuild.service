@@ -1,0 +1,16 @@
+[Unit]
+Description=Calcul Indemnité daily rebuild — empty commit to unlock scheduled drip-publishes
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/indemnite
+EnvironmentFile=/home/ubuntu/indemnite/.env.local
+ExecStart=/home/ubuntu/indemnite/scripts/vps/daily-rebuild.sh
+StandardOutput=journal
+StandardError=journal
+Restart=no
+TimeoutStartSec=180

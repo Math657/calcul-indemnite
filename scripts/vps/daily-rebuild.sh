@@ -10,14 +10,14 @@
 # getStaticPaths with the new "today" → freshly-due guides appear and
 # scheduled simulators leave the sitemap-exclusion list.
 #
-# Runs daily ~13:30 UTC via renov-rebuild.timer (with ±30 min jitter to
+# Runs daily ~16:00 UTC via indemnite-rebuild.timer (with ±30 min jitter to
 # avoid looking like a metronomic bot). Slot distinct from calc's 09:00 UTC.
 
 set -euo pipefail
 
-REPO_DIR="/home/ubuntu/renov"
-BOT_NAME="MaRénovAide Bot"
-BOT_EMAIL="bot@ma-renov-aide.fr"
+REPO_DIR="/home/ubuntu/indemnite"
+BOT_NAME="Calcul Indemnité Bot"
+BOT_EMAIL="bot@calcul-indemnite.fr"
 
 cd "${REPO_DIR}"
 
