@@ -1,13 +1,16 @@
 {
   "source": "SocialGouv — code-du-travail (modèles publicodes)",
   "source_url": "https://github.com/SocialGouv/code-du-travail-numerique",
-  "source_verified_at": "2026-06-08T14:32:35.184794+00:00",
+  "source_verified_at": "2026-06-08T14:38:53.900126+00:00",
   "count": 47,
   "conventions": [
     {
       "idcc": 16,
       "slug": "transports_routiers",
-      "name": "Transports routiers",
+      "name": "Transports routiers et activités auxiliaires du transport",
+      "full_name": "Convention collective nationale des transports routiers et activités auxiliaires du transport",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635624",
+      "effectif": 679524,
       "factors": [
         "Âge du salarié",
         "Le salarié remplit les conditions pour partir à la retraite",
@@ -20,7 +23,10 @@
     {
       "idcc": 44,
       "slug": "industries_chimiques",
-      "name": "Industries chimiques",
+      "name": "Industries chimiques et connexes",
+      "full_name": "Convention collective nationale des industries chimiques et connexes",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635613",
+      "effectif": 218310,
       "factors": [
         "Catégorie professionnelle",
         "Âge du salarié"
@@ -29,13 +35,19 @@
     {
       "idcc": 86,
       "slug": "publicite_francaise",
-      "name": "Publicite francaise",
+      "name": "Entreprises de la publicité et assimilées",
+      "full_name": "Convention collective nationale des entreprises de publicité et assimilées",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635630",
+      "effectif": 75306,
       "factors": []
     },
     {
       "idcc": 176,
       "slug": "industrie_pharmaceutique",
       "name": "Industrie pharmaceutique",
+      "full_name": "Convention collective nationale de l'industrie pharmaceutique",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635184",
+      "effectif": 129135,
       "factors": [
         "Âge du salarié"
       ]
@@ -43,7 +55,10 @@
     {
       "idcc": 275,
       "slug": "transport_aerien_personnel_au_sol",
-      "name": "Transport aerien personnel au sol",
+      "name": "Transport aérien : personnel au sol",
+      "full_name": "Convention collective nationale du personnel au sol des entreprises de transport aérien",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635872",
+      "effectif": 85188,
       "factors": [
         "Catégorie professionnelle",
         "Âge du salarié"
@@ -53,6 +68,9 @@
       "idcc": 292,
       "slug": "plasturgie",
       "name": "Plasturgie",
+      "full_name": "Convention collective nationale de la plasturgie (transformation des matières plastiques)",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635856",
+      "effectif": 118314,
       "factors": [
         "Catégorie professionnelle"
       ]
@@ -61,6 +79,9 @@
       "idcc": 573,
       "slug": "commerces_de_gros",
       "name": "Commerces de gros",
+      "full_name": "Convention collective nationale des commerces de gros",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635373",
+      "effectif": 341572,
       "factors": [
         "Catégorie professionnelle",
         "Le salarié a été cadre durant au moins 15 ans",
@@ -71,7 +92,10 @@
     {
       "idcc": 675,
       "slug": "habillement_commerce_succursales",
-      "name": "Habillement commerce succursales",
+      "name": "Maisons à succursales de vente au détail d'habillement",
+      "full_name": "Convention collective nationale des maisons à succursales de vente au détail d'habillement",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635617",
+      "effectif": 119795,
       "factors": [
         "Catégorie professionnelle",
         "Licenciement économique collectif",
@@ -81,37 +105,55 @@
     {
       "idcc": 787,
       "slug": "comptables",
-      "name": "Comptables",
+      "name": "Personnel des cabinets d'experts-comptables et de commissaires aux comptes",
+      "full_name": "Convention collective nationale des cabinets d'experts-comptables et de commissaires aux comptes",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635826",
+      "effectif": 138440,
       "factors": []
     },
     {
       "idcc": 843,
       "slug": "boulangerie_patisserie",
-      "name": "Boulangerie patisserie",
+      "name": "Boulangerie-pâtisserie (entreprises artisanales)",
+      "full_name": "Convention collective nationale de la boulangerie-pâtisserie -entreprises artisanales",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635886",
+      "effectif": 134889,
       "factors": []
     },
     {
       "idcc": 1043,
       "slug": "gardien_concierge",
-      "name": "Gardien concierge",
+      "name": "Gardiens, concierges et employés d'immeubles",
+      "full_name": "Convention collective nationale des gardiens, concierges et employés d'immeubles",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635953",
+      "effectif": 62393,
       "factors": []
     },
     {
       "idcc": 1090,
       "slug": "automobiles",
-      "name": "Automobiles",
+      "name": "Services de l'automobile (Commerce et réparation de l'automobile, du cycle et du motocycle, activités connexes, contrôle technique automobile, formation des conducteurs)",
+      "full_name": "Convention collective nationale des services de l'automobile (commerce et réparation de l'automobile, du cycle et du motocycle, activités connexes, contrôle technique automobile, formation des conducteurs auto-écoles CNPA)",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635191",
+      "effectif": 422715,
       "factors": []
     },
     {
       "idcc": 1147,
       "slug": "cabinets_medicaux",
-      "name": "Cabinets medicaux",
+      "name": "Personnel des cabinets médicaux",
+      "full_name": "Convention collective nationale du personnel des cabinets médicaux (médecin)",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635409",
+      "effectif": 83776,
       "factors": []
     },
     {
       "idcc": 1266,
       "slug": "restauration_collectivites",
-      "name": "Restauration collectivites",
+      "name": "Restauration de collectivités",
+      "full_name": "Convention collective nationale du personnel des entreprises de restauration de collectivités",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635418",
+      "effectif": 93662,
       "factors": [
         "Catégorie professionnelle"
       ]
@@ -119,13 +161,19 @@
     {
       "idcc": 1351,
       "slug": "prevention_secu_ent",
-      "name": "Prevention secu ent",
+      "name": "Entreprises de prévention et de sécurité",
+      "full_name": "Convention collective nationale des entreprises de prévention et de sécurité",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635405",
+      "effectif": 160768,
       "factors": []
     },
     {
       "idcc": 1404,
       "slug": "sedima",
-      "name": "Sedima",
+      "name": "Entreprises de la maintenance, distribution et location de matériels agricoles, de travaux publics, de bâtiment, de manutention, de motoculture de plaisance et activités connexes, dite SDLM",
+      "full_name": "Convention collective nationale des entreprises de commerce, de location et de réparation de tracteurs, machines et matériels agricoles, de matériels de travaux publics, de bâtiment et de manutention, de matériels de motoculture de plaisance, de jardins et d'espaces verts (SEDIMA)",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635653",
+      "effectif": 79387,
       "factors": [
         "CDI d'opération",
         "Durée du CDI d'opération",
@@ -138,13 +186,19 @@
     {
       "idcc": 1480,
       "slug": "journalisme",
-      "name": "Journalisme",
+      "name": "Journalistes",
+      "full_name": "Convention collective nationale des journalistes",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635444",
+      "effectif": 38019,
       "factors": []
     },
     {
       "idcc": 1483,
       "slug": "habillement_textiles_commerce_de_detail",
-      "name": "Habillement textiles commerce de detail",
+      "name": "Commerce de détail de l'habillement et des articles textiles",
+      "full_name": "Convention collective nationale du commerce de détail de l'habillement et des articles textiles",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635594",
+      "effectif": 63554,
       "factors": [
         "Catégorie professionnelle",
         "Âge du salarié"
@@ -153,7 +207,10 @@
     {
       "idcc": 1486,
       "slug": "bureaux_etudes_techniques",
-      "name": "Bureaux etudes techniques",
+      "name": "Bureaux d'études techniques, cabinets d'ingénieurs-conseils et sociétés de conseils",
+      "full_name": "Convention collective nationale applicable au personnel des bureaux d'études techniques, des cabinets d'ingénieurs-conseils et des sociétés de conseils(BET, SYNTEC)",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635173",
+      "effectif": 857061,
       "factors": [
         "Le licenciement fait suite au refus d'une clause de mobilité",
         "Catégorie professionnelle"
@@ -163,6 +220,9 @@
       "idcc": 1501,
       "slug": "restauration_rapide",
       "name": "Restauration rapide",
+      "full_name": "Convention collective nationale de la restauration rapide (restauration livrée)",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635596",
+      "effectif": 171010,
       "factors": [
         "Catégorie professionnelle",
         "Licenciement pour motif économique",
@@ -172,37 +232,55 @@
     {
       "idcc": 1505,
       "slug": "commerces_detail_fruits_legumes",
-      "name": "Commerces detail fruits legumes",
+      "name": "Commerce de détail alimentaire non spécialisé",
+      "full_name": "Convention collective nationale du commerce de détail de fruits et légumes, épicerie et produits laitiers",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635421",
+      "effectif": 80514,
       "factors": []
     },
     {
       "idcc": 1516,
       "slug": "organismes_formation",
-      "name": "Organismes formation",
+      "name": "Organismes de formation",
+      "full_name": "Convention collective nationale des organismes de formation",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635435",
+      "effectif": 72823,
       "factors": []
     },
     {
       "idcc": 1517,
       "slug": "commerces_de_detail_non_alimentaires",
-      "name": "Commerces de detail non alimentaires",
+      "name": "Commerces de détail non alimentaires : antiquités, brocante, galeries d'art (œuvres d'art), arts de la table, coutellerie, droguerie, équipement du foyer, bazars, commerces ménagers, modélisme, jeux, jouets, puérinatalité, maroquinerie, presse et jeux de hasard ou pronostics, produits de la vape",
+      "full_name": "Convention collective nationale des commerces de détail non alimentaires : antiquités, brocante, galeries d'art, arts de la table, coutellerie, droguerie, équipement du foyer, bazars, commerces ménagers, modélisme, jeux, jouets, périnatalité et maroquinerie(œuvres d'art)",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635870",
+      "effectif": 97292,
       "factors": []
     },
     {
       "idcc": 1518,
       "slug": "education_loisirs",
-      "name": "Education loisirs",
+      "name": "Éducation, culture, loisirs et animation au service des territoires (ÉCLAT)",
+      "full_name": "Convention collective nationale des métiers de l'éducation, de la culture, des loisirs et de l'animation agissant pour l'utilité sociale et environnementale, au service des territoires (ÉCLAT)",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635177",
+      "effectif": 113828,
       "factors": []
     },
     {
       "idcc": 1527,
       "slug": "immobilier",
-      "name": "Immobilier",
+      "name": "Immobilier : administrateurs de biens, sociétés immobilières, agents immobiliers",
+      "full_name": "Convention collective nationale de l'immobilier",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635413",
+      "effectif": 141326,
       "factors": []
     },
     {
       "idcc": 1596,
       "slug": "batiment_ouvriers_employes",
-      "name": "Batiment ouvriers employes",
+      "name": "Bâtiment Ouvriers (entreprises occupant jusqu'à 10 salariés)",
+      "full_name": "Convention collective nationale concernant les ouvriers employés par les entreprises du bâtiment visées par le décret du 1er mars 1962 - c'est-à-dire occupant jusqu'à 10 salariés",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635221",
+      "effectif": 282254,
       "factors": [
         "Âge du salarié"
       ]
@@ -210,7 +288,10 @@
     {
       "idcc": 1597,
       "slug": "batiment_employes_ouvriers_bis",
-      "name": "Batiment employes ouvriers bis",
+      "name": "Bâtiment Ouvriers (entreprises occupant plus de 10 salariés)",
+      "full_name": "Convention collective nationale concernant les ouvriers employés par les entreprises du bâtiment non visées par le décret 1er mars 1962 -c'est-à-dire occupant plus de 10 salariés",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635220",
+      "effectif": 257290,
       "factors": [
         "Âge du salarié"
       ]
@@ -218,7 +299,10 @@
     {
       "idcc": 1606,
       "slug": "bricolage",
-      "name": "Bricolage",
+      "name": "Bricolage (vente au détail en libre-service)",
+      "full_name": "Convention collective nationale du bricolage",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635871",
+      "effectif": 75861,
       "factors": [
         "Catégorie professionnelle",
         "Âge du salarié"
@@ -227,7 +311,10 @@
     {
       "idcc": 1672,
       "slug": "societes_assurances",
-      "name": "Societes assurances",
+      "name": "Sociétés d'assurances",
+      "full_name": "Convention collective nationale des sociétés d'assurances",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635918",
+      "effectif": 140739,
       "factors": [
         "Catégorie professionnelle",
         "Âge du salarié",
@@ -238,7 +325,10 @@
     {
       "idcc": 1702,
       "slug": "ouvriers_travaux_public",
-      "name": "Ouvriers travaux public",
+      "name": "Travaux publics (Tome II : Ouvriers)",
+      "full_name": "Convention collective nationale des ouvriers de travaux publics",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635467",
+      "effectif": 164919,
       "factors": [
         "Licenciement pour motif économique",
         "Âge du salarié"
@@ -248,6 +338,9 @@
       "idcc": 1740,
       "slug": "batiment_region_parisienne",
       "name": "Batiment region parisienne",
+      "full_name": null,
+      "legifrance_url": null,
+      "effectif": null,
       "factors": [
         "Âge du salarié"
       ]
@@ -255,13 +348,19 @@
     {
       "idcc": 1979,
       "slug": "hotels_cafes_restaurants",
-      "name": "Hotels cafes restaurants",
+      "name": "Hôtels, cafés, restaurants",
+      "full_name": "Convention collective nationale des hôtels, cafés, restaurants (HCR)",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635534",
+      "effectif": 580085,
       "factors": []
     },
     {
       "idcc": 1996,
       "slug": "pharmacie",
-      "name": "Pharmacie",
+      "name": "Pharmacie d'officine",
+      "full_name": "Convention collective nationale de la pharmacie d'officine",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635528",
+      "effectif": 119196,
       "factors": [
         "Catégorie professionnelle",
         "Licenciement pour motif économique"
@@ -270,7 +369,10 @@
     {
       "idcc": 2098,
       "slug": "personnel_presta_service_tertiaire",
-      "name": "Personnel presta service tertiaire",
+      "name": "Prestataires de services dans le domaine du secteur tertiaire",
+      "full_name": "Convention collective nationale du personnel des prestataires de services dans le domaine du secteur tertiaire",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635550",
+      "effectif": 127011,
       "factors": [
         "Catégorie professionnelle",
         "Âge du salarié"
@@ -280,6 +382,9 @@
       "idcc": 2120,
       "slug": "banque",
       "name": "Banque",
+      "full_name": "Convention collective nationale de la banque",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635780",
+      "effectif": 216431,
       "factors": [
         "Catégorie professionnelle",
         "Licenciement pour motif économique",
@@ -289,7 +394,10 @@
     {
       "idcc": 2148,
       "slug": "telecommunications",
-      "name": "Telecommunications",
+      "name": "Télécommunications",
+      "full_name": "Convention collective nationale des télécommunications",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635557",
+      "effectif": 88278,
       "factors": [
         "Âge du salarié"
       ]
@@ -297,7 +405,10 @@
     {
       "idcc": 2216,
       "slug": "commerces_detail_alimentation",
-      "name": "Commerces detail alimentation",
+      "name": "Commerce de détail et de gros à prédominance alimentaire",
+      "full_name": "Convention collective nationale du commerce de détail et de gros à prédominance alimentaire",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635085",
+      "effectif": 689830,
       "factors": [
         "Catégorie professionnelle",
         "Licenciement pour motif économique",
@@ -307,7 +418,10 @@
     {
       "idcc": 2264,
       "slug": "hospitalisation_privees",
-      "name": "Hospitalisation privees",
+      "name": "Hospitalisation privée",
+      "full_name": "Convention collective nationale de l'hospitalisation privée",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000005635813",
+      "effectif": 272286,
       "factors": [
         "Catégorie professionnelle",
         "Fonctions de non-cadres durant le contrat de travail",
@@ -318,6 +432,9 @@
       "idcc": 2511,
       "slug": "sport",
       "name": "Sport",
+      "full_name": "Convention collective nationale du sport",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000017577652",
+      "effectif": 80901,
       "factors": [
         "Catégorie professionnelle"
       ]
@@ -325,7 +442,10 @@
     {
       "idcc": 2596,
       "slug": "coiffure",
-      "name": "Coiffure",
+      "name": "Coiffure et professions connexes",
+      "full_name": "Convention collective nationale de la coiffure et des professions connexes",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000018563755",
+      "effectif": 98152,
       "factors": [
         "Catégorie professionnelle"
       ]
@@ -333,7 +453,10 @@
     {
       "idcc": 2609,
       "slug": "batiment_etam",
-      "name": "Batiment etam",
+      "name": "Bâtiment ETAM",
+      "full_name": "Convention collective nationale des employés, techniciens et agents de maîtrise du bâtiment",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000018773893",
+      "effectif": 140105,
       "factors": [
         "Âge du salarié à la fin de son préavis (exécuté ou non)"
       ]
@@ -341,7 +464,10 @@
     {
       "idcc": 2614,
       "slug": "travaux_publics",
-      "name": "Travaux publics",
+      "name": "Travaux publics (Tome III : ETAM)",
+      "full_name": "Convention collective nationale des employés, techniciens et agents de maîtrise des travaux publics",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000018926209",
+      "effectif": 83576,
       "factors": [
         "Âge du salarié"
       ]
@@ -349,25 +475,37 @@
     {
       "idcc": 2941,
       "slug": "aide_accompagnement_soins_services_domicile",
-      "name": "Aide accompagnement soins services domicile",
+      "name": "Aide, accompagnement, soins et services à domicile (BAD)",
+      "full_name": "Convention collective nationale de la branche de l'aide, de l'accompagnement, des soins et des services à domicile",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000025805800",
+      "effectif": 203690,
       "factors": []
     },
     {
       "idcc": 3043,
       "slug": "entreprises_proprete",
-      "name": "Entreprises proprete",
+      "name": "Entreprises de propreté et services associés",
+      "full_name": "Convention collective nationale des entreprises de propreté et services associés du 26 juillet 2011.",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000027172335",
+      "effectif": 367142,
       "factors": []
     },
     {
       "idcc": 3127,
       "slug": "entreprises_services_a_la_personne",
-      "name": "Entreprises services a la personne",
+      "name": "Entreprises de services à la personne",
+      "full_name": "Convention collective nationale des services à la personne du 20 septembre 2012",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000027084096",
+      "effectif": 70878,
       "factors": []
     },
     {
       "idcc": 3239,
       "slug": "particuliers_employeurs_domicile",
-      "name": "Particuliers employeurs domicile",
+      "name": "Particuliers employeurs et emploi à domicile",
+      "full_name": "Convention collective de la branche du secteur des particuliers employeurs et de l’emploi à domicile",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000044594539",
+      "effectif": 1173,
       "factors": [
         "Catégorie professionnelle",
         "Total des salaires perçus pendant la totalité du contrat de travail"
@@ -376,7 +514,10 @@
     {
       "idcc": 3248,
       "slug": "metallurgie",
-      "name": "Metallurgie",
+      "name": "Métallurgie",
+      "full_name": "Convention collective nationale de la métallurgie",
+      "legifrance_url": "https://www.legifrance.gouv.fr/conv_coll/id/KALICONT000046993250",
+      "effectif": 722667,
       "factors": [
         "Catégorie professionnelle",
         "Le salarié est au forfait jour",
