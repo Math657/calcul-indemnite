@@ -1,7 +1,7 @@
 [project]
-name = "renov-pipeline"
+name = "indemnite-pipeline"
 version = "0.1.0"
-description = "Ingestion + export pipeline for ma-renov-aide.fr data sources (ADEME DPE, France Rénov, ANAH, CEE)"
+description = "Ingestion + export pipeline for calcul-indemnite.fr data sources (ADEME DPE, France Rénov, ANAH, CEE)"
 requires-python = ">=3.11"
 dependencies = [
     "psycopg[binary]>=3.2",
@@ -18,7 +18,7 @@ dev = [
 ]
 
 [project.scripts]
-renov = "pipeline.cli:app"
+indemnite = "pipeline.cli:app"
 
 [build-system]
 requires = ["setuptools>=68"]

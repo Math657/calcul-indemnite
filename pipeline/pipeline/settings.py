@@ -44,6 +44,6 @@ def load() -> Settings:
         pg_db=_req("PG_DB"),
         user_agent=os.environ.get(
             "SCRAPER_USER_AGENT",
-            "ma-renov-aide-bot/0.1 (+https://ma-renov-aide.fr)",
+            "calcul-indemnite-bot/0.1 (+https://calcul-indemnite.fr)",
         ),
     )

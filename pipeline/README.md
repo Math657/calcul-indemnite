@@ -1,4 +1,4 @@
-# renov pipeline
+# indemnite pipeline
 
 Python pipeline that ingests French rénovation énergétique reference data (MaPrimeRénov barèmes, DPE coefficients, plafonds ANAH, primes CEE, etc.) into Postgres on the VPS, and later exports build-time JSON snapshots for the Astro frontend.
 
@@ -16,13 +16,13 @@ pipeline/
     ├── cli.py                   # entry point: `python -m pipeline.cli <cmd>`
     └── scrapers/
         ├── base.py              # BaseScraper: fetch → write → log
-        └── (renov scrapers land in step 13+)
+        └── (indemnite scrapers land in step 13+)
 ```
 
 ## First-time setup on the VPS
 
 ```bash
-cd ~/renov/pipeline
+cd ~/indemnite/pipeline
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
@@ -33,8 +33,8 @@ Set DB credentials at the **repo root** in `.env.local` (gitignored):
 ```
 PG_HOST=localhost
 PG_PORT=5432
-PG_USER=renov_app
-PG_DB=renov
+PG_USER=indemnite_app
+PG_DB=indemnite
 PG_PASSWORD=<from 00-postgres-setup.sh output>
 ```
 

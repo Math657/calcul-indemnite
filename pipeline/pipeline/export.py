@@ -3,7 +3,7 @@
 Astro reads these JSON files at build time (no DB connection in CI). Workflow:
 
 1. Scraper writes new records to Postgres on the VPS.
-2. The renov-publish.service systemd unit (weekly Fri 02:00 UTC) runs
+2. The indemnite-publish.service systemd unit (weekly Fri 02:00 UTC) runs
    ``python -m pipeline.cli export`` then ``publish.sh`` commits + pushes
    any JSON drift to origin/main.
 3. Cloudflare Workers Builds auto-rebuilds Astro with the new data.

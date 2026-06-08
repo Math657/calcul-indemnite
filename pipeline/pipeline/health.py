@@ -102,7 +102,7 @@ def send_webhook(text: str, webhook_url: str) -> None:
         requests.post(
             webhook_url,
             data=text.encode("utf-8"),
-            headers={"Title": "renov health alert", "Priority": "default", "Tags": "warning"},
+            headers={"Title": "indemnite health alert", "Priority": "default", "Tags": "warning"},
             timeout=10,
         )
     elif "slack.com" in webhook_url or "hooks.slack" in webhook_url:
@@ -120,7 +120,7 @@ def report() -> tuple[bool, str]:
     if healthy:
         text = "OK — all scrapers healthy"
     else:
-        lines = [f"renov health check found {len(issues)} issue(s):", ""]
+        lines = [f"indemnite health check found {len(issues)} issue(s):", ""]
         lines.extend(str(i) for i in issues)
         text = "\n".join(lines)
 

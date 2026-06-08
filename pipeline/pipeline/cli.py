@@ -1,4 +1,4 @@
-"""renov CLI — entry point for cron jobs and manual operations.
+"""indemnite CLI — entry point for cron jobs and manual operations.
 
 Examples (once scrapers are registered in step 13+):
   python -m pipeline.cli migrate
