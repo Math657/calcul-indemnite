@@ -99,7 +99,7 @@ const ANGLICISMES_WHITELIST = [
 ];
 
 const FILE_PATTERNS = [
-  'src/content/guides/**/*.mdx',
+  'src/content/dossiers/**/*.mdx',
   'src/pages/**/*.astro',
 ];
 
@@ -127,15 +127,15 @@ const BRAND_SPAM_THRESHOLD = 10;
 function collectValidLinkTargets() {
   const targets = new Set();
 
-  const guidesDir = path.join(ROOT, 'src/content/guides');
-  if (fs.existsSync(guidesDir)) {
-    for (const f of fs.readdirSync(guidesDir)) {
+  const dossiersDir = path.join(ROOT, 'src/content/dossiers');
+  if (fs.existsSync(dossiersDir)) {
+    for (const f of fs.readdirSync(dossiersDir)) {
       if (!/\.mdx?$/.test(f)) continue;
-      const content = fs.readFileSync(path.join(guidesDir, f), 'utf8');
+      const content = fs.readFileSync(path.join(dossiersDir, f), 'utf8');
       const draftMatch = content.match(/^draft:\s*(true|false)/m);
       const isDraft = draftMatch && draftMatch[1] === 'true';
       if (isDraft) continue;
-      targets.add(`/guides/${f.replace(/\.mdx?$/, '')}`);
+      targets.add(`/dossiers/${f.replace(/\.mdx?$/, '')}`);
     }
   }
 
@@ -194,7 +194,7 @@ function collectFiles(patterns) {
       }
     } else {
       const [dir, ext] = (() => {
-        if (pattern.endsWith('.mdx')) return ['src/content/guides', '.mdx'];
+        if (pattern.endsWith('.mdx')) return ['src/content/dossiers', '.mdx'];
         if (pattern.endsWith('.astro')) return ['src/pages', '.astro'];
         return [null, null];
       })();

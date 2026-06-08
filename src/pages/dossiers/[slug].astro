@@ -1,0 +1,88 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Container from '../../components/Container.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Methodology from '../../components/Methodology.astro';
+import LastUpdate from '../../components/LastUpdate.astro';
+import RelatedGuides from '../../components/RelatedGuides.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+
+export async function getStaticPaths() {
+  const todayISO = new Date().toISOString().slice(0, 10);
+  const dossiers = await getCollection('dossiers', (entry: CollectionEntry<'dossiers'>) => {
+    if (entry.data.draft) return false;
+    return entry.data.datePublished <= todayISO;
+  });
+  return dossiers.map((entry: CollectionEntry<'dossiers'>) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'dossiers'>;
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await entry.render();
+
+const seo = {
+  title: entry.data.title,
+  description: entry.data.description,
+  path: `/dossiers/${entry.slug}`,
+  ogImage: entry.data.ogImage,
+};
+
+const breadcrumbItems = [
+  { name: 'Accueil', path: '/' },
+  { name: 'Dossiers', path: '/dossiers' },
+  { name: entry.data.title, path: `/dossiers/${entry.slug}` },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: entry.data.title,
+    description: entry.data.description,
+    datePublished: entry.data.datePublished,
+    dateModified: entry.data.dateModified,
+    inLanguage: 'fr-FR',
+    isPartOf: { '@id': 'https://calcul-indemnite.fr/#website' },
+    publisher: { '@id': 'https://calcul-indemnite.fr/#organization' },
+  },
+];
+---
+<Base {seo} jsonLd={jsonLd}>
+  <Container as="main" size="md" class="py-8 sm:py-12">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <header class="mt-6 mb-8">
+      <h1 class="text-4xl font-extrabold text-slate-900 sm:text-5xl">{entry.data.title}</h1>
+      <p class="mt-4 text-lg leading-relaxed text-slate-700">{entry.data.description}</p>
+      <div class="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-500">
+        <LastUpdate date={entry.data.dateModified} label="Mis à jour le" />
+        {entry.data.tags && entry.data.tags.length > 0 && (
+          <div class="flex flex-wrap gap-1">
+            {entry.data.tags.map((tag: string) => (
+              <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700">{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </header>
+
+    <TableOfContents headings={headings} />
+
+    <article class="prose prose-slate max-w-none prose-headings:text-slate-900 prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:scroll-mt-20 prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3 prose-p:text-slate-700 prose-p:leading-relaxed prose-a:text-indigo-700 prose-a:no-underline hover:prose-a:underline prose-strong:text-slate-900 prose-table:text-sm prose-th:bg-slate-50 prose-th:text-left">
+      <Content />
+    </article>
+
+    <RelatedGuides excludeSlug={entry.slug} preferHub={entry.data.hub} />
+
+    <section class="mt-12">
+      <Methodology />
+    </section>
+  </Container>
+</Base>

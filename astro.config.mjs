@@ -19,11 +19,11 @@ const scheduledGuidePaths = new Set();
 const TODAY = new Date(new Date().toISOString().slice(0, 10)); // midnight UTC, date-only
 
 try {
-  for (const file of readdirSync('src/content/guides')) {
+  for (const file of readdirSync('src/content/dossiers')) {
     if (!file.endsWith('.md') && !file.endsWith('.mdx')) continue;
     const content = readFileSync(`src/content/guides/${file}`, 'utf-8');
     const slug = file.replace(/\.mdx?$/, '');
-    const path = `/guides/${slug}`;
+    const path = `/dossiers/${slug}`;
     const dm = content.match(/^dateModified:\s*['"]?([\d-]+)/m);
     if (dm) guideLastmod.set(path, dm[1]);
     const dp = content.match(/^datePublished:\s*['"]?([\d-]+)/m);

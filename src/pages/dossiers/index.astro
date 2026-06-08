@@ -1,12 +1,14 @@
 ---
+import { getCollection, type CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Container from '../../components/Container.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import GuideCard from '../../components/GuideCard.astro';
 
 const seo = {
   title: 'Dossiers pratiques — licenciement, rupture, prud’hommes',
   description:
-    'Dossiers pratiques sur le licenciement, la rupture conventionnelle, le préavis, le solde de tout compte et les conventions collectives. Premiers dossiers en cours de publication.',
+    'Dossiers pratiques et sourcés sur le licenciement, la rupture conventionnelle, le préavis, le solde de tout compte et les conventions collectives. Mise à jour datée, sources officielles.',
   path: '/dossiers',
 };
 
@@ -15,13 +17,15 @@ const breadcrumbItems = [
   { name: 'Dossiers', path: '/dossiers' },
 ];
 
-const aVenir = [
-  'Indemnité de licenciement : salaire de référence, mode d’emploi',
-  'Barème Macron année par année : plancher et plafond détaillés',
-  'Rupture conventionnelle et chômage après le 1ᵉʳ septembre 2026',
-  'Préavis de licenciement : durées selon l’ancienneté',
-  'Solde de tout compte : ce qui doit y figurer',
-];
+const todayISO = new Date().toISOString().slice(0, 10);
+const dossiers = (
+  await getCollection('dossiers', (entry: CollectionEntry<'dossiers'>) => {
+    if (entry.data.draft) return false;
+    return entry.data.datePublished <= todayISO;
+  })
+).sort((a: CollectionEntry<'dossiers'>, b: CollectionEntry<'dossiers'>) =>
+  b.data.datePublished.localeCompare(a.data.datePublished),
+);
 ---
 <Base {seo}>
   <Container as="main" size="lg" class="py-8 sm:py-12">
@@ -30,21 +34,24 @@ const aVenir = [
     <header class="mt-6 mb-8">
       <h1 class="text-4xl font-extrabold text-slate-900 sm:text-5xl">Dossiers pratiques</h1>
       <p class="mt-4 max-w-3xl text-lg leading-relaxed text-slate-700">
-        Des dossiers sourcés sur le licenciement et la fin du contrat de travail. Les premiers titres sont en cours de publication.
+        Des dossiers sourcés sur le licenciement et la fin du contrat de travail. Chaque page cite sa base légale et porte une date de mise à jour.
       </p>
     </header>
 
-    <ul class="space-y-3">
-      {aVenir.map((t) => (
-        <li class="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4 text-slate-700">
-          <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500">Bientôt</span>
-          <span>{t}</span>
-        </li>
-      ))}
-    </ul>
-
-    <p class="mt-8 text-sm text-slate-600">
-      En attendant, lancez le <a href="/calcul-indemnite-licenciement" class="text-indigo-700 hover:underline">calcul de votre indemnité de licenciement</a>.
-    </p>
+    {dossiers.length > 0 ? (
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {dossiers.map((d: CollectionEntry<'dossiers'>) => (
+          <GuideCard
+            title={d.data.title}
+            description={d.data.description}
+            slug={d.slug}
+            datePublished={d.data.datePublished}
+            hub={d.data.hub}
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="text-slate-600">Les premiers dossiers arrivent. En attendant, lancez le <a href="/calcul-indemnite-licenciement" class="text-indigo-700 hover:underline">calcul de votre indemnité de licenciement</a>.</p>
+    )}
   </Container>
 </Base>
