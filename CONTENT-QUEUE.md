@@ -10,9 +10,9 @@ frontmatter of `src/content/dossiers/*.mdx`.
 
 - **Today**: 2026-06-08
 - **Published**: 2
-- **Scheduled (drip queue)**: 11
+- **Scheduled (drip queue)**: 17
 - **Drafts**: 0
-- **Total tracked articles**: 13
+- **Total tracked articles**: 19
 
 ## Planned (not yet written)
 <!-- planned:start -->
@@ -34,6 +34,12 @@ _Aucun guide prévu non écrit pour le moment. Liste à compléter à la main en
 | 2026-07-10 | [Ancienneté : comment se calcule-t-elle pour l'indemnité ?](src/content/dossiers/anciennete-calcul-indemnite-licenciement.mdx) | licenciement |
 | 2026-07-14 | [Rupture conventionnelle : montant minimum et marge de négociation](src/content/dossiers/rupture-conventionnelle-montant-minimum-negocier.mdx) | rupture |
 | 2026-07-18 | [Prime de précarité : l'indemnité de fin de CDD expliquée](src/content/dossiers/prime-precarite-fin-cdd.mdx) | — |
+| 2026-07-22 | [Préavis de licenciement des cadres : la règle des 3 mois](src/content/dossiers/preavis-cadres-trois-mois.mdx) | licenciement |
+| 2026-07-26 | [Rupture pendant la période d'essai : indemnité et délai de prévenance](src/content/dossiers/licenciement-periode-essai-indemnite.mdx) | licenciement |
+| 2026-07-30 | [Indemnité légale ou conventionnelle : laquelle s'applique ?](src/content/dossiers/indemnite-legale-ou-conventionnelle-licenciement.mdx) | licenciement |
+| 2026-08-03 | [Licenciement et chômage : les conditions pour toucher l'ARE](src/content/dossiers/licenciement-chomage-are-conditions.mdx) | licenciement |
+| 2026-08-07 | [Démission : a-t-on droit à une indemnité de licenciement ?](src/content/dossiers/demission-indemnite-licenciement.mdx) | licenciement |
+| 2026-08-11 | [Indemnité de licenciement à temps partiel : comment la calculer](src/content/dossiers/indemnite-licenciement-temps-partiel.mdx) | licenciement |
 
 ## Published — live on the site
 
