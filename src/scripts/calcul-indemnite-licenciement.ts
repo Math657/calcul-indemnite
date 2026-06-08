@@ -141,5 +141,7 @@ export function initSimulator(): void {
   document
     .querySelectorAll<HTMLInputElement>('#indemnite-form input')
     .forEach((el) => el.addEventListener('input', recompute));
+  const btn = document.getElementById('calc-btn');
+  if (btn) btn.addEventListener('click', recompute);
   recompute();
 }

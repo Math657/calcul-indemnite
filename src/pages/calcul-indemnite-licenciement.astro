@@ -101,12 +101,17 @@ const faqs = [
           </div>
           <span class="mt-2 block text-xs text-slate-500">Ancienneté à la date d’envoi de la lettre de licenciement. Minimum 8 mois pour l’indemnité légale.</span>
         </fieldset>
+
+        <button type="button" id="calc-btn" class="w-full rounded-lg bg-indigo-600 px-5 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          Calculer mon indemnité
+        </button>
+        <p class="text-center text-xs text-slate-500">Le résultat se met à jour automatiquement à chaque saisie.</p>
       </form>
 
-      <aside id="result-panel" class="lg:sticky lg:top-24 lg:self-start" hidden>
+      <aside id="result-panel" class="lg:sticky lg:top-24 lg:self-start">
         <div class="rounded-xl border border-indigo-200 bg-indigo-50 p-5 sm:p-6">
           <h2 class="text-xl font-bold text-slate-900">Estimation</h2>
-          <div id="result-body" class="mt-4"></div>
+          <div id="result-body" class="mt-4"><p class="text-sm text-slate-600">Renseignez votre salaire de référence et votre ancienneté pour voir l’estimation.</p></div>
           <p class="mt-6 rounded-md border-l-4 border-amber-400 bg-amber-50 p-3 text-xs leading-relaxed text-slate-700">
             <strong>Estimation indicative</strong> de l’indemnité <em>légale</em>. Votre convention collective peut prévoir un montant supérieur, qui prévaut alors. Pour un chiffrage opposable, appuyez-vous sur le simulateur officiel <a href="https://www.service-public.fr/particuliers/vosdroits/F408" rel="external" class="font-medium underline">service-public.fr</a>.
           </p>
