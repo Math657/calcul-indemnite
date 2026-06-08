@@ -36,10 +36,10 @@ const verifiedAt = conventionsData.source_verified_at;
 
     <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {conventions.map((c) => (
-        <div class="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-3">
+        <a href={`/conventions-collectives/${c.idcc}-${c.slug.replace(/_/g, '-')}`} class="group flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-3 transition hover:border-indigo-400 hover:shadow-sm">
           <span class="shrink-0 rounded bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-700">IDCC {c.idcc}</span>
-          <span class="text-sm text-slate-800">{c.name}</span>
-        </div>
+          <span class="text-sm text-slate-800 group-hover:text-indigo-700">{c.name}</span>
+        </a>
       ))}
     </div>
 

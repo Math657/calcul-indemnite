@@ -1,7 +1,7 @@
 [project]
 name = "indemnite-pipeline"
 version = "0.1.0"
-description = "Ingestion + export pipeline for calcul-indemnite.fr data sources (ADEME DPE, France Rénov, ANAH, CEE)"
+description = "Ingestion + export pipeline for calcul-indemnite.fr data (SocialGouv code-du-travail conventions, Légifrance, SMIC/PMSS)"
 requires-python = ">=3.11"
 dependencies = [
     "psycopg[binary]>=3.2",
@@ -9,6 +9,7 @@ dependencies = [
     "beautifulsoup4>=4.12",
     "python-dotenv>=1.0",
     "typer>=0.12",
+    "pyyaml>=6.0",
 ]
 
 [project.optional-dependencies]

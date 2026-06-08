@@ -59,10 +59,12 @@ def export_conventions() -> Path:
             _write(out, data)
             return out
 
-        cur.execute("SELECT idcc, slug, name FROM conventions ORDER BY idcc")
+        cur.execute("SELECT idcc, slug, name, factors FROM conventions ORDER BY idcc")
         rows = cur.fetchall()
         data["count"] = len(rows)
-        data["conventions"] = [{"idcc": r[0], "slug": r[1], "name": r[2]} for r in rows]
+        data["conventions"] = [
+            {"idcc": r[0], "slug": r[1], "name": r[2], "factors": r[3] or []} for r in rows
+        ]
 
         cur.execute("SELECT max(updated_at) FROM conventions")
         data["source_verified_at"] = _serialize(cur.fetchone()[0])
