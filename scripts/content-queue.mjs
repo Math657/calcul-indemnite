@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Content queue tracker. Scans src/content/guides/*.mdx, parses
+ * Content queue tracker. Scans src/content/dossiers/*.mdx, parses
  * frontmatter, and generates CONTENT-QUEUE.md grouping each guide
  * by status (published, scheduled, draft). Run manually:
  *
@@ -24,7 +24,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, '..');
-const GUIDES_DIR = path.join(ROOT, 'src/content/guides');
+const GUIDES_DIR = path.join(ROOT, 'src/content/dossiers');
 const QUEUE_FILE = path.join(ROOT, 'CONTENT-QUEUE.md');
 
 const TODAY = new Date().toISOString().slice(0, 10);
@@ -34,8 +34,14 @@ _Aucun guide prévu non écrit pour le moment. Liste à compléter à la main en
 `;
 
 function field(content, key) {
-  const m = content.match(new RegExp(`^${key}:\\s*['"]?([^'"\\n]+?)['"]?\\s*$`, 'm'));
-  return m ? m[1].trim() : null;
+  const m = content.match(new RegExp(`^${key}:\\s*(.+?)\\s*$`, 'm'));
+  if (!m) return null;
+  let v = m[1].trim();
+  // Strip a single pair of surrounding quotes (values may contain apostrophes).
+  if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+    v = v.slice(1, -1);
+  }
+  return v;
 }
 
 function bool(content, key) {
@@ -79,7 +85,7 @@ if (fs.existsSync(QUEUE_FILE)) {
 }
 
 function tableRow(a) {
-  return `| ${a.datePublished} | [${a.title}](src/content/guides/${a.file}) | ${a.hub} |`;
+  return `| ${a.datePublished} | [${a.title}](src/content/dossiers/${a.file}) | ${a.hub} |`;
 }
 
 function tableOrPlaceholder(rows, placeholder) {
@@ -94,7 +100,7 @@ after adding, editing, or rescheduling a guide.
 The **Planned** section between the HTML comment markers is hand-maintained
 and preserved across regenerations — list there what you intend to write
 but haven't started yet. Everything below it is derived from the MDX
-frontmatter of \`src/content/guides/*.mdx\`.
+frontmatter of \`src/content/dossiers/*.mdx\`.
 
 - **Today**: ${TODAY}
 - **Published**: ${published.length}
@@ -130,7 +136,7 @@ ${tableOrPlaceholder(published, '')}`
 ${
   drafts.length
     ? drafts
-        .map((a) => `- [${a.slug}](src/content/guides/${a.file}) — ${a.title}`)
+        .map((a) => `- [${a.slug}](src/content/dossiers/${a.file}) — ${a.title}`)
         .join('\n')
     : '_Aucun brouillon._'
 }
