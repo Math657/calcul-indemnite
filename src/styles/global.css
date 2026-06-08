@@ -1,0 +1,114 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+   Print styles — used during tax season when users save/print calculator
+   results. Hide chrome (nav, footer, CTAs, share buttons, newsletter,
+   FAQ, related calcs) and keep the calculation itself + the key context.
+   Inverts colors to black-on-white for ink savings, expands link URLs
+   inline so printed copies remain useful offline.
+   ────────────────────────────────────────────────────────────────────── */
+@media print {
+  /* Hide global chrome */
+  header,
+  footer {
+    display: none !important;
+  }
+
+  /* Hide interactive / promotional elements */
+  aside[aria-label="Sugestão"],
+  aside[aria-label="Sugestão patrocinada"],
+  aside[aria-label="Inscrição em newsletter"],
+  a[aria-label="Compartilhar no WhatsApp"],
+  .no-print {
+    display: none !important;
+  }
+
+  /* Hide breadcrumbs + the "Achou útil?" share row + cookie/CTA blocks */
+  nav[aria-label="Breadcrumb"] {
+    display: none !important;
+  }
+
+  /* Body: black on white, no shadows */
+  body {
+    color: #000 !important;
+    background: #fff !important;
+  }
+  main {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  /* Strip backgrounds + shadows so ink saved on color */
+  .bg-indigo-50,
+  .bg-indigo-100,
+  .bg-slate-50,
+  .bg-slate-100,
+  .ring-1,
+  .shadow-sm,
+  .shadow-md {
+    background: transparent !important;
+    box-shadow: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+  }
+
+  /* Links: black + underline, expand URL after for offline reading */
+  a {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #555;
+    word-break: break-all;
+  }
+  /* Don't expand internal anchor links — keeps print clean */
+  a[href^="/"]::after,
+  a[href^="#"]::after,
+  a[href^="mailto:"]::after,
+  a[href^="tel:"]::after {
+    content: "";
+  }
+
+  /* Tables and result blocks shouldn't break across pages */
+  table,
+  .calc-output,
+  ol,
+  ul {
+    page-break-inside: avoid;
+  }
+
+  /* H1 starts at top, with brand attribution */
+  h1 {
+    margin-top: 0 !important;
+    font-size: 22pt !important;
+  }
+  body::before {
+    content: "calcul-indemnite.fr";
+    display: block;
+    font-size: 9pt;
+    color: #555;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 4pt;
+    margin-bottom: 12pt;
+  }
+
+  /* Add a printed footer with source URL */
+  body::after {
+    content: "Contenu informatif. Ne remplace pas un audit énergétique ni l’avis d’un conseiller France Rénov. calcul-indemnite.fr";
+    display: block;
+    font-size: 8pt;
+    color: #555;
+    border-top: 1px solid #ccc;
+    margin-top: 24pt;
+    padding-top: 4pt;
+    text-align: center;
+  }
+}

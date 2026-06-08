@@ -1,0 +1,69 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { buildSeo, type SeoProps } from '../lib/seo';
+import { organizationSchema, websiteSchema } from '../lib/schema';
+import { SITE } from '../data/site';
+
+interface Props {
+  seo: SeoProps;
+  jsonLd?: Record<string, unknown>[];
+  /** When true, skip global Header/Footer (rare — used for /404 only currently). */
+  bareChrome?: boolean;
+}
+
+const { seo, jsonLd = [], bareChrome = false } = Astro.props;
+const meta = buildSeo(seo);
+const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
+
+// Site-wide schemas are emitted on every page so search engines and AI agents
+// can pick up Organization + WebSite identity from any entry point.
+const siteSchemas = [organizationSchema(), websiteSchema()];
+---
+<!doctype html>
+<html lang="fr-FR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{meta.title}</title>
+    <meta name="description" content={meta.description} />
+    <link rel="canonical" href={meta.canonical} />
+    <meta name="robots" content={meta.robots} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={meta.title} />
+    <meta property="og:description" content={meta.description} />
+    <meta property="og:url" content={meta.canonical} />
+    <meta property="og:image" content={meta.ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={meta.title} />
+    <meta name="twitter:description" content={meta.description} />
+    <meta name="twitter:image" content={meta.ogImage} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#4f46e5" />
+
+    {[...siteSchemas, ...jsonLd].map((data) => (
+      <script type="application/ld+json" set:html={JSON.stringify(data)} />
+    ))}
+  </head>
+  <body class="min-h-screen bg-white text-slate-900 antialiased">
+    {!bareChrome && <Header />}
+    <slot />
+    {!bareChrome && <Footer />}
+    {cfBeaconToken && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={`{"token": "${cfBeaconToken}"}`}
+      ></script>
+    )}
+  </body>
+</html>

@@ -1,0 +1,18 @@
+[Unit]
+Description=MaRénovAide scraper: %i
+Wants=network-online.target
+After=network-online.target postgresql.service
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/renov/pipeline
+EnvironmentFile=/home/ubuntu/renov/.env.local
+ExecStart=/home/ubuntu/renov/pipeline/.venv/bin/python -m pipeline.cli scrape %i
+StandardOutput=journal
+StandardError=journal
+# Don't restart automatically; the timer schedules retries.
+Restart=no
+# Kill after 5 minutes — well above the seconds we actually need.
+TimeoutStartSec=300

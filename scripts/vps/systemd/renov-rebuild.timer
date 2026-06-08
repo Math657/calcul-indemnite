@@ -1,0 +1,16 @@
+[Unit]
+Description=Daily MaRénovAide rebuild — drip-publish scheduled guides & simulators
+Documentation=https://github.com/mathieu.dessaint10/ma-renov-aide
+
+[Timer]
+# Daily at 13:30 UTC nominal, with ±30 min jitter so the rebuild doesn't
+# always land at the exact same minute. Looks like a real human's site
+# pulse rather than a clean cron tick. Distinct slot from calc (09:00
+# UTC) per footprint-hygiene staggering.
+OnCalendar=*-*-* 13:30:00 UTC
+RandomizedDelaySec=1800
+Persistent=true
+Unit=renov-rebuild.service
+
+[Install]
+WantedBy=timers.target

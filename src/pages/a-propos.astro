@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import Container from '../components/Container.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Methodology from '../components/Methodology.astro';
+import { SITE } from '../data/site';
+
+const EDITORIAL_REVIEW_DATE = '2026-06-08';
+
+const seo = {
+  title: `À propos — ${SITE.name}, calcul des indemnités du travail`,
+  description: `${SITE.name} rend lisibles et calculables les indemnités de licenciement, de rupture conventionnelle et le barème prud’hommes, à partir des textes officiels du Code du travail.`,
+  path: '/a-propos',
+};
+
+const breadcrumbItems = [
+  { name: 'Accueil', path: '/' },
+  { name: 'À propos', path: '/a-propos' },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: `À propos de ${SITE.name}`,
+    description: seo.description,
+    url: `${SITE.url}/a-propos`,
+    inLanguage: 'fr-FR',
+    isPartOf: { '@id': `${SITE.url}#website` },
+    publisher: { '@id': `${SITE.url}#organization` },
+    dateModified: EDITORIAL_REVIEW_DATE,
+  },
+];
+---
+<Base {seo} jsonLd={jsonLd}>
+  <Container as="main" size="md" class="py-12 sm:py-16">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <h1 class="mt-6 text-4xl font-extrabold text-slate-900 sm:text-5xl">À propos de {SITE.name}</h1>
+    <p class="mt-4 text-lg leading-relaxed text-slate-700">
+      {SITE.name} calcule les indemnités liées à la fin du contrat de travail — licenciement, rupture conventionnelle, barème prud’hommes — à partir des règles publiques du Code du travail. L’objectif : un chiffre clair, sourcé, à jour, sans inscription.
+    </p>
+    <p class="mt-2 text-sm text-slate-500">
+      Dernière revue éditoriale : {new Date(EDITORIAL_REVIEW_DATE).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}.
+    </p>
+
+    <section class="mt-12 space-y-4">
+      <h2 class="text-2xl font-bold text-slate-900">Notre mission</h2>
+      <p class="leading-relaxed text-slate-700">
+        Les règles du droit du travail bougent : la réforme de l’assurance chômage applicable au 1ᵉʳ septembre 2026 modifie la durée d’indemnisation après une rupture conventionnelle, le SMIC et le plafond de la sécurité sociale se revalorisent chaque année, et chaque convention collective fixe ses propres montants. Les calculateurs commerciaux mettent rarement à jour leurs tableaux ; les sites institutionnels traitent un point à la fois.
+      </p>
+      <p class="leading-relaxed text-slate-700">
+        Ici, chaque montant, taux et plafond provient d’un texte officiel identifié et porte une date de mise à jour. Le calcul s’exécute dans votre navigateur : aucune donnée saisie n’est transmise.
+      </p>
+    </section>
+
+    <section class="mt-12 space-y-4">
+      <h2 class="text-2xl font-bold text-slate-900">L’équipe éditoriale</h2>
+      <p class="leading-relaxed text-slate-700">
+        {SITE.name} est édité par une <strong>petite équipe</strong> qui combine veille juridique et lecture des textes du Code du travail. Nous publions en anonyme pour deux raisons : éviter de revendiquer une autorité personnelle non démontrable, et tenir une rigueur de vérification supérieure à celle d’un auteur isolé.
+      </p>
+      <p class="leading-relaxed text-slate-700">
+        Notre crédibilité repose sur la <strong>méthode</strong> : sources primaires citées en ligne, audit automatique du contenu à chaque mise à jour, et liste des citations légales vérifiées. Le lecteur peut contrôler chaque chiffre en suivant les liens vers Légifrance, service-public.fr ou la Cour de cassation.
+      </p>
+    </section>
+
+    <section class="mt-12 space-y-4">
+      <h2 class="text-2xl font-bold text-slate-900">Notre méthode de vérification</h2>
+      <ul class="space-y-2 pl-5 text-slate-700">
+        <li class="list-disc">
+          <strong>Citations légales vérifiées.</strong> Chaque article du Code du travail, loi ou décret cité est confirmé contre <a href="https://www.legifrance.gouv.fr" rel="external" class="text-indigo-700 hover:underline">Légifrance</a> avant publication.
+        </li>
+        <li class="list-disc">
+          <strong>Liens internes et cohérence calendaire.</strong> Un lien interne brisé fait échouer la compilation ; une date incohérente est détectée et corrigée.
+        </li>
+        <li class="list-disc">
+          <strong>Données liées à la source.</strong> Les valeurs qui bougent (SMIC, plafond de la sécurité sociale, taux légaux) sont stockées dans des fichiers versionnés. À chaque revalorisation, une seule mise à jour se propage à toutes les pages — pas de chiffre figé dans la prose.
+        </li>
+      </ul>
+    </section>
+
+    <section class="mt-12 space-y-4">
+      <h2 class="text-2xl font-bold text-slate-900">Ce que nous ne faisons pas</h2>
+      <ul class="space-y-2 pl-5 text-slate-700">
+        <li class="list-disc">
+          <strong>Donner un avis juridique individualisé.</strong> Un calcul n’est pas une consultation. Pour un litige, l’avis d’un avocat en droit du travail reste nécessaire.
+        </li>
+        <li class="list-disc">
+          <strong>Inventer une citation légale.</strong> Si une référence n’est pas vérifiable sur Légifrance, elle n’est pas publiée.
+        </li>
+        <li class="list-disc">
+          <strong>Revendre les données personnelles des visiteurs.</strong> Voir la <a href="/politique-de-confidentialite" class="text-indigo-700 hover:underline">politique de confidentialité</a>.
+        </li>
+      </ul>
+    </section>
+
+    <section class="mt-12 space-y-4">
+      <h2 class="text-2xl font-bold text-slate-900">Indépendance et financement</h2>
+      <p class="leading-relaxed text-slate-700">
+        Le site est gratuit. À terme, il pourra être financé par de la publicité contextuelle (Google AdSense) et des liens partenaires clairement signalés vers des services juridiques. Ces liens n’influencent ni les calculs ni les montants affichés, et n’ajoutent aucun surcoût pour le visiteur. Aucune donnée personnelle n’est revendue.
+      </p>
+    </section>
+
+    <section class="mt-12 space-y-4">
+      <h2 class="text-2xl font-bold text-slate-900">Limites</h2>
+      <p class="leading-relaxed text-slate-700">
+        {SITE.name} est un outil d’information. Les simulateurs donnent une estimation à partir des règles publiques. Ils ne remplacent pas :
+      </p>
+      <ul class="space-y-2 pl-5 text-slate-700">
+        <li class="list-disc">l’avis d’un avocat en droit du travail ou d’un conseiller juridique ;</li>
+        <li class="list-disc">le calcul opposable d’une convention collective applicable à votre contrat ;</li>
+        <li class="list-disc">une décision du conseil de prud’hommes.</li>
+      </ul>
+    </section>
+
+    <section class="mt-12 space-y-4">
+      <h2 class="text-2xl font-bold text-slate-900">Méthodologie technique</h2>
+      <Methodology />
+    </section>
+
+    <p class="mt-12 text-sm text-slate-500">
+      Une question, une erreur signalée, une suggestion : voir la <a href="/contact" class="text-indigo-700 hover:underline">page contact</a>. Signalements éditoriaux : <a href={`mailto:${SITE.contactEmail}`} class="text-indigo-700 hover:underline">{SITE.contactEmail}</a>.
+    </p>
+  </Container>
+</Base>

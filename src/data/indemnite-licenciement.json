@@ -1,0 +1,31 @@
+{
+  "version": "2026-06-08",
+  "objet": "Indemnité légale de licenciement — constantes de calcul (Code du travail)",
+  "anciennete_minimale_mois": 8,
+  "taux": {
+    "jusqua_10_ans": 0.25,
+    "au_dela_10_ans": 0.3333333333333333
+  },
+  "notes": [
+    "Salaire de référence = le plus favorable entre la moyenne mensuelle des 12 derniers mois et le tiers des 3 derniers mois (primes annuelles au prorata).",
+    "L'indemnité conventionnelle, si elle est plus favorable, remplace l'indemnité légale.",
+    "Le licenciement pour motif économique ouvre droit à la même indemnité légale minimale."
+  ],
+  "references": [
+    {
+      "code": "L1234-9",
+      "objet": "Droit à l'indemnité à partir de 8 mois d'ancienneté ininterrompue",
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035644154"
+    },
+    {
+      "code": "R1234-2",
+      "objet": "Taux d'un quart de mois par année jusqu'à 10 ans, un tiers au-delà",
+      "url": "https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006072050"
+    },
+    {
+      "code": "R1234-4",
+      "objet": "Détermination du salaire de référence",
+      "url": "https://www.service-public.fr/particuliers/vosdroits/F408"
+    }
+  ]
+}

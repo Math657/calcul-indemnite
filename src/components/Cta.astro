@@ -1,0 +1,58 @@
+---
+/**
+ * Direct-content CTA block. Page passes title/body/cta props directly.
+ *
+ * The offer-driven mode (auto-populate from a global offers.ts registry,
+ * with active/pending/paused states) existed in calc and was removed during
+ * the renov scaffold — no renov simulator pages and no renov affiliate
+ * inscriptions exist yet (Effy / Hellio / IZI Awin approvals are pending).
+ * Re-add the registry + offer-driven mode when the first partner approval
+ * lands. Until then, guides and simulator pages render <Cta> with
+ * literal copy.
+ */
+
+interface Props {
+  title: string;
+  body: string;
+  ctaText?: string;
+  ctaHref?: string;
+  /** Set to true when ctaHref points at an affiliate / partner — adds rel="sponsored" and "Partenaire" badge. */
+  isAffiliate?: boolean;
+  variant?: 'subtle' | 'prominent';
+}
+
+const { title, body, ctaText, ctaHref, isAffiliate = false, variant = 'subtle' } = Astro.props;
+
+const isProminent = variant === 'prominent';
+const hasLink = Boolean(ctaText && ctaHref);
+const linkRel = isAffiliate ? 'sponsored noopener' : 'noopener';
+---
+<aside
+  class={isProminent
+    ? 'rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-800 p-6 text-white shadow-md ring-1 ring-indigo-800/20'
+    : 'rounded-xl border border-indigo-200 bg-indigo-50 p-5 text-slate-800'}
+  aria-label={isAffiliate ? 'Suggestion partenaire' : 'Suggestion'}
+>
+  <div class="flex items-start justify-between gap-3">
+    <h3 class={isProminent ? 'text-xl font-bold' : 'text-lg font-semibold text-indigo-900'}>{title}</h3>
+    {isAffiliate && (
+      <span class={isProminent
+        ? 'shrink-0 rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white'
+        : 'shrink-0 rounded-full bg-indigo-700 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white'}>
+        Partenaire
+      </span>
+    )}
+  </div>
+  <p class={isProminent ? 'mt-2 leading-relaxed text-indigo-50' : 'mt-2 leading-relaxed text-slate-700'}>{body}</p>
+  {hasLink && (
+    <a
+      href={ctaHref}
+      rel={linkRel}
+      class={isProminent
+        ? 'mt-4 inline-block rounded-lg bg-white px-4 py-2 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100'
+        : 'mt-3 inline-block rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700'}
+    >
+      {ctaText} →
+    </a>
+  )}
+</aside>

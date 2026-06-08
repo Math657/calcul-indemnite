@@ -1,0 +1,61 @@
+---
+/**
+ * "Guides liés" widget — shown at the bottom of guide pages and hub
+ * landing pages. Replicates calc's ArtigosRelacionados pattern.
+ *
+ * Logic: prefer guides with the same hub as the current page, fall
+ * back to any other published guide. Excludes the current guide via
+ * `excludeSlug`, drafts, and any guide whose datePublished is still in
+ * the future (drip-publish gate — see astro.config.mjs).
+ */
+import { getCollection, type CollectionEntry } from 'astro:content';
+import GuideCard from './GuideCard.astro';
+import { HUBS } from '../data/hubs';
+
+interface Props {
+  /** Slug of the current guide — excluded from the related list. Leave undefined on hub landings. */
+  excludeSlug?: string;
+  /** Preferred hub to filter by ('aides' / 'dpe' / 'simulateurs'). Falls back to all published guides. */
+  preferHub?: keyof typeof HUBS;
+  /** Max number of related guides to render. Default 3. */
+  limit?: number;
+  /** Heading shown above the list. Default "Guides liés". */
+  heading?: string;
+}
+
+const { excludeSlug, preferHub, limit = 3, heading = 'Guides liés' } = Astro.props;
+
+const todayISO = new Date().toISOString().slice(0, 10);
+const all = await getCollection('guides', (entry: CollectionEntry<'guides'>) => {
+  if (entry.data.draft) return false;
+  if (entry.data.datePublished > todayISO) return false;
+  if (excludeSlug && entry.slug === excludeSlug) return false;
+  return true;
+});
+
+const sortByDate = (a: CollectionEntry<'guides'>, b: CollectionEntry<'guides'>) =>
+  b.data.datePublished.localeCompare(a.data.datePublished);
+
+const sameHub = preferHub ? all.filter((a: CollectionEntry<'guides'>) => a.data.hub === preferHub) : [];
+const otherHubs = all.filter((a: CollectionEntry<'guides'>) => !sameHub.includes(a));
+sameHub.sort(sortByDate);
+otherHubs.sort(sortByDate);
+
+const related = [...sameHub, ...otherHubs].slice(0, limit);
+---
+{related.length > 0 && (
+  <aside class="mt-12">
+    <h2 class="text-2xl font-bold text-slate-900">{heading}</h2>
+    <div class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {related.map((a: CollectionEntry<'guides'>) => (
+        <GuideCard
+          title={a.data.title}
+          description={a.data.description}
+          slug={a.slug}
+          datePublished={a.data.datePublished}
+          hub={a.data.hub}
+        />
+      ))}
+    </div>
+  </aside>
+)}

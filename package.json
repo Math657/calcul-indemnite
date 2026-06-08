@@ -1,0 +1,37 @@
+{
+  "name": "calcul-indemnite",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "audit:content": "node scripts/audit-content.mjs",
+    "audit:urls": "node scripts/audit-urls.mjs",
+    "queue": "node scripts/content-queue.mjs",
+    "prebuild": "node scripts/audit-content.mjs",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/cloudflare": "^12.0.0",
+    "@astrojs/mdx": "^4.0.0",
+    "@astrojs/sitemap": "^3.2.0",
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/vite": "^4.0.0",
+    "sharp": "^0.33.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.0.0"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

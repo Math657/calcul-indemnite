@@ -1,0 +1,18 @@
+[Unit]
+Description=Daily IndexNow ping — fires ~30min after the daily rebuild
+Documentation=https://www.indexnow.org/
+
+[Timer]
+# Daily rebuild fires at 13:30 UTC (±30 min jitter). We fire at 14:00 UTC
+# with our own jitter so the rebuild has time to push + Cloudflare to
+# deploy. The script itself adds another 180s sleep, so by the time we
+# actually fetch the sitemap, we're ~30-35 minutes after rebuild push.
+# Slot distinct from calc (09:30 UTC) and concursoja (11:00 UTC) per
+# footprint-hygiene staggering.
+OnCalendar=*-*-* 14:00:00 UTC
+RandomizedDelaySec=30min
+Persistent=true
+Unit=renov-indexnow.service
+
+[Install]
+WantedBy=timers.target

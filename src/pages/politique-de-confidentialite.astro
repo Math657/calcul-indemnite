@@ -1,0 +1,165 @@
+---
+/**
+ * Politique de confidentialité — conforme au RGPD (Règlement UE 2016/679)
+ * et à la loi Informatique et Libertés modifiée (loi 78-17 du 6 janvier 1978).
+ *
+ * TODO before public deploy:
+ *  - Confirm the address — currently 'Rouen', which is the city only.
+ *    For RGPD-compliance the data controller's full address should be
+ *    listed (same field as mentions-legales).
+ *  - When Google AdSense is added (step 15+), add a section on ad cookies
+ *    + the CMP / consent banner used.
+ */
+import Base from '../layouts/Base.astro';
+import Container from '../components/Container.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+
+const seo = {
+  title: `Politique de confidentialité — ${SITE.name}`,
+  description: `Comment ${SITE.name} traite les données personnelles : finalités, bases légales, durée de conservation, droits et coordonnées RGPD.`,
+  path: '/politique-de-confidentialite',
+  // noindex: this page references the responsable de traitement (the editor
+  // identified in mentions-legales). Like mentions-legales, it's legally
+  // required and linked from the footer for user discovery, but we don't
+  // want the legal identity surfacing in search-result snippets.
+  noindex: true,
+};
+
+const breadcrumbItems = [
+  { name: 'Accueil', path: '/' },
+  { name: 'Politique de confidentialité', path: '/politique-de-confidentialite' },
+];
+
+const SIRET = '848 104 055 00027';
+const ADRESSE = 'Rouen, France';
+---
+<Base {seo}>
+  <Container as="main" size="md" class="py-12 sm:py-16">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <h1 class="mt-6 text-4xl font-extrabold text-slate-900 sm:text-5xl">Politique de confidentialité</h1>
+    <p class="mt-2 text-sm text-slate-500">En vigueur depuis le 8 juin 2026. Conforme au RGPD (Règlement UE 2016/679) et à la loi Informatique et Libertés modifiée.</p>
+
+    <section class="mt-10 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">1. Responsable de traitement</h2>
+      <p class="leading-relaxed text-slate-700">
+        Le responsable de traitement au sens de l’article 4 du RGPD est l’éditeur du site, dont l’identité complète figure dans les <a href="/mentions-legales" class="text-indigo-700 hover:underline">mentions légales</a> (entrepreneur individuel sous régime auto-entrepreneur).
+      </p>
+      <dl class="grid gap-y-2 text-slate-700 sm:grid-cols-[max-content_1fr] sm:gap-x-6">
+        <dt class="font-semibold">SIRET</dt>
+        <dd>{SIRET}</dd>
+
+        <dt class="font-semibold">Adresse</dt>
+        <dd>{ADRESSE}</dd>
+
+        <dt class="font-semibold">Email RGPD</dt>
+        <dd><a href={`mailto:${SITE.privacyEmail}`} class="text-indigo-700 hover:underline">{SITE.privacyEmail}</a></dd>
+      </dl>
+      <p class="leading-relaxed text-slate-700">
+        Compte tenu de l’échelle de l’activité (entrepreneur individuel, pas de traitement à grande échelle ni de catégories de données sensibles), aucun délégué à la protection des données (DPO) n’est désigné. L’ensemble des demandes RGPD est traité directement par le responsable de traitement.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">2. Données collectées et finalités</h2>
+
+      <h3 class="mt-4 text-base font-semibold text-slate-900">2.1 Mesure d’audience anonyme</h3>
+      <p class="leading-relaxed text-slate-700">
+        Le site utilise <strong>Cloudflare Web Analytics</strong> pour mesurer l’audience. Cet outil est configuré sans cookies et sans identifiant utilisateur persistant. Aucune donnée personnelle au sens du RGPD n’est collectée à cette fin. Les agrégats produits (nombre de pages vues, temps de chargement, pays d’origine au niveau pays uniquement) ne permettent pas l’identification des visiteurs.
+      </p>
+      <ul class="space-y-1 pl-5 text-sm text-slate-600">
+        <li class="list-disc"><strong>Sous-traitant :</strong> Cloudflare, Inc. (États-Unis)</li>
+        <li class="list-disc"><strong>Base légale :</strong> intérêt légitime (art. 6.1.f RGPD), mesure d’audience nécessaire au fonctionnement éditorial du site, sans atteinte aux droits des personnes du fait de l’anonymisation.</li>
+        <li class="list-disc"><strong>Durée de conservation :</strong> 6 mois côté Cloudflare.</li>
+      </ul>
+
+      <h3 class="mt-4 text-base font-semibold text-slate-900">2.2 Newsletter (à venir)</h3>
+      <p class="leading-relaxed text-slate-700">
+        Une newsletter d’information sur les mises à jour de barèmes sera proposée. L’inscription nécessite la saisie d’une adresse email et le clic sur un lien de confirmation (double opt-in). La gestion technique est confiée à <strong>Buttondown</strong> (États-Unis), sous-traitant.
+      </p>
+      <ul class="space-y-1 pl-5 text-sm text-slate-600">
+        <li class="list-disc"><strong>Base légale :</strong> consentement explicite (art. 6.1.a RGPD).</li>
+        <li class="list-disc"><strong>Durée de conservation :</strong> jusqu’à la désinscription, qui peut être effectuée en un clic depuis chaque email envoyé.</li>
+        <li class="list-disc"><strong>Transfert hors UE :</strong> oui, vers les États-Unis, encadré par les clauses contractuelles types (SCC) de la Commission européenne.</li>
+      </ul>
+
+      <h3 class="mt-4 text-base font-semibold text-slate-900">2.3 Contact par email</h3>
+      <p class="leading-relaxed text-slate-700">
+        Lorsqu’un visiteur écrit à l’une des adresses indiquées en <a href="/contact" class="text-indigo-700 hover:underline">page contact</a>, son email et le contenu du message sont conservés dans la boîte de réception du responsable de traitement. Ces données ne sont pas utilisées à d’autres fins que la réponse à la demande.
+      </p>
+      <ul class="space-y-1 pl-5 text-sm text-slate-600">
+        <li class="list-disc"><strong>Base légale :</strong> intérêt légitime (art. 6.1.f RGPD) ou exécution de mesures précontractuelles selon l’objet de la demande.</li>
+        <li class="list-disc"><strong>Durée de conservation :</strong> 3 ans à compter du dernier échange, conformément à la recommandation CNIL prospection B2B/B2C.</li>
+      </ul>
+
+      <h3 class="mt-4 text-base font-semibold text-slate-900">2.4 Liens partenaires (à venir)</h3>
+      <p class="leading-relaxed text-slate-700">
+        À terme, certains liens sortants vers des services juridiques partenaires pourront être des liens affiliés. Le cas échéant, le clic serait suivi sur le domaine du partenaire, à l’aide d’un cookie déposé par celui-ci, pas par {SITE.name}. Aucun cookie n’est déposé sur le domaine {SITE.url} pour cette finalité.
+      </p>
+      <ul class="space-y-1 pl-5 text-sm text-slate-600">
+        <li class="list-disc"><strong>Responsable du traitement de suivi :</strong> le partenaire concerné. Voir sa politique de confidentialité.</li>
+        <li class="list-disc"><strong>Information préalable :</strong> chaque lien partenaire est signalé visuellement (étiquette « Partenaire ») et porte l’attribut <code class="rounded bg-slate-100 px-1 text-xs">rel="sponsored"</code>.</li>
+      </ul>
+
+      <h3 class="mt-4 text-base font-semibold text-slate-900">2.5 Simulateurs et calculs</h3>
+      <p class="leading-relaxed text-slate-700">
+        Les simulateurs (indemnité de licenciement, rupture conventionnelle, barème prud’hommes) s’exécutent intégralement dans le navigateur du visiteur. Aucune valeur saisie (salaire, ancienneté, etc.) n’est envoyée à un serveur, enregistrée dans un cookie ou transmise à un tiers. Cette propriété est vérifiable dans le code source du site.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">3. Cookies et traceurs</h2>
+      <p class="leading-relaxed text-slate-700">
+        En l’état actuel du site, aucun cookie n’est déposé sur le navigateur du visiteur depuis le domaine {SITE.url}. Aucune bannière de consentement n’est donc affichée. Les seuls traceurs susceptibles d’être déposés le sont par des sites tiers à l’issue d’un clic explicite sur un lien sortant (notamment les liens partenaires décrits au § 2.4) et relèvent alors de la politique de confidentialité du site de destination.
+      </p>
+      <p class="leading-relaxed text-slate-700">
+        Toute évolution (par exemple : ajout de publicité contextuelle financée par Google AdSense) entraînera la publication d’une bannière de consentement conforme aux recommandations de la CNIL avant tout dépôt de cookie non strictement nécessaire.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">4. Destinataires des données</h2>
+      <p class="leading-relaxed text-slate-700">
+        Aucune donnée personnelle n’est revendue. Les sous-traitants techniques cités au § 2 (Cloudflare, Buttondown) reçoivent les données strictement nécessaires à l’exécution de leur prestation, encadrée par un contrat conforme à l’article 28 du RGPD.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">5. Droits des personnes</h2>
+      <p class="leading-relaxed text-slate-700">
+        Conformément aux articles 15 à 22 du RGPD, vous disposez sur vos données personnelles d’un droit :
+      </p>
+      <ul class="space-y-1 pl-5 text-slate-700">
+        <li class="list-disc">d’accès et d’information ;</li>
+        <li class="list-disc">de rectification ;</li>
+        <li class="list-disc">d’effacement (« droit à l’oubli ») ;</li>
+        <li class="list-disc">à la limitation du traitement ;</li>
+        <li class="list-disc">à la portabilité ;</li>
+        <li class="list-disc">d’opposition pour des motifs tenant à votre situation particulière ;</li>
+        <li class="list-disc">de retirer votre consentement à tout moment, lorsque le traitement est fondé sur ce consentement (newsletter notamment) ;</li>
+        <li class="list-disc">de définir des directives relatives au sort de vos données après votre décès.</li>
+      </ul>
+      <p class="leading-relaxed text-slate-700">
+        Ces droits s’exercent par email à <a href={`mailto:${SITE.privacyEmail}`} class="text-indigo-700 hover:underline">{SITE.privacyEmail}</a>. Une réponse vous sera apportée dans un délai d’un mois, prolongeable de deux mois compte tenu de la complexité de la demande conformément à l’article 12.3 du RGPD.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">6. Réclamation auprès de la CNIL</h2>
+      <p class="leading-relaxed text-slate-700">
+        Si vous estimez, après nous avoir contactés, que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la <strong>Commission nationale de l’informatique et des libertés (CNIL)</strong> :
+      </p>
+      <p class="leading-relaxed text-slate-700">
+        3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07. <a href="https://www.cnil.fr" rel="external" class="text-indigo-700 hover:underline">www.cnil.fr</a>
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">7. Mise à jour de la politique</h2>
+      <p class="leading-relaxed text-slate-700">
+        Cette politique peut évoluer. La date de mise à jour figure en haut de page. Toute évolution substantielle (nouveau sous-traitant, nouvelle finalité, ajout de cookies) sera signalée par un avis visible sur la page d’accueil pendant au moins 14 jours.
+      </p>
+    </section>
+  </Container>
+</Base>

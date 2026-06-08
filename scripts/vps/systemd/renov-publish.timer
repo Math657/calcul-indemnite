@@ -1,0 +1,16 @@
+[Unit]
+Description=Weekly MaRénovAide publish: refresh static data on the live site
+Documentation=https://github.com/mathieu.dessaint10/ma-renov-aide
+
+[Timer]
+# Fridays at 02:00 UTC — 1 h after the scrapers fire (Fri 01:00 UTC).
+# Slot distinct from calc (Sun 04:00 UTC) and concursoja (Wed 06:30 UTC)
+# per footprint-hygiene staggering. Persistent=true catches up missed
+# runs (e.g. after VPS reboot) on next boot.
+OnCalendar=Fri 02:00:00 UTC
+RandomizedDelaySec=300
+Persistent=true
+Unit=renov-publish.service
+
+[Install]
+WantedBy=timers.target

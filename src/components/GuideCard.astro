@@ -1,0 +1,38 @@
+---
+/**
+ * Guide card. Reused on /guides index, hub pages' guide section, and the
+ * related-guides widget at the bottom of each guide.
+ */
+import { HUBS, type Hub } from '../data/hubs';
+import { formatDate } from '../lib/locale';
+
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  datePublished: string;
+  hub?: keyof typeof HUBS;
+  /** When true, hides the hub badge (e.g. on a hub page where it's redundant). */
+  hideHubBadge?: boolean;
+}
+
+const { title, description, slug, datePublished, hub, hideHubBadge = false } = Astro.props;
+const hubMeta: Hub | null = hub ? HUBS[hub] : null;
+---
+<a
+  href={`/guides/${slug}`}
+  class="group flex flex-col rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-indigo-400 hover:shadow-md"
+>
+  <div class="mb-3 flex items-center gap-2 text-xs text-slate-500">
+    {hubMeta && !hideHubBadge && (
+      <span class="rounded-full bg-indigo-50 px-2.5 py-0.5 font-medium text-indigo-700 ring-1 ring-indigo-200">
+        {hubMeta.shortTitle}
+      </span>
+    )}
+    <time datetime={datePublished}>{formatDate(datePublished)}</time>
+  </div>
+  <h3 class="text-base font-semibold leading-snug text-slate-900 group-hover:text-indigo-700">
+    {title}
+  </h3>
+  <p class="mt-2 line-clamp-3 text-sm text-slate-600">{description}</p>
+</a>

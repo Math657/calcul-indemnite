@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import Container from '../components/Container.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+
+const seo = {
+  title: `Conditions générales d’utilisation — ${SITE.name}`,
+  description: `Conditions d’usage du site ${SITE.name} : accès gratuit, contenu informatif, propriété intellectuelle, liens partenaires et limite de responsabilité.`,
+  path: '/cgu',
+};
+
+const breadcrumbItems = [
+  { name: 'Accueil', path: '/' },
+  { name: 'CGU', path: '/cgu' },
+];
+---
+<Base {seo}>
+  <Container as="main" size="md" class="py-12 sm:py-16">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <h1 class="mt-6 text-4xl font-extrabold text-slate-900 sm:text-5xl">Conditions générales d’utilisation</h1>
+    <p class="mt-2 text-sm text-slate-500">En vigueur depuis le 8 juin 2026.</p>
+
+    <section class="mt-10 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">1. Objet</h2>
+      <p class="leading-relaxed text-slate-700">
+        Les présentes conditions régissent l’utilisation du site {SITE.name}, accessible à l’adresse {SITE.url}. Tout accès au site implique l’acceptation sans réserve des présentes conditions.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">2. Accès et gratuité</h2>
+      <p class="leading-relaxed text-slate-700">
+        L’accès au site est gratuit et ne nécessite pas d’inscription. L’utilisateur prend en charge les frais de connexion et d’équipement nécessaires à l’accès. L’éditeur s’efforce de maintenir le site accessible 24/7, sans garantie de continuité ; des interruptions peuvent survenir pour maintenance ou pour des raisons indépendantes de sa volonté.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">3. Propriété intellectuelle</h2>
+      <p class="leading-relaxed text-slate-700">
+        Les textes éditoriaux, l’architecture du site, le code source et les éléments graphiques sont la propriété de l’éditeur, protégés par le Code de la propriété intellectuelle.
+      </p>
+      <p class="leading-relaxed text-slate-700">
+        Les données publiques affichées (montants, taux et plafonds du Code du travail) proviennent de sources institutionnelles citées sur chaque page (Légifrance, service-public.fr, data.gouv.fr). Elles sont diffusées dans le respect des licences ouvertes applicables (Licence Ouverte / Open Licence v2.0 d’Etalab pour les données data.gouv.fr).
+      </p>
+      <p class="leading-relaxed text-slate-700">
+        La reproduction et la rediffusion d’extraits éditoriaux sont autorisées à des fins non commerciales avec citation explicite de la source et lien vers la page d’origine.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">4. Liens partenaires</h2>
+      <p class="leading-relaxed text-slate-700">
+        À terme, certains liens vers des services juridiques partenaires pourront être des liens d’affiliation. Lorsqu’un visiteur passe par un lien signalé « Partenaire », {SITE.name} percevrait une commission, sans surcoût pour le visiteur. Ces liens sont marqués <code class="rounded bg-slate-100 px-1.5 py-0.5 text-xs">rel="sponsored"</code> conformément aux recommandations Google.
+      </p>
+      <p class="leading-relaxed text-slate-700">
+        Les liens partenaires n’influencent ni les barèmes affichés, ni les résultats des simulateurs, ni la ligne éditoriale. {SITE.name} n’est ni mandaté ni rémunéré par une autorité publique.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">5. Responsabilité</h2>
+      <p class="leading-relaxed text-slate-700">
+        Le contenu de {SITE.name} a une vocation d’information. Les simulateurs fournissent une estimation à partir des règles publiques en vigueur à la date affichée. Ils ne remplacent ni l’avis d’un avocat en droit du travail, ni une décision du conseil de prud’hommes.
+      </p>
+      <p class="leading-relaxed text-slate-700">
+        L’éditeur s’efforce de maintenir les données à jour mais ne peut garantir l’absence d’erreur. Toute décision (montant d’une indemnité, engagement d’une procédure) doit faire l’objet d’une vérification par l’utilisateur ou un professionnel compétent. La responsabilité de l’éditeur ne saurait être engagée pour les conséquences d’une utilisation des informations affichées.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">6. Données personnelles</h2>
+      <p class="leading-relaxed text-slate-700">
+        Le traitement des données personnelles est décrit dans la <a href="/politique-de-confidentialite" class="text-indigo-700 hover:underline">politique de confidentialité</a>.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">7. Modification des conditions</h2>
+      <p class="leading-relaxed text-slate-700">
+        L’éditeur se réserve le droit de modifier les présentes conditions à tout moment. La date de mise à jour figure en haut de cette page. L’utilisateur est invité à consulter régulièrement la version en vigueur.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">8. Loi applicable et juridiction</h2>
+      <p class="leading-relaxed text-slate-700">
+        Les présentes conditions sont régies par le droit français. En cas de litige, et après tentative de résolution amiable, les tribunaux français sont seuls compétents.
+      </p>
+    </section>
+  </Container>
+</Base>

@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import Container from '../components/Container.astro';
+
+const seo = {
+  title: 'Page non trouvée — CalculIndemnité',
+  description: 'La page demandée est introuvable. Retournez à l’accueil ou consultez les simulateurs.',
+  path: '/404',
+  noindex: true,
+};
+---
+<Base {seo}>
+  <Container as="main" size="md" class="py-20 text-center">
+    <p class="text-sm font-semibold uppercase tracking-wider text-indigo-700">Erreur 404</p>
+    <h1 class="mt-3 text-4xl font-extrabold text-slate-900 sm:text-5xl">Page non trouvée</h1>
+    <p class="mx-auto mt-4 max-w-xl text-slate-600">
+      Cette adresse ne correspond plus à aucune page. Le contenu a peut-être été déplacé, ou l’URL contient une erreur.
+    </p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="/" class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700">
+        Retour à l’accueil
+      </a>
+      <a href="/simulateurs" class="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+        Voir les simulateurs
+      </a>
+    </div>
+  </Container>
+</Base>

@@ -1,0 +1,19 @@
+---
+import { SITE } from '../data/site';
+
+interface Props {
+  /** Style variant. 'subtle' fits inline (above content). 'footer' fits page-bottom. */
+  variant?: 'subtle' | 'footer';
+}
+
+const { variant = 'subtle' } = Astro.props;
+---
+{variant === 'subtle' ? (
+  <p class="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-relaxed text-slate-600">
+    <strong>Contenu avec liens partenaires.</strong> Lorsque vous demandez un devis ou souscrivez via les recommandations signalées « Partenaire », nous percevons une commission, sans surcoût pour vous. Cela contribue à maintenir {SITE.name} gratuit. Les partenariats n’influencent ni les résultats des simulateurs ni la ligne éditoriale.
+  </p>
+) : (
+  <small class="block text-xs leading-relaxed text-slate-500">
+    Cette page contient des liens partenaires. Nous percevons une commission lorsque vous demandez un devis via les recommandations signalées. Sans surcoût, sans influence sur les calculs.
+  </small>
+)}

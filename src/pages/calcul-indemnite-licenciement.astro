@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro';
+import Container from '../components/Container.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Methodology from '../components/Methodology.astro';
+import Faq from '../components/Faq.astro';
+import { simulatorSchema } from '../lib/schema';
+
+const seo = {
+  title: 'Calcul indemnité de licenciement 2026 — simulateur gratuit',
+  description:
+    'Calculez votre indemnité légale de licenciement 2026 selon votre salaire de référence et votre ancienneté. Formule du Code du travail, un quart puis un tiers de mois par année. Sans inscription.',
+  path: '/calcul-indemnite-licenciement',
+};
+
+const breadcrumbItems = [
+  { name: 'Accueil', path: '/' },
+  { name: 'Indemnité de licenciement', path: '/calcul-indemnite-licenciement' },
+];
+
+const UPDATED = '2026-06-08';
+
+const jsonLd = [
+  simulatorSchema({
+    name: 'Calcul indemnité de licenciement 2026',
+    description:
+      'Outil gratuit pour estimer l’indemnité légale de licenciement à partir du salaire de référence et de l’ancienneté, selon la formule du Code du travail.',
+    path: '/calcul-indemnite-licenciement',
+    datePublished: '2026-06-08',
+    dateModified: UPDATED,
+  }),
+];
+
+const faqs = [
+  {
+    question: 'Quelle ancienneté minimale pour avoir droit à l’indemnité légale ?',
+    answer:
+      'Il faut au moins <strong>8 mois d’ancienneté ininterrompue</strong> au service du même employeur, à la date d’envoi de la lettre de licenciement (article L1234-9 du Code du travail). En dessous de ce seuil, l’indemnité légale n’est pas due, mais une convention collective peut prévoir un droit sans condition de durée.',
+  },
+  {
+    question: 'Comment est déterminé le salaire de référence ?',
+    answer:
+      'On retient le montant le plus favorable entre la <strong>moyenne mensuelle des 12 derniers mois</strong> précédant le licenciement et <strong>le tiers des 3 derniers mois</strong>. Dans la seconde formule, les primes annuelles ou exceptionnelles sont comptées au prorata. Saisissez ce salaire de référence brut dans le simulateur.',
+  },
+  {
+    question: 'Faut-il appliquer l’indemnité légale ou l’indemnité conventionnelle ?',
+    answer:
+      'On applique le montant le plus favorable au salarié. Beaucoup de conventions collectives (Syntec, métallurgie, BTP…) prévoient une indemnité supérieure au minimum légal. Vérifiez votre convention avant de retenir le chiffre légal de ce simulateur.',
+  },
+  {
+    question: 'Le licenciement économique change-t-il le calcul ?',
+    answer:
+      'Non. L’indemnité légale minimale est la même pour un licenciement pour motif personnel ou pour motif économique. Des dispositifs complémentaires (contrat de sécurisation professionnelle) peuvent s’ajouter sans modifier ce socle.',
+  },
+  {
+    question: 'Mes données sont-elles envoyées à un serveur ?',
+    answer:
+      'Non. La totalité du calcul s’exécute dans votre navigateur. Aucun salaire, aucune donnée n’est transmise à un serveur, enregistrée dans un cookie ou partagée avec un tiers. Le code est vérifiable dans la source de la page.',
+  },
+];
+---
+<Base {seo} jsonLd={jsonLd}>
+  <Container as="main" size="lg" class="py-8 sm:py-12">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <header class="mt-6 mb-8">
+      <h1 class="text-4xl font-extrabold text-slate-900 sm:text-5xl">Calcul de l’indemnité de licenciement</h1>
+      <p class="mt-4 max-w-3xl text-lg leading-relaxed text-slate-700">
+        Estimez votre indemnité <strong>légale</strong> de licenciement selon la formule du Code du travail : un quart de mois de salaire par année d’ancienneté jusqu’à 10 ans, un tiers de mois par année au-delà. Le calcul s’exécute dans votre navigateur.
+      </p>
+      <p class="mt-2 text-sm text-slate-500">
+        Données à jour au {UPDATED.split('-').reverse().join('/')}.
+      </p>
+    </header>
+
+    <div class="grid gap-8 lg:grid-cols-[1fr_1fr]">
+      <form id="indemnite-form" class="space-y-6" autocomplete="off">
+        <fieldset class="rounded-xl border border-slate-200 bg-white p-5">
+          <legend class="px-2 text-sm font-semibold uppercase tracking-wide text-slate-500">Votre salaire</legend>
+          <label class="mt-2 block">
+            <span class="block text-sm font-medium text-slate-700">Salaire de référence brut mensuel (€)</span>
+            <input id="salaire-ref" type="number" min="0" step="1" placeholder="2500" inputmode="numeric"
+              class="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" />
+            <span class="mt-1 block text-xs text-slate-500">Le plus favorable entre la moyenne des 12 derniers mois et le tiers des 3 derniers mois.</span>
+          </label>
+        </fieldset>
+
+        <fieldset class="rounded-xl border border-slate-200 bg-white p-5">
+          <legend class="px-2 text-sm font-semibold uppercase tracking-wide text-slate-500">Votre ancienneté</legend>
+          <div class="mt-2 grid grid-cols-2 gap-4">
+            <label class="block">
+              <span class="block text-sm font-medium text-slate-700">Années</span>
+              <input id="anciennete-annees" type="number" min="0" step="1" placeholder="12" inputmode="numeric"
+                class="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" />
+            </label>
+            <label class="block">
+              <span class="block text-sm font-medium text-slate-700">Mois</span>
+              <input id="anciennete-mois" type="number" min="0" max="11" step="1" placeholder="7" inputmode="numeric"
+                class="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" />
+            </label>
+          </div>
+          <span class="mt-2 block text-xs text-slate-500">Ancienneté à la date d’envoi de la lettre de licenciement. Minimum 8 mois pour l’indemnité légale.</span>
+        </fieldset>
+      </form>
+
+      <aside id="result-panel" class="lg:sticky lg:top-24 lg:self-start" hidden>
+        <div class="rounded-xl border border-indigo-200 bg-indigo-50 p-5 sm:p-6">
+          <h2 class="text-xl font-bold text-slate-900">Estimation</h2>
+          <div id="result-body" class="mt-4"></div>
+          <p class="mt-6 rounded-md border-l-4 border-amber-400 bg-amber-50 p-3 text-xs leading-relaxed text-slate-700">
+            <strong>Estimation indicative</strong> de l’indemnité <em>légale</em>. Votre convention collective peut prévoir un montant supérieur, qui prévaut alors. Pour un chiffrage opposable, appuyez-vous sur le simulateur officiel <a href="https://www.service-public.fr/particuliers/vosdroits/F408" rel="external" class="font-medium underline">service-public.fr</a>.
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <section class="mt-16">
+      <Methodology />
+    </section>
+
+    <section class="mt-12">
+      <Faq faqs={faqs} />
+    </section>
+
+    <section class="mt-12 rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Sources et méthode</h3>
+      <ul class="mt-3 space-y-1 text-sm">
+        <li>• Droit à l’indemnité (8 mois d’ancienneté) : <a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000035644154" rel="external" class="text-indigo-700 hover:underline">article L1234-9 du Code du travail</a>.</li>
+        <li>• Taux d’un quart puis d’un tiers de mois par année : article R1234-2 du Code du travail.</li>
+        <li>• Fiche pratique et simulateur officiel : <a href="https://www.service-public.fr/particuliers/vosdroits/F408" rel="external" class="text-indigo-700 hover:underline">service-public.fr — indemnité de licenciement</a></li>
+        <li>• Texte intégral : <a href="https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006072050" rel="external" class="text-indigo-700 hover:underline">Code du travail sur Légifrance</a></li>
+      </ul>
+    </section>
+  </Container>
+
+  <script>
+    import { initSimulator } from '../scripts/calcul-indemnite-licenciement';
+    initSimulator();
+  </script>
+</Base>

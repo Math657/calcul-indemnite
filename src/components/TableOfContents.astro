@@ -1,0 +1,51 @@
+---
+/**
+ * Sommaire auto-généré depuis les headings extraits par Astro lors de
+ * `await entry.render()`. Filtre sur H2 uniquement (les H3 servent à
+ * découper des sous-cas chiffrés et seraient bruyantes dans le sommaire).
+ * Ne s'affiche pas si le guide a moins de `minHeadings` H2 — pas de
+ * sommaire sur un guide court.
+ *
+ * SEO : Google reconnaît ce pattern (nav + h2 + liste d'ancres) et peut
+ * faire remonter des sitelinks sous le résultat principal en SERP.
+ * Garde un balisage HTML simple et sémantique — pas de schema dédié
+ * (le schema.org/SiteNavigationElement n'apporte rien pour un TOC
+ * intra-page).
+ */
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+  /** Seuil minimum de H2 pour afficher le sommaire. */
+  minHeadings?: number;
+  heading?: string;
+}
+
+const { headings, minHeadings = 5, heading = 'Sommaire' } = Astro.props;
+
+const h2s = headings.filter((h) => h.depth === 2);
+const show = h2s.length >= minHeadings;
+---
+{show && (
+  <nav aria-label={heading} class="mb-8 rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 sm:px-6 sm:py-5">
+    <p class="text-sm font-semibold uppercase tracking-wide text-slate-500">{heading}</p>
+    <ol class="mt-3 space-y-1.5 text-sm sm:columns-2 sm:gap-x-8 sm:space-y-1.5">
+      {h2s.map((h, i) => (
+        <li class="break-inside-avoid">
+          <a
+            href={`#${h.slug}`}
+            class="block text-indigo-700 hover:underline"
+          >
+            <span class="mr-1.5 inline-block w-5 text-right tabular-nums text-slate-400">{i + 1}.</span>
+            <span>{h.text}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}

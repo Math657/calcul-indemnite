@@ -1,0 +1,17 @@
+# Verified legal citations allowlist (calcul-indemnite).
+# One canonical citation per line. Lines starting with # are ignored.
+# A citation here has been checked against a primary source
+# (legifrance.gouv.fr, service-public.fr). Wrong citations must be FIXED
+# in the page, not added here.
+
+# --- Mentions légales / RGPD (legal + privacy pages) ---
+Loi 2004-575
+Décret 2010-1180
+art. 6 LCEN
+art. 6 III LCEN
+Loi Informatique et Libertés
+art. 4 RGPD
+art. 6.1.a RGPD
+art. 6.1.f RGPD
+art. 12.3 RGPD
+art. 28 RGPD

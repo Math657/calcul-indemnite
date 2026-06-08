@@ -1,0 +1,123 @@
+---
+/**
+ * Mentions légales — obligatoires en vertu de l'article 6 III de la LCEN
+ * (loi 2004-575 du 21 juin 2004) et du décret 2010-1180 du 7 octobre 2010.
+ *
+ * TODO before public deploy:
+ *  - Replace 'Rouen' with the full registered business address — LCEN
+ *    technically requires the full street address ('siège social') for a
+ *    professional editor (which auto-entrepreneur is). City-only is fine
+ *    during development but should be filled in before going live.
+ */
+import Base from '../layouts/Base.astro';
+import Container from '../components/Container.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+
+const seo = {
+  title: `Mentions légales — ${SITE.name}`,
+  description: `Identité de l'éditeur, du directeur de la publication et de l'hébergeur de ${SITE.name}, conformément à l'article 6 de la LCEN.`,
+  path: '/mentions-legales',
+  // noindex: the page is legally required (LCEN art. 6) and linked from the
+  // footer for user discovery, but the editor's personal name appears here
+  // and we don't want it surfacing in Google searches for the name.
+  noindex: true,
+};
+
+const breadcrumbItems = [
+  { name: 'Accueil', path: '/' },
+  { name: 'Mentions légales', path: '/mentions-legales' },
+];
+
+const SIRET = '848 104 055 00027';
+const ADRESSE = 'Rouen, France';
+---
+<Base {seo}>
+  <Container as="main" size="md" class="py-12 sm:py-16">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <h1 class="mt-6 text-4xl font-extrabold text-slate-900 sm:text-5xl">Mentions légales</h1>
+    <p class="mt-2 text-sm text-slate-500">Conformément à l’article 6 III de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique (LCEN).</p>
+
+    <section class="mt-10 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">Éditeur du site</h2>
+      <dl class="grid gap-y-2 text-slate-700 sm:grid-cols-[max-content_1fr] sm:gap-x-6">
+        <dt class="font-semibold">Nom</dt>
+        <dd>Mathieu Dessaint</dd>
+
+        <dt class="font-semibold">Statut</dt>
+        <dd>Entrepreneur individuel (régime de l’auto-entrepreneur)</dd>
+
+        <dt class="font-semibold">SIRET</dt>
+        <dd>{SIRET}</dd>
+
+        <dt class="font-semibold">Adresse</dt>
+        <dd>{ADRESSE}</dd>
+
+        <dt class="font-semibold">Email</dt>
+        <dd><a href={`mailto:${SITE.contactEmail}`} class="text-indigo-700 hover:underline">{SITE.contactEmail}</a></dd>
+      </dl>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">Directeur de la publication</h2>
+      <p class="leading-relaxed text-slate-700">
+        Mathieu Dessaint, en sa qualité d’éditeur du site, assure la fonction de directeur de la publication.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">Hébergement</h2>
+      <p class="leading-relaxed text-slate-700">
+        Le site est hébergé sur l’infrastructure de :
+      </p>
+      <dl class="grid gap-y-2 text-slate-700 sm:grid-cols-[max-content_1fr] sm:gap-x-6">
+        <dt class="font-semibold">Société</dt>
+        <dd>Cloudflare, Inc.</dd>
+
+        <dt class="font-semibold">Adresse</dt>
+        <dd>101 Townsend Street, San Francisco, CA 94107, États-Unis</dd>
+
+        <dt class="font-semibold">Site web</dt>
+        <dd><a href="https://www.cloudflare.com" rel="external" class="text-indigo-700 hover:underline">www.cloudflare.com</a></dd>
+      </dl>
+      <p class="leading-relaxed text-slate-700">
+        Les traitements de données réalisés sur les serveurs back-end (collecte automatisée des barèmes publics) s’effectuent sur un serveur loué auprès de :
+      </p>
+      <dl class="grid gap-y-2 text-slate-700 sm:grid-cols-[max-content_1fr] sm:gap-x-6">
+        <dt class="font-semibold">Société</dt>
+        <dd>OVH SAS</dd>
+
+        <dt class="font-semibold">Adresse</dt>
+        <dd>2 rue Kellermann, 59100 Roubaix, France</dd>
+
+        <dt class="font-semibold">Site web</dt>
+        <dd><a href="https://www.ovhcloud.com" rel="external" class="text-indigo-700 hover:underline">www.ovhcloud.com</a></dd>
+      </dl>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">Propriété intellectuelle</h2>
+      <p class="leading-relaxed text-slate-700">
+        L’ensemble du contenu éditorial, du code source et des éléments graphiques de {SITE.name} est protégé par le Code de la propriété intellectuelle. Toute reproduction ou rediffusion intégrale, sur quelque support que ce soit, est soumise à autorisation préalable. Les conditions d’utilisation des extraits sont précisées dans les <a href="/cgu" class="text-indigo-700 hover:underline">CGU</a>.
+      </p>
+      <p class="leading-relaxed text-slate-700">
+        Les données publiques affichées proviennent de sources institutionnelles diffusées sous Licence Ouverte / Open Licence d’Etalab : Légifrance (legifrance.gouv.fr), service-public.fr et data.gouv.fr.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">Données personnelles</h2>
+      <p class="leading-relaxed text-slate-700">
+        Le traitement des données personnelles est décrit dans la <a href="/politique-de-confidentialite" class="text-indigo-700 hover:underline">politique de confidentialité</a>, conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés modifiée.
+      </p>
+    </section>
+
+    <section class="mt-8 space-y-3">
+      <h2 class="text-xl font-bold text-slate-900">Loi applicable</h2>
+      <p class="leading-relaxed text-slate-700">
+        Le site et son contenu sont régis par le droit français. En cas de litige et après tentative de résolution amiable, les tribunaux français sont seuls compétents.
+      </p>
+    </section>
+  </Container>
+</Base>

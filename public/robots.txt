@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /*?
+
+Sitemap: https://calcul-indemnite.fr/sitemap-index.xml

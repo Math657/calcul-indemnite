@@ -1,0 +1,15 @@
+---
+import { formatDateLong } from '../lib/locale';
+
+interface Props {
+  date: Date | string;
+  label?: string;
+}
+
+const { date, label = 'Dernière mise à jour' } = Astro.props;
+const iso = typeof date === 'string' ? date : date.toISOString().slice(0, 10);
+const formatted = formatDateLong(date);
+---
+<p class="text-sm text-slate-500">
+  {label} : <time datetime={iso} class="font-medium text-slate-700">{formatted}</time>
+</p>

@@ -1,0 +1,17 @@
+[Unit]
+Description=MaRénovAide auto-publish: export DB → JSON → git push (if drift)
+Wants=network-online.target
+After=network-online.target postgresql.service
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/renov
+EnvironmentFile=/home/ubuntu/renov/.env.local
+ExecStart=/home/ubuntu/renov/scripts/vps/publish.sh
+StandardOutput=journal
+StandardError=journal
+Restart=no
+# Allow 5 min for the worst-case git operations on slow network.
+TimeoutStartSec=300
