@@ -18,7 +18,9 @@ from __future__ import annotations
 
 from .base import BaseScraper
 from .cdtn_conventions import CdtnConventionsScraper
+from .cdtn_watch import CdtnWatchScraper
 
 REGISTRY: dict[str, type[BaseScraper]] = {
     "cdtn_conventions": CdtnConventionsScraper,
+    "cdtn_watch": CdtnWatchScraper,
 }
