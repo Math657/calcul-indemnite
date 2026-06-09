@@ -19,6 +19,7 @@ BOT_NAME="Calcul Indemnité Bot"
 BOT_EMAIL="bot@calcul-indemnite.fr"
 DATA_FILES=(
   "src/data/conventions.json"
+  "src/data/parametres-sociaux.json"
   # Add entries as new scrapers + exports are registered in pipeline/export.py.
 )
 

@@ -1,6 +1,6 @@
 # indemnite pipeline
 
-Python pipeline that ingests French rénovation énergétique reference data (MaPrimeRénov barèmes, DPE coefficients, plafonds ANAH, primes CEE, etc.) into Postgres on the VPS, and later exports build-time JSON snapshots for the Astro frontend.
+Python pipeline that ingests French labour-law reference data (conventions collectives metadata, SMIC + plafond de la Sécurité sociale, watched legal sources) into Postgres on the VPS, and exports build-time JSON snapshots for the Astro frontend.
 
 ## Layout
 
@@ -8,15 +8,17 @@ Python pipeline that ingests French rénovation énergétique reference data (Ma
 pipeline/
 ├── pyproject.toml
 ├── migrations/                  # numbered raw-SQL migrations
-│   └── (empty — first migration lands in step 13 with the ADEME DPE scraper)
 └── pipeline/
     ├── settings.py              # env-driven config (.env, .env.local)
     ├── db.py                    # psycopg connection helper
     ├── migrate.py               # applies pending migrations
+    ├── export.py                # DB → src/data/*.json snapshots
     ├── cli.py                   # entry point: `python -m pipeline.cli <cmd>`
     └── scrapers/
         ├── base.py              # BaseScraper: fetch → write → log
-        └── (indemnite scrapers land in step 13+)
+        ├── cdtn_conventions.py  # conventions collectives metadata (IDCC)
+        ├── cdtn_watch.py        # content-hash watch on SocialGouv legal models
+        └── social_params.py     # SMIC horaire + plafond mensuel Sécu (URSSAF publicodes)
 ```
 
 ## First-time setup on the VPS
@@ -49,7 +51,8 @@ Re-running is safe (idempotent).
 ## Run a scraper
 
 ```bash
-python -m pipeline.cli scrape ademe_dpe        # after step 13 registers this scraper
+python -m pipeline.cli scrape social_params    # SMIC + plafond Sécu
+python -m pipeline.cli scrape cdtn_conventions  # conventions collectives
 ```
 
 Or run them all:

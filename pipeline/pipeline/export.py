@@ -85,6 +85,88 @@ def export_conventions() -> Path:
     return out
 
 
+# Durée légale mensuelle conventionnelle (35 h × 52 / 12, arrondie) servant au
+# passage SMIC horaire → SMIC mensuel brut, comme la publication officielle.
+HEURES_MENSUELLES = 151.67
+
+
+def export_parametres_sociaux() -> Path:
+    """Export SMIC + PMSS en vigueur (et l'historique) vers src/data/parametres-sociaux.json.
+
+    On retient, pour chaque paramètre, la valeur dont la date d'entrée en
+    vigueur est la plus récente sans dépasser la date du build. Le SMIC mensuel
+    brut est dérivé du SMIC horaire sur la base de 151,67 h.
+    """
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    out = OUT_DIR / "parametres-sociaux.json"
+
+    data: dict[str, Any] = {
+        "source": "URSSAF / betagouv — mon-entreprise (publicodes)",
+        "source_url": "https://mon-entreprise.urssaf.fr",
+        "source_verified_at": None,
+        "effective_date": None,
+        "smic": None,
+        "pmss": None,
+        "history": {"smic_horaire_brut": [], "pmss_mensuel": []},
+    }
+
+    with connect() as conn, conn.cursor() as cur:
+        cur.execute("SELECT to_regclass('public.social_parameters')")
+        if cur.fetchone()[0] is None:
+            _write(out, data)
+            return out
+
+        cur.execute("SELECT current_date")
+        data["effective_date"] = _serialize(cur.fetchone()[0])
+
+        cur.execute(
+            """
+            SELECT DISTINCT ON (param) param, effective_from, value, unit
+              FROM social_parameters
+             WHERE effective_from <= current_date
+             ORDER BY param, effective_from DESC
+            """
+        )
+        current = {r[0]: {"effective_from": _serialize(r[1]), "value": _serialize(r[2]), "unit": r[3]} for r in cur.fetchall()}
+
+        smic = current.get("smic_horaire_brut")
+        if smic:
+            horaire = smic["value"]
+            mensuel = round(horaire * HEURES_MENSUELLES, 2)
+            data["smic"] = {
+                "horaire_brut": horaire,
+                "mensuel_brut": mensuel,
+                "base_heures_mensuelles": HEURES_MENSUELLES,
+                "depuis": smic["effective_from"],
+                "unite": "€",
+            }
+
+        pmss = current.get("pmss_mensuel")
+        if pmss:
+            mensuel = pmss["value"]
+            data["pmss"] = {
+                "mensuel": mensuel,
+                "annuel": round(mensuel * 12, 2),
+                "depuis": pmss["effective_from"],
+                "unite": "€",
+            }
+
+        cur.execute(
+            "SELECT param, effective_from, value, unit FROM social_parameters "
+            "ORDER BY param, effective_from DESC"
+        )
+        for param, eff, value, unit in cur.fetchall():
+            bucket = data["history"].get(param)
+            if bucket is not None:
+                bucket.append({"depuis": _serialize(eff), "valeur": _serialize(value), "unite": unit})
+
+        cur.execute("SELECT max(updated_at) FROM social_parameters")
+        data["source_verified_at"] = _serialize(cur.fetchone()[0])
+
+    _write(out, data)
+    return out
+
+
 def export_all() -> list[Path]:
     """Run every registered export. Returns paths actually written."""
-    return [export_conventions()]
+    return [export_conventions(), export_parametres_sociaux()]

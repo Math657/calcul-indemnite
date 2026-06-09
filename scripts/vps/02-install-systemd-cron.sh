@@ -55,8 +55,10 @@ systemctl enable --now "indemnite-publish.timer"
 systemctl enable --now "indemnite-rebuild.timer"
 systemctl enable --now "indemnite-indexnow.timer"
 # Per-scraper timers are enabled when each scraper is registered.
-# Currently registered:
+# Currently registered (enable each once):
 #   sudo systemctl enable --now "indemnite-scrape@cdtn_conventions.timer"
+#   sudo systemctl enable --now "indemnite-scrape@cdtn_watch.timer"
+#   sudo systemctl enable --now "indemnite-scrape@social_params.timer"
 
 echo "[5/5] Done. Current state:"
 echo ""
