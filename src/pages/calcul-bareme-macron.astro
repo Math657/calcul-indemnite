@@ -1,0 +1,200 @@
+---
+import Base from '../layouts/Base.astro';
+import Container from '../components/Container.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Methodology from '../components/Methodology.astro';
+import Faq from '../components/Faq.astro';
+import { simulatorSchema } from '../lib/schema';
+import bareme from '../data/bareme-macron.json';
+
+const seo = {
+  title: 'Calcul barème Macron 2026 — simulateur indemnité prud’hommes',
+  description:
+    'Estimez la fourchette d’indemnité aux prud’hommes pour un licenciement sans cause réelle et sérieuse : plancher et plafond selon l’ancienneté et la taille de l’entreprise (barème Macron, article L1235-3). Sans inscription.',
+  path: '/calcul-bareme-macron',
+};
+
+const breadcrumbItems = [
+  { name: 'Accueil', path: '/' },
+  { name: 'Barème prud’hommes', path: '/bareme-macron' },
+  { name: 'Calcul du barème Macron', path: '/calcul-bareme-macron' },
+];
+
+const UPDATED = bareme.version;
+
+const jsonLd = [
+  simulatorSchema({
+    name: 'Calcul du barème Macron 2026',
+    description:
+      'Outil gratuit pour estimer la fourchette d’indemnité prud’homale (plancher et plafond) en cas de licenciement sans cause réelle et sérieuse, selon le barème de l’article L1235-3 du Code du travail.',
+    path: '/calcul-bareme-macron',
+    datePublished: '2026-06-09',
+    dateModified: UPDATED,
+  }),
+];
+
+const faqs = [
+  {
+    question: 'À quoi correspond le barème Macron ?',
+    answer:
+      'C’est la grille de l’article L1235-3 du Code du travail qui borne l’indemnité versée par le conseil de prud’hommes lorsqu’un licenciement est jugé <strong>sans cause réelle et sérieuse</strong>. Elle fixe, pour chaque année d’ancienneté, un montant minimum et un montant maximum exprimés en mois de salaire brut.',
+  },
+  {
+    question: 'Cette indemnité remplace-t-elle l’indemnité de licenciement ?',
+    answer:
+      'Non, les deux se cumulent. L’indemnité de licenciement reste due à partir de 8 mois d’ancienneté ; l’indemnité prud’homale s’y ajoute quand le juge constate que le licenciement n’avait pas de cause réelle et sérieuse. Calculez d’abord le socle avec le <a href="/calcul-indemnite-licenciement">simulateur d’indemnité de licenciement</a>.',
+  },
+  {
+    question: 'La taille de l’entreprise change-t-elle le résultat ?',
+    answer:
+      'Le plafond reste le même pour toutes les entreprises. Seul le <strong>plancher</strong> est abaissé dans les entreprises de moins de 11 salariés, et uniquement pour une ancienneté de 0 à 10 ans. Au-delà de 10 ans, le plancher de droit commun (3 mois) s’applique de nouveau.',
+  },
+  {
+    question: 'Dans quels cas le plafond ne s’applique-t-il pas ?',
+    answer:
+      'Quand le licenciement est <strong>nul</strong> : discrimination, harcèlement, atteinte à une liberté fondamentale ou violation d’un statut protecteur. L’indemnité est alors d’au moins 6 mois de salaire brut, sans plafond. Cochez la case correspondante dans le simulateur.',
+  },
+  {
+    question: 'Le juge est-il tenu de suivre ce barème ?',
+    answer:
+      'Oui pour un licenciement sans cause réelle et sérieuse : la Cour de cassation l’a confirmé en assemblée plénière le 11 mai 2022. Le juge fixe librement le montant à l’intérieur de la fourchette, mais ne peut pas en sortir, sauf cas de nullité.',
+  },
+  {
+    question: 'Mes données sont-elles transmises à un serveur ?',
+    answer:
+      'Non. Le calcul s’exécute entièrement dans votre navigateur. Aucun salaire, aucune donnée n’est envoyée à un serveur, stockée dans un cookie ou partagée. Le code est vérifiable dans la source de la page.',
+  },
+];
+---
+<Base {seo} jsonLd={jsonLd}>
+  <Container as="main" size="lg" class="py-8 sm:py-12">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <header class="mt-6 mb-8">
+      <h1 class="text-4xl font-extrabold text-slate-900 sm:text-5xl">Calcul du barème Macron</h1>
+      <p class="mt-4 max-w-3xl text-lg leading-relaxed text-slate-700">
+        Estimez la fourchette d’indemnité que le conseil de prud’hommes peut accorder pour un licenciement <strong>sans cause réelle et sérieuse</strong> : un plancher et un plafond en mois de salaire brut, selon votre ancienneté et la taille de l’entreprise (article L1235-3 du Code du travail). Le calcul s’exécute dans votre navigateur.
+      </p>
+      <p class="mt-2 text-sm text-slate-500">
+        Barème à jour au {UPDATED.split('-').reverse().join('/')}.
+      </p>
+    </header>
+
+    <div class="grid gap-8 lg:grid-cols-[1fr_1fr]">
+      <form id="bareme-form" class="space-y-6" autocomplete="off">
+        <fieldset class="rounded-xl border border-slate-200 bg-white p-5">
+          <legend class="px-2 text-sm font-semibold uppercase tracking-wide text-slate-500">Votre salaire</legend>
+          <label class="mt-2 block">
+            <span class="block text-sm font-medium text-slate-700">Salaire de référence brut mensuel (€)</span>
+            <input id="salaire-brut" type="number" min="0" step="1" placeholder="2500" inputmode="numeric"
+              class="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" />
+            <span class="mt-1 block text-xs text-slate-500">En général la moyenne des 12 derniers mois de salaire brut.</span>
+          </label>
+        </fieldset>
+
+        <fieldset class="rounded-xl border border-slate-200 bg-white p-5">
+          <legend class="px-2 text-sm font-semibold uppercase tracking-wide text-slate-500">Votre ancienneté</legend>
+          <label class="mt-2 block">
+            <span class="block text-sm font-medium text-slate-700">Années complètes dans l’entreprise</span>
+            <input id="anciennete-annees" type="number" min="0" step="1" placeholder="12" inputmode="numeric"
+              class="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" />
+            <span class="mt-1 block text-xs text-slate-500">Le barème raisonne en années complètes. Au-delà de 29 ans, le plafond reste de 20 mois.</span>
+          </label>
+        </fieldset>
+
+        <fieldset class="rounded-xl border border-slate-200 bg-white p-5">
+          <legend class="px-2 text-sm font-semibold uppercase tracking-wide text-slate-500">Taille de l’entreprise</legend>
+          <div class="mt-2 space-y-2">
+            <label class="flex items-center gap-3">
+              <input type="radio" name="taille" value="grande" checked
+                class="h-4 w-4 border-slate-300 text-indigo-600 focus:ring-indigo-500" />
+              <span class="text-sm text-slate-700">11 salariés ou plus</span>
+            </label>
+            <label class="flex items-center gap-3">
+              <input type="radio" name="taille" value="petite"
+                class="h-4 w-4 border-slate-300 text-indigo-600 focus:ring-indigo-500" />
+              <span class="text-sm text-slate-700">Moins de 11 salariés</span>
+            </label>
+          </div>
+          <span class="mt-2 block text-xs text-slate-500">Modifie seulement le plancher, pour une ancienneté de 0 à 10 ans.</span>
+        </fieldset>
+
+        <fieldset class="rounded-xl border border-slate-200 bg-white p-5">
+          <legend class="px-2 text-sm font-semibold uppercase tracking-wide text-slate-500">Situation particulière</legend>
+          <label class="mt-2 flex items-start gap-3">
+            <input id="licenciement-nul" type="checkbox"
+              class="mt-0.5 h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
+            <span class="text-sm text-slate-700">Licenciement <strong>nul</strong> (discrimination, harcèlement, atteinte à une liberté fondamentale, salarié protégé)
+              <span class="mt-0.5 block text-xs text-slate-500">Le barème ne s’applique pas : plancher de 6 mois, sans plafond.</span>
+            </span>
+          </label>
+        </fieldset>
+
+        <button type="button" id="calc-btn" class="w-full rounded-lg bg-indigo-600 px-5 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          Calculer la fourchette
+        </button>
+        <p class="text-center text-xs text-slate-500">Le résultat se met à jour automatiquement à chaque saisie.</p>
+      </form>
+
+      <aside id="result-panel" class="lg:sticky lg:top-24 lg:self-start">
+        <div class="rounded-xl border border-indigo-200 bg-indigo-50 p-5 sm:p-6">
+          <h2 class="text-xl font-bold text-slate-900">Estimation</h2>
+          <div id="result-body" class="mt-4"><p class="text-sm text-slate-600">Renseignez votre salaire et votre ancienneté pour voir la fourchette.</p></div>
+          <p class="mt-6 rounded-md border-l-4 border-amber-400 bg-amber-50 p-3 text-xs leading-relaxed text-slate-700">
+            <strong>Estimation indicative.</strong> Le montant définitif est fixé par le conseil de prud’hommes à l’intérieur de cette fourchette, et seulement si le licenciement est jugé sans cause réelle et sérieuse. Pour défendre un dossier, faites-vous accompagner par un avocat ou un défenseur syndical.
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold text-slate-900">Le barème année par année</h2>
+      <p class="mt-2 max-w-3xl text-sm text-slate-600">
+        Plancher et plafond en mois de salaire brut (entreprises d’au moins 11 salariés). Dans les entreprises de moins de 11 salariés, le plancher est réduit de 0 à 10 ans d’ancienneté.
+      </p>
+      <div class="mt-4 overflow-x-auto">
+        <table class="w-full min-w-[28rem] text-sm">
+          <thead>
+            <tr class="border-b border-slate-300 text-left text-slate-500">
+              <th class="py-2 pr-4 font-semibold">Ancienneté</th>
+              <th class="py-2 pr-4 font-semibold">Plancher</th>
+              <th class="py-2 font-semibold">Plafond</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bareme.standard.map((row) => (
+              <tr class="border-b border-slate-100">
+                <td class="py-1.5 pr-4 text-slate-700">{row.anciennete === bareme.anciennete_max_baremee ? `${row.anciennete} ans et au-delà` : `${row.anciennete} an${row.anciennete > 1 ? 's' : ''}`}</td>
+                <td class="py-1.5 pr-4 text-slate-700">{row.plancher === 0 ? 'sans objet' : `${row.plancher.toLocaleString('fr-FR')} mois`}</td>
+                <td class="py-1.5 text-slate-700">{row.plafond.toLocaleString('fr-FR')} mois</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mt-16">
+      <Methodology />
+    </section>
+
+    <section class="mt-12">
+      <Faq faqs={faqs} />
+    </section>
+
+    <section class="mt-12 rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Sources et méthode</h3>
+      <ul class="mt-3 space-y-1 text-sm">
+        <li>• Barème (plancher et plafond par ancienneté) : <a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000036762052" rel="external" class="text-indigo-700 hover:underline">article L1235-3 du Code du travail</a>.</li>
+        <li>• Exclusion du barème en cas de licenciement nul : article L1235-3-1 du Code du travail.</li>
+        <li>• Validité opposable au juge : Cour de cassation, assemblée plénière, 11 mai 2022.</li>
+        <li>• Fiche pratique : <a href="https://www.service-public.fr/particuliers/vosdroits/F2433" rel="external" class="text-indigo-700 hover:underline">service-public.fr — licenciement sans cause réelle et sérieuse</a>.</li>
+      </ul>
+    </section>
+  </Container>
+
+  <script>
+    import { initSimulator } from '../scripts/calcul-bareme-macron';
+    initSimulator();
+  </script>
+</Base>

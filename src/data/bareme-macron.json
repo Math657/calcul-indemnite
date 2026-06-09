@@ -1,0 +1,75 @@
+{
+  "version": "2026-06-09",
+  "objet": "Barème Macron — indemnité prud’homale pour licenciement sans cause réelle et sérieuse (art. L1235-3 du Code du travail)",
+  "unite": "mois de salaire brut",
+  "anciennete_max_baremee": 29,
+  "licenciement_nul_plancher_mois": 6,
+  "standard": [
+    { "anciennete": 0, "plancher": 0, "plafond": 1 },
+    { "anciennete": 1, "plancher": 1, "plafond": 2 },
+    { "anciennete": 2, "plancher": 3, "plafond": 3.5 },
+    { "anciennete": 3, "plancher": 3, "plafond": 4 },
+    { "anciennete": 4, "plancher": 3, "plafond": 5 },
+    { "anciennete": 5, "plancher": 3, "plafond": 6 },
+    { "anciennete": 6, "plancher": 3, "plafond": 7 },
+    { "anciennete": 7, "plancher": 3, "plafond": 8 },
+    { "anciennete": 8, "plancher": 3, "plafond": 8 },
+    { "anciennete": 9, "plancher": 3, "plafond": 9 },
+    { "anciennete": 10, "plancher": 3, "plafond": 10 },
+    { "anciennete": 11, "plancher": 3, "plafond": 10.5 },
+    { "anciennete": 12, "plancher": 3, "plafond": 11 },
+    { "anciennete": 13, "plancher": 3, "plafond": 11.5 },
+    { "anciennete": 14, "plancher": 3, "plafond": 12 },
+    { "anciennete": 15, "plancher": 3, "plafond": 13 },
+    { "anciennete": 16, "plancher": 3, "plafond": 13.5 },
+    { "anciennete": 17, "plancher": 3, "plafond": 14 },
+    { "anciennete": 18, "plancher": 3, "plafond": 14.5 },
+    { "anciennete": 19, "plancher": 3, "plafond": 15 },
+    { "anciennete": 20, "plancher": 3, "plafond": 15.5 },
+    { "anciennete": 21, "plancher": 3, "plafond": 16 },
+    { "anciennete": 22, "plancher": 3, "plafond": 16.5 },
+    { "anciennete": 23, "plancher": 3, "plafond": 17 },
+    { "anciennete": 24, "plancher": 3, "plafond": 17.5 },
+    { "anciennete": 25, "plancher": 3, "plafond": 18 },
+    { "anciennete": 26, "plancher": 3, "plafond": 18.5 },
+    { "anciennete": 27, "plancher": 3, "plafond": 19 },
+    { "anciennete": 28, "plancher": 3, "plafond": 19.5 },
+    { "anciennete": 29, "plancher": 3, "plafond": 20 }
+  ],
+  "petite_entreprise_plancher": [
+    { "anciennete": 0, "plancher": 0 },
+    { "anciennete": 1, "plancher": 0.5 },
+    { "anciennete": 2, "plancher": 0.5 },
+    { "anciennete": 3, "plancher": 1 },
+    { "anciennete": 4, "plancher": 1 },
+    { "anciennete": 5, "plancher": 1.5 },
+    { "anciennete": 6, "plancher": 1.5 },
+    { "anciennete": 7, "plancher": 2 },
+    { "anciennete": 8, "plancher": 2 },
+    { "anciennete": 9, "plancher": 2.5 },
+    { "anciennete": 10, "plancher": 2.5 }
+  ],
+  "notes": [
+    "Le barème ne s’applique qu’à un licenciement jugé sans cause réelle et sérieuse par le conseil de prud’hommes. Le montant retenu reste à l’appréciation du juge, à l’intérieur de la fourchette.",
+    "Le plafond est identique quelle que soit la taille de l’entreprise. Seul le plancher est réduit dans les entreprises de moins de 11 salariés, et seulement pour une ancienneté de 0 à 10 ans ; au-delà, le plancher de droit commun s’applique.",
+    "Au-delà de 29 ans d’ancienneté, le plafond reste fixé à 20 mois de salaire brut.",
+    "Un licenciement nul (discrimination, harcèlement, atteinte à une liberté fondamentale, violation d’un statut protecteur) échappe au barème : le plancher est de 6 mois de salaire brut et aucun plafond ne s’impose.",
+    "L’indemnité prud’homale se cumule avec l’indemnité de licenciement, qui est due par ailleurs."
+  ],
+  "references": [
+    {
+      "code": "L1235-3",
+      "objet": "Barème des indemnités pour licenciement sans cause réelle et sérieuse (plancher et plafond par ancienneté)",
+      "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000036762052"
+    },
+    {
+      "code": "L1235-3-1",
+      "objet": "Exclusion du barème en cas de nullité du licenciement (plancher de 6 mois, sans plafond)",
+      "url": "https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006072050"
+    },
+    {
+      "objet": "Validité du barème opposable au juge — Cour de cassation, assemblée plénière, 11 mai 2022",
+      "url": "https://www.courdecassation.fr/decision/627b9ba6d8c66e05dac0c5c5"
+    }
+  ]
+}
