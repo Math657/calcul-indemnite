@@ -1,0 +1,57 @@
+{
+  "version": "2026-06-09",
+  "objet": "Paramètres d'estimation de l'allocation chômage (ARE) après rupture conventionnelle, intégrant la réforme du 1ᵉʳ septembre 2026",
+  "are": {
+    "taux_sjr": 0.404,
+    "partie_fixe": 13.18,
+    "taux_plancher_sjr": 0.57,
+    "plafond_sjr": 0.75,
+    "allocation_min_journaliere": 32.13,
+    "jours_mois_moyen": 30.42,
+    "revalorisation": "2025-07-01",
+    "notes": [
+      "L'allocation journalière brute retient la formule la plus favorable entre 40,4 % du salaire journalier de référence (SJR) majoré de la partie fixe, et 57 % du SJR.",
+      "Elle ne peut être inférieure à l'allocation minimale ni supérieure à 75 % du SJR.",
+      "Le SJR est ici approché à partir d'un salaire mensuel brut stable sur 12 mois ; France Travail le calcule sur les salaires réellement perçus pendant la période de référence.",
+      "La partie fixe et l'allocation minimale sont revalorisées chaque 1ᵉʳ juillet."
+    ]
+  },
+  "reforme_2026": {
+    "entree_en_vigueur": "2026-09-01",
+    "champ": "Ruptures conventionnelles individuelles.",
+    "duree_max_mois": {
+      "moins_55_ans": 15,
+      "55_ans_et_plus": 20.5
+    },
+    "duree_max_mois_avant_reforme": {
+      "moins_55_ans": 18,
+      "55_56_ans": 22.5,
+      "57_ans_et_plus": 27
+    },
+    "notes": [
+      "À compter du 1ᵉʳ septembre 2026, la durée maximale d'indemnisation après une rupture conventionnelle individuelle est ramenée à 15 mois avant 55 ans et à 20,5 mois à partir de 55 ans.",
+      "La procédure de rupture, le délai de rétractation de 15 jours et le montant de l'indemnité de rupture ne sont pas modifiés.",
+      "À partir de 57 ans, une prolongation au-delà de 20,5 mois reste possible après examen de France Travail au cours de l'indemnisation.",
+      "La durée d'indemnisation effective dépend aussi du nombre de jours travaillés pendant la période de référence : elle ne peut pas dépasser ces plafonds, mais peut être plus courte."
+    ]
+  },
+  "differes": [
+    "Un délai d'attente de 7 jours s'applique avant le premier versement.",
+    "Un différé congés payés s'ajoute selon l'indemnité compensatrice de congés payés perçue.",
+    "Un différé spécifique d'indemnisation décale le versement lorsque l'indemnité de rupture dépasse le minimum légal (part supra-légale)."
+  ],
+  "references": [
+    {
+      "objet": "Calcul du montant de l'ARE — fiche service-public",
+      "url": "https://www.service-public.fr/particuliers/vosdroits/F14860"
+    },
+    {
+      "objet": "Allocation d'aide au retour à l'emploi — Unédic",
+      "url": "https://www.unedic.org/la-reglementation/fiches-thematiques/allocation-d-aide-au-retour-a-l-emploi-are"
+    },
+    {
+      "objet": "Réforme de l'indemnisation chômage après rupture conventionnelle (en vigueur le 1ᵉʳ septembre 2026)",
+      "url": "https://www.info.gouv.fr/actualite/assurance-chomage-un-projet-de-loi-pour-faire-evoluer-les-ruptures-conventionnelles"
+    }
+  ]
+}

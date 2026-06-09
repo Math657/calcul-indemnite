@@ -1,0 +1,170 @@
+---
+import Base from '../layouts/Base.astro';
+import Container from '../components/Container.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Methodology from '../components/Methodology.astro';
+import Faq from '../components/Faq.astro';
+import { simulatorSchema } from '../lib/schema';
+import chomage from '../data/chomage.json';
+
+const seo = {
+  title: 'Calcul chômage après rupture conventionnelle 2026 — simulateur',
+  description:
+    'Estimez votre allocation chômage (ARE) après une rupture conventionnelle : montant mensuel et durée d’indemnisation selon la réforme du 1ᵉʳ septembre 2026 (15 mois avant 55 ans, 20,5 mois après). Sans inscription.',
+  path: '/calcul-rupture-conventionnelle',
+};
+
+const breadcrumbItems = [
+  { name: 'Accueil', path: '/' },
+  { name: 'Rupture conventionnelle', path: '/rupture-conventionnelle' },
+  { name: 'Calcul du chômage', path: '/calcul-rupture-conventionnelle' },
+];
+
+const UPDATED = chomage.version;
+const D = chomage.reforme_2026.duree_max_mois;
+const AVANT = chomage.reforme_2026.duree_max_mois_avant_reforme;
+
+const jsonLd = [
+  simulatorSchema({
+    name: 'Calcul du chômage après rupture conventionnelle 2026',
+    description:
+      'Outil gratuit pour estimer l’allocation de retour à l’emploi (ARE) et sa durée après une rupture conventionnelle, en intégrant la réforme de l’assurance chômage du 1ᵉʳ septembre 2026.',
+    path: '/calcul-rupture-conventionnelle',
+    datePublished: '2026-06-09',
+    dateModified: UPDATED,
+  }),
+];
+
+const faqs = [
+  {
+    question: 'Qu’est-ce qui change au 1ᵉʳ septembre 2026 ?',
+    answer:
+      'Pour une rupture conventionnelle individuelle, la durée maximale d’indemnisation par l’assurance chômage est ramenée à <strong>15 mois avant 55 ans</strong> (au lieu de 18) et à <strong>20,5 mois à partir de 55 ans</strong>. Le montant de l’allocation et l’indemnité de rupture ne changent pas ; seule la durée maximale est réduite.',
+  },
+  {
+    question: 'A-t-on droit au chômage après une rupture conventionnelle ?',
+    answer:
+      'Oui. La rupture conventionnelle est assimilée à une perte involontaire d’emploi et ouvre droit à l’allocation de retour à l’emploi (ARE), sous réserve de remplir les conditions d’affiliation (durée de travail minimale sur la période de référence) et d’être inscrit comme demandeur d’emploi.',
+  },
+  {
+    question: 'Comment est calculé le montant de l’allocation ?',
+    answer:
+      'L’allocation journalière retient la formule la plus favorable entre 40,4 % du salaire journalier de référence majoré d’une partie fixe, et 57 % de ce salaire. Elle ne peut pas être inférieure à l’allocation minimale ni dépasser 75 % du salaire journalier de référence. Ce simulateur approche ce salaire à partir d’un salaire mensuel stable sur douze mois.',
+  },
+  {
+    question: 'Quand commence le versement de l’allocation ?',
+    answer:
+      'Le versement ne démarre pas immédiatement. S’ajoutent un délai d’attente de 7 jours, un différé lié aux congés payés et un différé spécifique lorsque l’indemnité de rupture dépasse le minimum légal. Ces délais décalent le premier paiement sans réduire le montant mensuel.',
+  },
+  {
+    question: 'Le montant de mon indemnité de rupture est-il affecté ?',
+    answer:
+      'Non. L’indemnité spécifique de rupture conventionnelle reste au moins égale à l’indemnité légale de licenciement. Vous pouvez la chiffrer avec le <a href="/calcul-indemnite-licenciement">simulateur d’indemnité de licenciement</a>.',
+  },
+  {
+    question: 'Mes données sont-elles transmises ?',
+    answer:
+      'Non. Le calcul s’exécute entièrement dans votre navigateur. Aucun salaire, aucune donnée n’est envoyée à un serveur, stockée dans un cookie ou partagée. Pour un chiffrage personnalisé, utilisez le simulateur officiel de France Travail.',
+  },
+];
+---
+<Base {seo} jsonLd={jsonLd}>
+  <Container as="main" size="lg" class="py-8 sm:py-12">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <header class="mt-6 mb-8">
+      <h1 class="text-4xl font-extrabold text-slate-900 sm:text-5xl">Calcul du chômage après rupture conventionnelle</h1>
+      <p class="mt-4 max-w-3xl text-lg leading-relaxed text-slate-700">
+        Estimez votre allocation de retour à l’emploi (ARE) après une rupture conventionnelle : montant mensuel et durée maximale d’indemnisation, en tenant compte de la <strong>réforme du 1ᵉʳ septembre 2026</strong>. Le calcul s’exécute dans votre navigateur.
+      </p>
+      <p class="mt-2 text-sm text-slate-500">
+        Paramètres à jour au {UPDATED.split('-').reverse().join('/')}.
+      </p>
+    </header>
+
+    <div class="grid gap-8 lg:grid-cols-[1fr_1fr]">
+      <form id="rupture-form" class="space-y-6" autocomplete="off">
+        <fieldset class="rounded-xl border border-slate-200 bg-white p-5">
+          <legend class="px-2 text-sm font-semibold uppercase tracking-wide text-slate-500">Votre salaire</legend>
+          <label class="mt-2 block">
+            <span class="block text-sm font-medium text-slate-700">Salaire mensuel brut (€)</span>
+            <input id="salaire-brut" type="number" min="0" step="1" placeholder="2500" inputmode="numeric"
+              class="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" />
+            <span class="mt-1 block text-xs text-slate-500">Salaire brut moyen des douze derniers mois, primes incluses.</span>
+          </label>
+        </fieldset>
+
+        <fieldset class="rounded-xl border border-slate-200 bg-white p-5">
+          <legend class="px-2 text-sm font-semibold uppercase tracking-wide text-slate-500">Votre âge</legend>
+          <label class="mt-2 block">
+            <span class="block text-sm font-medium text-slate-700">Âge à la fin du contrat</span>
+            <input id="age" type="number" min="16" max="70" step="1" placeholder="40" inputmode="numeric"
+              class="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" />
+            <span class="mt-1 block text-xs text-slate-500">Détermine la durée maximale d’indemnisation : {D.moins_55_ans} mois avant 55 ans, {D['55_ans_et_plus']} mois à partir de 55 ans.</span>
+          </label>
+        </fieldset>
+
+        <button type="button" id="calc-btn" class="w-full rounded-lg bg-indigo-600 px-5 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          Estimer mon allocation
+        </button>
+        <p class="text-center text-xs text-slate-500">Le résultat se met à jour automatiquement à chaque saisie.</p>
+      </form>
+
+      <aside id="result-panel" class="lg:sticky lg:top-24 lg:self-start">
+        <div class="rounded-xl border border-indigo-200 bg-indigo-50 p-5 sm:p-6">
+          <h2 class="text-xl font-bold text-slate-900">Estimation</h2>
+          <div id="result-body" class="mt-4"><p class="text-sm text-slate-600">Renseignez votre salaire et votre âge pour voir l’estimation.</p></div>
+          <p class="mt-6 rounded-md border-l-4 border-amber-400 bg-amber-50 p-3 text-xs leading-relaxed text-slate-700">
+            <strong>Estimation indicative.</strong> France Travail calcule le salaire journalier de référence sur vos salaires réels et applique des différés avant le premier versement. Pour un chiffrage personnalisé, utilisez le simulateur officiel de <a href="https://www.francetravail.fr" rel="external" class="font-medium underline">France Travail</a>.
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <section class="mt-16 prose prose-slate max-w-none">
+      <h2>La réforme du 1ᵉʳ septembre 2026</h2>
+      <p>
+        La loi sur l’assurance chômage adoptée le 2 juin 2026 réduit la durée maximale d’indemnisation après une rupture conventionnelle individuelle. Le montant de l’allocation et l’indemnité de rupture ne sont pas touchés.
+      </p>
+      <table>
+        <thead>
+          <tr><th>Âge à la fin du contrat</th><th>Durée maximale avant le 1ᵉʳ septembre 2026</th><th>Durée maximale après</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Moins de 55 ans</td><td>{AVANT.moins_55_ans} mois</td><td><strong>{D.moins_55_ans} mois</strong></td></tr>
+          <tr><td>55 à 56 ans</td><td>{AVANT['55_56_ans']} mois</td><td><strong>{D['55_ans_et_plus']} mois</strong></td></tr>
+          <tr><td>57 ans et plus</td><td>{AVANT['57_ans_et_plus']} mois</td><td><strong>{D['55_ans_et_plus']} mois</strong></td></tr>
+        </tbody>
+      </table>
+      <p>
+        À partir de 57 ans, une prolongation au-delà de {D['55_ans_et_plus']} mois reste possible après examen de France Travail au cours de l’indemnisation. La durée réellement ouverte dépend du nombre de jours travaillés pendant la période de référence et ne peut pas dépasser ces plafonds.
+      </p>
+      <p>
+        L’indemnité de rupture, elle, suit la même base que l’indemnité de licenciement.
+        <a href="/calcul-indemnite-licenciement">Calculez ce plancher avec le simulateur d’indemnité</a>, et consultez le <a href="/rupture-conventionnelle">dossier sur la rupture conventionnelle</a> pour la procédure complète.
+      </p>
+    </section>
+
+    <section class="mt-12">
+      <Methodology />
+    </section>
+
+    <section class="mt-12">
+      <Faq faqs={faqs} />
+    </section>
+
+    <section class="mt-12 rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Sources et méthode</h3>
+      <ul class="mt-3 space-y-1 text-sm">
+        <li>• Calcul du montant de l’ARE : <a href="https://www.service-public.fr/particuliers/vosdroits/F14860" rel="external" class="text-indigo-700 hover:underline">service-public.fr — montant de l’allocation</a>.</li>
+        <li>• Règles d’indemnisation : <a href="https://www.unedic.org/la-reglementation/fiches-thematiques/allocation-d-aide-au-retour-a-l-emploi-are" rel="external" class="text-indigo-700 hover:underline">Unédic — allocation d’aide au retour à l’emploi</a>.</li>
+        <li>• Réforme chômage rupture conventionnelle (1ᵉʳ septembre 2026) : <a href="https://www.info.gouv.fr/actualite/assurance-chomage-un-projet-de-loi-pour-faire-evoluer-les-ruptures-conventionnelles" rel="external" class="text-indigo-700 hover:underline">info.gouv.fr</a>.</li>
+      </ul>
+    </section>
+  </Container>
+
+  <script>
+    import { initSimulator } from '../scripts/calcul-rupture-conventionnelle';
+    initSimulator();
+  </script>
+</Base>

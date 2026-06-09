@@ -133,7 +133,7 @@ Pattern : `BaseScraper` (déjà dans le repo calc/renov) + table `scrape_runs`. 
 
 1. **`/calcul-indemnite-licenciement`** — **livré.** Indemnité légale (¼ mois/an ≤10 ans + ⅓ mois/an >10 ans). 100 % client-side, zero PII, lit `indemnite-licenciement.json`.
 2. **`/calcul-bareme-macron`** — **livré (2026-06-09).** Prud'hommes, contestation (angle lead-gen). Fourchette plancher/plafond par ancienneté × taille entreprise + cas licenciement nul (6 mois, sans plafond). Lit `bareme-macron.json` (table L1235-3 vérifiée, voir [[legal-data-verification]]). Tableau année par année affiché.
-3. (Wave 2) **`/calcul-rupture-conventionnelle`** — montant mini légal + estimation chômage post-réforme (hook 09-2026). **Dépend du scraper SMIC/PMSS (step 9).**
+3. **`/calcul-rupture-conventionnelle`** — **livré (2026-06-09).** Estimation chômage (ARE) post-réforme : allocation journalière/mensuelle (formule 40,4 % + partie fixe / 57 %, plancher, plafond 75 % SJR) + durée max selon réforme 09-2026 (15 mois <55 ans, 20,5 mois ≥55 ans). Constantes ARE + brackets réforme vérifiés (service-public/Unédic + 2 sources légales concordantes). Lit `chomage.json`. Renvoie au simulateur licenciement pour l'indemnité de rupture.
 
 ---
 
@@ -200,12 +200,13 @@ Avantage timing : indexé/âgé avant le pic presse réforme chômage (septembre
 14. [ ] Soumission GSC (Gmail principal) + Bing Webmaster Tools + sitemap
 15. [ ] Inscriptions monétisation (après premières impressions) : AdSense nouveau Gmail, réseaux lead-gen juridique
 
-**Reste à faire (synthèse 2026-06-09)** : (9) scraper SMIC/PMSS → (Wave 2) `/calcul-rupture-conventionnelle` avec estimation chômage post-réforme → hubs `/preavis` + `/solde-de-tout-compte` → soumission GSC/Bing.
+**Reste à faire (synthèse 2026-06-09, MAJ)** : ✅ scraper SMIC/PMSS livré · ✅ `/calcul-rupture-conventionnelle` (estimation chômage post-réforme) livré · ✅ maillage interne vérifié (0 lien cassé / 63 pages, cluster des 3 simulateurs). Restant → hubs `/preavis` + `/solde-de-tout-compte` (§3.2) · revue valeurs ARE à la revalo 1ᵉʳ juillet 2026 · soumission GSC/Bing (step 14).
 
 ---
 
 ## 8. Changelog
 
+- v0.3 (2026-06-09) : `/calcul-rupture-conventionnelle` livré — estimateur chômage (ARE + durée) intégrant la réforme du 1ᵉʳ septembre 2026 (15 mois <55 ans, 20,5 mois ≥55 ans), constantes ARE + brackets réforme vérifiés sur sources autoritaires concordantes (`chomage.json`). Passe de maillage interne : 0 lien cassé sur 63 pages, cluster des 3 simulateurs (cross-links licenciement ↔ barème ↔ rupture), fix lien `/simulateurs` du 404, copy homepage corrigée. Voir [[legal-data-verification]].
 - v0.2 (2026-06-09) : doc resynchronisée avec l'état réel du repo (la v0.1 décrivait l'exécution comme non démarrée alors que Phases 0–1 + Phase 2 quasi complètes étaient livrées). Décisions §6 tranchées (compte `Math657`, brand `Calcul Indemnité`, couleur indigo-700). Deuxième simulateur de launch livré : `/calcul-bareme-macron` (table L1235-3 vérifiée depuis source primaire, voir [[legal-data-verification]] — Légifrance bloque les bots, valeurs recoupées sur reproductions + sanity-check arithmétique). Prochaine action recalée sur step 9 (scraper SMIC/PMSS).
 - v0.1 (2026-06-08) : niche site #4 sélectionnée (droit du travail / indemnités) via filtrage §1 + recherche 2026 (réforme chômage 09-2026, CPF/PEA éliminés). Domaine `calcul-indemnite.fr` (+`.com`) choisi et dispo confirmée (RDAP). Architecture proposée (réutilise stack renov), grammaire URL distincte, cron staggering Mardi, sources de données identifiées. Exécution non démarrée — bloquant : achat domaine OVH + décisions §6.
 
