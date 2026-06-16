@@ -1,40 +1,12 @@
 {
   "source": "URSSAF / betagouv — mon-entreprise (publicodes)",
   "source_url": "https://mon-entreprise.urssaf.fr",
-  "source_verified_at": "2026-06-09",
-  "effective_date": "2026-06-09",
-  "smic": {
-    "horaire_brut": 12.31,
-    "mensuel_brut": 1867.06,
-    "base_heures_mensuelles": 151.67,
-    "depuis": "2026-06-01",
-    "unite": "€"
-  },
-  "pmss": {
-    "mensuel": 4005,
-    "annuel": 48060,
-    "depuis": "2026-01-01",
-    "unite": "€"
-  },
+  "source_verified_at": null,
+  "effective_date": null,
+  "smic": null,
+  "pmss": null,
   "history": {
-    "smic_horaire_brut": [
-      { "depuis": "2026-06-01", "valeur": 12.31, "unite": "€/heure" },
-      { "depuis": "2026-01-01", "valeur": 12.02, "unite": "€/heure" },
-      { "depuis": "2024-11-01", "valeur": 11.88, "unite": "€/heure" },
-      { "depuis": "2024-01-01", "valeur": 11.65, "unite": "€/heure" },
-      { "depuis": "2023-05-01", "valeur": 11.52, "unite": "€/heure" },
-      { "depuis": "2023-01-01", "valeur": 11.27, "unite": "€/heure" },
-      { "depuis": "2022-08-01", "valeur": 11.07, "unite": "€/heure" },
-      { "depuis": "2022-05-01", "valeur": 10.85, "unite": "€/heure" },
-      { "depuis": "2022-01-01", "valeur": 10.57, "unite": "€/heure" },
-      { "depuis": "2021-10-01", "valeur": 10.48, "unite": "€/heure" },
-      { "depuis": "2021-01-01", "valeur": 10.25, "unite": "€/heure" }
-    ],
-    "pmss_mensuel": [
-      { "depuis": "2026-01-01", "valeur": 4005, "unite": "€/mois" },
-      { "depuis": "2025-01-01", "valeur": 3925, "unite": "€/mois" },
-      { "depuis": "2024-01-01", "valeur": 3864, "unite": "€/mois" },
-      { "depuis": "2023-01-01", "valeur": 3666, "unite": "€/mois" }
-    ]
+    "smic_horaire_brut": [],
+    "pmss_mensuel": []
   }
 }
