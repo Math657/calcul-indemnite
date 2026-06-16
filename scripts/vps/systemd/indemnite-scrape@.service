@@ -2,6 +2,10 @@
 Description=Calcul Indemnité scraper: %i
 Wants=network-online.target
 After=network-online.target postgresql.service
+# On a failed run, arm a transient retry timer (+6h, +30h). A single transient
+# blip would otherwise go stale until the next weekly run and trip the 8d health
+# alert (cf calculify incident 2026-06-15).
+OnFailure=indemnite-scrape-retry@%i.timer
 
 [Service]
 Type=oneshot

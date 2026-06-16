@@ -1,0 +1,21 @@
+[Unit]
+Description=Calcul Indemnité scraper retry: %i
+# Triggered only by indemnite-scrape-retry@%i.timer (armed via OnFailure on the
+# primary indemnite-scrape@%i.service). Intentionally has NO OnFailure= itself,
+# so a failing retry does NOT re-arm the timer — this bounds retries to the two
+# OnActiveSec points (+6h, +30h). After that, the next scheduled run + the daily
+# health check are the fallback.
+Wants=network-online.target
+After=network-online.target postgresql.service
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/indemnite/pipeline
+EnvironmentFile=/home/ubuntu/indemnite/.env.local
+ExecStart=/home/ubuntu/indemnite/pipeline/.venv/bin/python -m pipeline.cli scrape %i
+StandardOutput=journal
+StandardError=journal
+Restart=no
+TimeoutStartSec=300

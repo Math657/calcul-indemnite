@@ -1,0 +1,11 @@
+[Unit]
+Description=Calcul Indemnité scraper retry timer: %i
+# Armed transiently by OnFailure= on indemnite-scrape@%i.service. Not enabled at
+# boot — it only exists once a primary run has failed.
+
+[Timer]
+OnActiveSec=6h
+OnActiveSec=30h
+Unit=indemnite-scrape-retry@%i.service
+AccuracySec=1min
+RemainAfterElapse=no
