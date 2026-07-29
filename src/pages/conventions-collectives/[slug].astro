@@ -18,11 +18,28 @@ const factors: string[] = (conv as any).factors ?? [];
 const verifiedAt = conventionsData.source_verified_at;
 const path = `/conventions-collectives/${conv.idcc}-${conv.slug.replace(/_/g, '-')}`;
 
+/**
+ * Titre et description couvrent deux intentions distinctes, mesurées dans la
+ * Search Console : l'indemnité de licenciement, sur laquelle ces pages
+ * ressortent déjà en position 7 à 10, et la consultation du texte de la
+ * convention (« télécharger convention collective idcc NNNN »), première
+ * famille de requêtes du site mais bloquée au-delà de la position 30.
+ */
 const seo = {
-  title: `Indemnité de licenciement — ${conv.name} (IDCC ${conv.idcc})`,
-  description: `Indemnité de licenciement dans la convention collective ${conv.name} (IDCC ${conv.idcc}) : minimum légal, indemnité conventionnelle et calcul officiel. Source Code du travail numérique.`,
+  title: `${conv.name} (IDCC ${conv.idcc}) — indemnité et texte officiel`,
+  description: `Convention collective ${conv.name}, IDCC ${conv.idcc} : consulter le texte officiel sur Légifrance, indemnité légale de licenciement et règles conventionnelles applicables.`,
   path,
 };
+
+const legifranceUrl: string | undefined = (conv as any).legifrance_url;
+
+/*
+ * Pas de date de signature affichée : `full_name` ne la porte que pour 3 des
+ * 47 conventions, et l'une des trois est un faux positif (IDCC 1596 cite « le
+ * décret du 1er mars 1962 », qui n'est pas la date de la convention). Un champ
+ * absent 44 fois sur 47 et faux une fois sur trois quand il apparaît vaut moins
+ * que pas de champ du tout. À reprendre si le scraper récupère la donnée.
+ */
 
 const breadcrumbItems = [
   { name: 'Accueil', path: '/' },
@@ -52,6 +69,27 @@ const officialTool = 'https://code.travail.gouv.fr/outils/indemnite-licenciement
       </p>
       <p class="mt-2 text-sm text-slate-500">Données SocialGouv vérifiées le {formatDateLong(verifiedAt)}.</p>
     </header>
+
+    {legifranceUrl && (
+      <section class="mb-10 rounded-xl border border-slate-200 bg-slate-50 p-5">
+        <h2 class="text-xl font-bold text-slate-900">Consulter le texte de la convention</h2>
+        <p class="mt-2 text-slate-700">
+          Le texte intégral de la convention collective {conv.name} est publié sur Légifrance, dans sa version consolidée en vigueur. Il s’y consulte article par article et s’y télécharge.
+        </p>
+        <p class="mt-4">
+          <a
+            href={legifranceUrl}
+            rel="external"
+            class="inline-block rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700"
+          >
+            Texte officiel sur Légifrance →
+          </a>
+        </p>
+        <p class="mt-3 text-sm text-slate-500">
+          Légifrance est le service public de diffusion du droit. C’est la seule version officielle : les recopies trouvées ailleurs ne sont pas garanties à jour.
+        </p>
+      </section>
+    )}
 
     <section class="space-y-3 text-slate-700">
       <h2 class="text-xl font-bold text-slate-900">Le plancher : l’indemnité légale</h2>
@@ -88,11 +126,6 @@ const officialTool = 'https://code.travail.gouv.fr/outils/indemnite-licenciement
           Calculateur officiel — code.travail.gouv.fr →
         </a>
       </p>
-      {(conv as any).legifrance_url && (
-        <p class="mt-3 text-sm">
-          <a href={(conv as any).legifrance_url} rel="external" class="text-indigo-700 hover:underline">Texte de la convention sur Légifrance →</a>
-        </p>
-      )}
     </section>
 
     <section class="mt-10">
