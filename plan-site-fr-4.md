@@ -1,8 +1,10 @@
 # Plan opérationnel : Site FR #4 — CalculIndemnité
 
 **Document de référence d'exécution**
-**Version 0.2 — 2026-06-09**
-**Statut : Phases 0–1 livrées + Phase 2 quasi complète. Repo `Math657/calcul-indemnite` live (Astro 5, brand indigo « Calcul Indemnité »), infra VPS `indemnite-*` (slot Mardi), Cloudflare câblé, pages légales + institutionnelles, hubs. Scrapers conventions (`cdtn_conventions`, `cdtn_watch`) + 47 pages IDCC. Moteur drip dossiers : 19 articles, 2 publiés, 17 en file jusqu'au 11 août. Les DEUX simulateurs de launch sont livrés : `/calcul-indemnite-licenciement` et `/calcul-bareme-macron`. Prochaine action : Phase 2 step 9 — scraper SMIC/PMSS (débloque l'estimateur chômage rupture conventionnelle, moat réforme 09-2026).**
+**Version 0.4 — 2026-07-29**
+**Statut : Phase 2 complète. 78 pages construites, 75 au sitemap. Les TROIS simulateurs sont livrés et alimentés par les données scrapées. Quatre scrapers actifs (`cdtn_conventions`, `cdtn_watch`, `social_params`, `reforme_watch`), 0 échec sur 30 jours. Hubs complets, y compris `/preavis` et `/solde-de-tout-compte`. Drip : 19 articles, 15 publiés, 4 en file jusqu'au 11 août. Prochaine action : Phase 3 step 14/15 — lecture GSC et vague éditoriale « réforme » avant le pic de septembre.**
+
+> **Écart plan/réel corrigé le 2026-07-29.** La v0.3 marquait le step 9 livré alors que la chaîne SMIC/PMSS ne tournait pas sur le VPS : migration 005 non appliquée, timer jamais activé, `parametres-sociaux.json` exporté intégralement à `null` et poussé chaque semaine. Le code existait, rien ne l'exécutait. Leçon retenue : un step n'est « livré » qu'une fois vérifié sur le VPS, pas une fois committé.
 
 ---
 
@@ -190,22 +192,36 @@ Avantage timing : indexé/âgé avant le pic presse réforme chômage (septembre
 8. [x] VPS : DB `indemnite` + roles + deploy key + clone + venv + timers systemd
 
 **Phase 2 — contenu data-driven (mirror renov steps 13–14)**
-9. [ ] **Premier scraper (SMIC/PMSS) + migration + export JSON + timer — PROCHAINE ACTION**
+9. [x] Scraper SMIC/PMSS + migration + export JSON + timer — **effectivement en service depuis le 2026-07-29** (migration 005 appliquée, timer activé, 15 valeurs datées, JSON consommé par les deux simulateurs)
 10. [x] Simulateur `/calcul-indemnite-licenciement` (full-dynamic, zero hardcode)
 11. [x] Simulateur `/calcul-bareme-macron` (table L1235-3 vérifiée, fourchette + nul, tableau)
-12. [~] Hubs `/conventions-collectives/` (47 IDCC), `/bareme-macron`, `/rupture-conventionnelle` faits ; hubs `/preavis` et `/solde-de-tout-compte` (§3.2) **manquants**
+12. [x] Hubs `/conventions-collectives/` (47 IDCC), `/bareme-macron`, `/rupture-conventionnelle`, plus `/preavis` et `/solde-de-tout-compte` livrés le 2026-07-29 (sourcés L1234-1, L1234-5, L1234-19, L1234-20)
 13. [x] Drip queue dossiers éditoriaux (audit gate YMYL actif : 0 fail) — 19 articles, 2 publiés, 17 en file
 
 **Phase 3 — observationnel + monétisation**
 14. [ ] Soumission GSC (Gmail principal) + Bing Webmaster Tools + sitemap
 15. [ ] Inscriptions monétisation (après premières impressions) : AdSense nouveau Gmail, réseaux lead-gen juridique
 
-**Reste à faire (synthèse 2026-06-09, MAJ)** : ✅ scraper SMIC/PMSS livré · ✅ `/calcul-rupture-conventionnelle` (estimation chômage post-réforme) livré · ✅ maillage interne vérifié (0 lien cassé / 63 pages, cluster des 3 simulateurs). Restant → hubs `/preavis` + `/solde-de-tout-compte` (§3.2) · revue valeurs ARE à la revalo 1ᵉʳ juillet 2026 · soumission GSC/Bing (step 14).
+**Reste à faire (synthèse 2026-07-29)** : ✅ chaîne SMIC/PMSS en service · ✅ hubs `/preavis` + `/solde-de-tout-compte` · ✅ revue valeurs ARE tranchée (pas de revalorisation au 1ᵉʳ juillet 2026, CA Unédic bloqué 25-25 le 30 juin — constantes inchangées) · ✅ veille `reforme_watch` · ✅ GSC + Bing + sitemap soumis (vérification DNS, pas de balise dans le repo) · ✅ maillage interne revérifié (0 lien cassé sur 78 pages, 1 seule page sans lien entrant : `/404`, par construction).
+
+Restant :
+- **Vague éditoriale « réforme »** avant le pic de septembre — la file s'assèche le 11 août, la réforme entre en vigueur le 1ᵉʳ septembre. À caler sur l'export GSC des requêtes réelles.
+- **Lecture GSC** début septembre pour arbitrer la Wave 2 sur données plutôt que sur hypothèse.
+- **Monétisation** (step 15) : candidature LegalPlace en cours ; AdSense après premières impressions.
+- **Alerting** : `ALERT_WEBHOOK_URL` est câblé mais ntfy.sh applique son quota **par IP**, partagée par les 4 sites du VPS — un test de publication renvoie déjà 429. Basculer sur Discord ou Slack, sans quota par IP, pour que les alertes partent vraiment.
 
 ---
 
 ## 8. Changelog
 
+- v0.4 (2026-07-29) : audit complet + remise à niveau de l'infrastructure.
+  - **Chaîne SMIC/PMSS réellement mise en service** (migration 005, timer, 15 valeurs datées) : elle était marquée livrée mais n'avait jamais tourné.
+  - **`parametres-sociaux.json` branché aux simulateurs.** PMSS → plafond du salaire de référence ARE (4 × PMSS, soit 16 020 € en 2026) ; SMIC → repère de saisie sur l'indemnité, sans inventer de plancher légal inexistant. Le plafond calculé (16 020 €) et le SJR au plafond (526,68 €) correspondent exactement à la fiche Unédic « Paramètres utiles » d'avril 2026.
+  - **Hubs `/preavis` et `/solde-de-tout-compte`** livrés, 4 dossiers désorphelinés, flag `nav` pour garder le header centré sur les simulateurs.
+  - **Veille `reforme_watch`** : assertion sur les valeurs plutôt que hash de page, deux sources concordantes, plus détection de l'arrivée des durées de réforme dans la doc officielle.
+  - **Sauvegardes Postgres réparées.** Les dumps du 21 au 27 juillet faisaient 0 octet (fenêtre d'indisponibilité du VPS) et comptaient comme valides dans la rétention. Écriture en `.part` + vérification avant publication ; `health.py` surveille désormais la sauvegarde via un état déposé en `/var/lib/indemnite/`.
+  - **Panne VPS du 20 au 27 juillet** constatée a posteriori : timers arrêtés, 2 articles publiés en retard, IndexNow non envoyé pour eux. Récupération automatique au redémarrage.
+  - Lien mort `service-public F2433` remplacé par F1848 ; 12 liens migrés vers `service-public.gouv.fr`.
 - v0.3 (2026-06-09) : `/calcul-rupture-conventionnelle` livré — estimateur chômage (ARE + durée) intégrant la réforme du 1ᵉʳ septembre 2026 (15 mois <55 ans, 20,5 mois ≥55 ans), constantes ARE + brackets réforme vérifiés sur sources autoritaires concordantes (`chomage.json`). Passe de maillage interne : 0 lien cassé sur 63 pages, cluster des 3 simulateurs (cross-links licenciement ↔ barème ↔ rupture), fix lien `/simulateurs` du 404, copy homepage corrigée. Voir [[legal-data-verification]].
 - v0.2 (2026-06-09) : doc resynchronisée avec l'état réel du repo (la v0.1 décrivait l'exécution comme non démarrée alors que Phases 0–1 + Phase 2 quasi complètes étaient livrées). Décisions §6 tranchées (compte `Math657`, brand `Calcul Indemnité`, couleur indigo-700). Deuxième simulateur de launch livré : `/calcul-bareme-macron` (table L1235-3 vérifiée depuis source primaire, voir [[legal-data-verification]] — Légifrance bloque les bots, valeurs recoupées sur reproductions + sanity-check arithmétique). Prochaine action recalée sur step 9 (scraper SMIC/PMSS).
 - v0.1 (2026-06-08) : niche site #4 sélectionnée (droit du travail / indemnités) via filtrage §1 + recherche 2026 (réforme chômage 09-2026, CPF/PEA éliminés). Domaine `calcul-indemnite.fr` (+`.com`) choisi et dispo confirmée (RDAP). Architecture proposée (réutilise stack renov), grammaire URL distincte, cron staggering Mardi, sources de données identifiées. Exécution non démarrée — bloquant : achat domaine OVH + décisions §6.
