@@ -10,9 +10,9 @@ frontmatter of `src/content/dossiers/*.mdx`.
 
 - **Today**: 2026-07-29
 - **Published**: 15
-- **Scheduled (drip queue)**: 4
+- **Scheduled (drip queue)**: 10
 - **Drafts**: 0
-- **Total tracked articles**: 19
+- **Total tracked articles**: 25
 
 ## Planned (not yet written)
 <!-- planned:start -->
@@ -27,6 +27,12 @@ _Aucun guide prévu non écrit pour le moment. Liste à compléter à la main en
 | 2026-08-03 | [Licenciement et chômage : les conditions pour toucher l'ARE](src/content/dossiers/licenciement-chomage-are-conditions.mdx) | licenciement |
 | 2026-08-07 | [Démission : a-t-on droit à une indemnité de licenciement ?](src/content/dossiers/demission-indemnite-licenciement.mdx) | licenciement |
 | 2026-08-11 | [Indemnité de licenciement à temps partiel : comment la calculer](src/content/dossiers/indemnite-licenciement-temps-partiel.mdx) | licenciement |
+| 2026-08-13 | [Signer avant le 1ᵉʳ septembre 2026 : la date qui compte vraiment](src/content/dossiers/rupture-conventionnelle-signer-avant-septembre-2026.mdx) | rupture |
+| 2026-08-16 | [Rupture conventionnelle après 55 ans : ce que la réforme retire](src/content/dossiers/rupture-conventionnelle-seniors-55-ans-reforme.mdx) | rupture |
+| 2026-08-19 | [Réforme de septembre 2026 : ce qui ne change pas pour vous](src/content/dossiers/rupture-conventionnelle-ce-qui-ne-change-pas-2026.mdx) | rupture |
+| 2026-08-22 | [Réforme du chômage 2026 : combien elle vous coûte, en euros](src/content/dossiers/reforme-chomage-2026-combien-ca-coute.mdx) | rupture |
+| 2026-08-26 | [Négocier plus d'indemnité retarde votre premier versement](src/content/dossiers/differe-specifique-indemnisation-rupture-conventionnelle.mdx) | rupture |
+| 2026-08-29 | [Rupture conventionnelle individuelle ou collective : la réforme trie](src/content/dossiers/rupture-conventionnelle-individuelle-ou-collective.mdx) | rupture |
 
 ## Published — live on the site
 
