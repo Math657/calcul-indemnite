@@ -14,6 +14,12 @@ export interface Hub {
   shortTitle: string;
   path: string;
   description: string;
+  /**
+   * false keeps the hub out of the header nav while still listing it in the
+   * footer and powering `hub:` cross-linking. Used for secondary topics that
+   * would otherwise crowd the header away from the simulators.
+   */
+  nav?: boolean;
 }
 
 export const HUBS: Record<string, Hub> = {
@@ -48,6 +54,24 @@ export const HUBS: Record<string, Hub> = {
     path: '/conventions-collectives',
     description:
       'Catalogue des conventions collectives couvertes (indemnité conventionnelle, préavis) — liste maintenue à partir des modèles officiels du Code du travail numérique.',
+  },
+  preavis: {
+    slug: 'preavis',
+    title: 'Préavis de licenciement',
+    shortTitle: 'Préavis',
+    path: '/preavis',
+    description:
+      'Durée du préavis de licenciement selon l’ancienneté et la convention collective, dispense à l’initiative de l’employeur ou du salarié, et indemnité compensatrice de préavis.',
+    nav: false,
+  },
+  solde: {
+    slug: 'solde-de-tout-compte',
+    title: 'Solde de tout compte',
+    shortTitle: 'Solde',
+    path: '/solde-de-tout-compte',
+    description:
+      'Ce que doit contenir le solde de tout compte remis à la fin du contrat, les documents obligatoires qui l’accompagnent et le délai de six mois pour le dénoncer.',
+    nav: false,
   },
   dossiers: {
     slug: 'dossiers',

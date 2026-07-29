@@ -16,7 +16,7 @@ const dossiers = defineCollection({
   schema: z.object({
     title: z.string().min(20).max(80),
     description: z.string().min(120).max(200),
-    hub: z.enum(['licenciement', 'bareme', 'rupture', 'conventions']).optional(),
+    hub: z.enum(['licenciement', 'bareme', 'rupture', 'conventions', 'preavis', 'solde']).optional(),
     tags: z.array(z.string()).default([]),
     author: z.string().optional(),
     datePublished: z.string(),

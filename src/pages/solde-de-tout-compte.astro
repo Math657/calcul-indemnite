@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro';
+import Container from '../components/Container.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Methodology from '../components/Methodology.astro';
+import Faq from '../components/Faq.astro';
+import RelatedGuides from '../components/RelatedGuides.astro';
+
+const seo = {
+  title: 'Solde de tout compte : contenu, documents et délai de 6 mois',
+  description:
+    'Ce que doit contenir le solde de tout compte remis à la fin du contrat, les documents obligatoires qui l’accompagnent, et le délai de six mois pour dénoncer le reçu avant qu’il ne devienne libératoire.',
+  path: '/solde-de-tout-compte',
+};
+
+const breadcrumbItems = [
+  { name: 'Accueil', path: '/' },
+  { name: 'Solde de tout compte', path: '/solde-de-tout-compte' },
+];
+
+/** Postes qui figurent habituellement à l’inventaire du solde de tout compte. */
+const postes = [
+  { poste: 'Derniers salaires', detail: 'Salaire du mois en cours jusqu’à la fin du contrat, primes et heures supplémentaires dues.' },
+  { poste: 'Indemnité compensatrice de préavis', detail: 'Si le préavis n’a pas été exécuté à l’initiative de l’employeur (article L1234-5).' },
+  { poste: 'Indemnité compensatrice de congés payés', detail: 'Pour les congés acquis et non pris à la date de rupture.' },
+  { poste: 'Indemnité de licenciement', detail: 'Indemnité légale ou conventionnelle, selon la plus favorable.' },
+  { poste: 'Contrepartie de clause de non-concurrence', detail: 'Si le contrat en prévoit une et que l’employeur n’y a pas renoncé.' },
+  { poste: 'Épargne salariale', detail: 'Participation, intéressement, et état récapitulatif des sommes épargnées.' },
+];
+
+const faqs = [
+  {
+    question: 'Que se passe-t-il si je signe le reçu pour solde de tout compte ?',
+    answer:
+      'La signature ne vous prive pas de vos droits immédiatement. L’article L1234-20 vous laisse <strong>six mois</strong> pour dénoncer le reçu. Passé ce délai, il devient libératoire pour l’employeur, mais <strong>uniquement pour les sommes qui y sont mentionnées</strong> — une somme absente du reçu reste réclamable au-delà.',
+  },
+  {
+    question: 'Suis-je obligé de signer ?',
+    answer:
+      'Non. La signature du reçu n’est pas une condition du paiement : l’employeur doit vous verser les sommes dues même sans signature. Vous pouvez aussi signer en ajoutant la mention « sous réserve de mes droits », qui marque votre désaccord sans bloquer le versement.',
+  },
+  {
+    question: 'Quels documents doivent m’être remis avec ?',
+    answer:
+      'Le certificat de travail, dont l’article L1234-19 impose la délivrance à l’expiration du contrat, et l’attestation destinée à France Travail qui vous permet de faire valoir vos droits au chômage. S’y ajoute l’état récapitulatif de l’épargne salariale lorsque vous en avez.',
+  },
+  {
+    question: 'Comment dénoncer le reçu ?',
+    answer:
+      'Par lettre recommandée avec accusé de réception adressée à l’employeur dans les six mois, en indiquant les sommes que vous contestez et pourquoi. La dénonciation conserve vos droits ; à défaut d’accord, le conseil de prud’hommes reste compétent.',
+  },
+];
+---
+<Base {seo}>
+  <Container as="main" size="lg" class="py-8 sm:py-12">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <header class="mt-6 mb-8">
+      <h1 class="text-4xl font-extrabold text-slate-900 sm:text-5xl">Solde de tout compte : que vérifier avant de signer</h1>
+      <p class="mt-4 max-w-3xl text-lg leading-relaxed text-slate-700">
+        Le solde de tout compte fait l’inventaire des sommes versées à la rupture du contrat. Le signer n’efface pas vos droits — mais vous n’avez que six mois pour le contester, et seules les sommes qui y figurent sont couvertes par ce délai.
+      </p>
+    </header>
+
+    <section class="prose prose-slate max-w-none">
+      <h2>Ce que dit l’article L1234-20</h2>
+      <p>
+        Le solde de tout compte est établi par l’employeur et le salarié lui en donne reçu. Il fait l’inventaire des sommes versées lors de la rupture du contrat de travail. Le reçu peut être dénoncé dans les six mois qui suivent sa signature, délai au-delà duquel il devient libératoire pour l’employeur <strong>pour les sommes qui y sont mentionnées</strong>.
+      </p>
+      <p>
+        Cette dernière précision est la plus utile en pratique : l’effet libératoire ne couvre que ce qui est écrit. Une prime oubliée, des heures supplémentaires non comptées ou une indemnité absente de l’inventaire échappent au délai de six mois.
+      </p>
+
+      <h2>Les postes à vérifier ligne à ligne</h2>
+    </section>
+
+    <div class="mt-6 overflow-x-auto">
+      <table class="w-full min-w-lg border-collapse text-left text-sm">
+        <thead>
+          <tr class="border-b border-slate-300 bg-slate-50">
+            <th scope="col" class="px-4 py-3 font-semibold text-slate-900">Poste</th>
+            <th scope="col" class="px-4 py-3 font-semibold text-slate-900">À vérifier</th>
+          </tr>
+        </thead>
+        <tbody>
+          {postes.map((p) => (
+            <tr class="border-b border-slate-200">
+              <td class="px-4 py-3 font-medium text-slate-900">{p.poste}</td>
+              <td class="px-4 py-3 text-slate-700">{p.detail}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <section class="prose prose-slate mt-10 max-w-none">
+      <p>
+        Le poste le plus souvent sous-évalué est l’indemnité de licenciement, en particulier lorsque la convention collective prévoit un calcul plus favorable que la formule légale. Recalculez-la avant de signer.
+      </p>
+      <p>
+        <a href="/calcul-indemnite-licenciement">→ Recalculer mon indemnité de licenciement</a>
+      </p>
+
+      <h2>Les documents remis en même temps</h2>
+      <p>
+        À l’expiration du contrat, l’employeur délivre un <strong>certificat de travail</strong> (article L1234-19), ainsi que l’<strong>attestation destinée à France Travail</strong>, indispensable pour ouvrir vos droits à l’assurance chômage. Si vous disposez d’une épargne salariale, un état récapitulatif vous est également remis.
+      </p>
+      <p>
+        <a href="/calcul-rupture-conventionnelle">→ Estimer mon allocation chômage après la rupture</a>
+      </p>
+
+      <h2>Contester après signature</h2>
+      <p>
+        La dénonciation se fait par lettre recommandée avec accusé de réception dans le délai de six mois, en précisant les sommes contestées. Au-delà, le recours reste possible pour tout ce qui ne figurait pas au reçu. Si le désaccord porte aussi sur le motif du licenciement, l’enjeu dépasse le solde de tout compte.
+      </p>
+      <p>
+        <a href="/calcul-bareme-macron">→ Estimer l’indemnité prud’homale en cas de contestation</a>
+      </p>
+    </section>
+
+    <RelatedGuides preferHub="solde" heading="Dossiers sur la fin de contrat" limit={3} />
+
+    <section class="mt-12">
+      <Faq faqs={faqs} />
+    </section>
+
+    <section class="mt-12">
+      <Methodology />
+    </section>
+
+    <section class="mt-12 rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Sources</h3>
+      <ul class="mt-3 space-y-1 text-sm">
+        <li>• Solde de tout compte et délai de dénonciation : <a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000019071122" rel="external" class="text-indigo-700 hover:underline">article L1234-20 du Code du travail</a>.</li>
+        <li>• Certificat de travail : <a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006901138" rel="external" class="text-indigo-700 hover:underline">article L1234-19 du Code du travail</a>.</li>
+        <li>• Indemnité compensatrice de préavis : <a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006901118" rel="external" class="text-indigo-700 hover:underline">article L1234-5 du Code du travail</a>.</li>
+      </ul>
+    </section>
+  </Container>
+</Base>
