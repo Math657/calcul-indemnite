@@ -14,6 +14,7 @@ exact amount.
 from __future__ import annotations
 
 import re
+import unicodedata
 from typing import Any
 
 import requests
@@ -35,6 +36,51 @@ KALI_URL = "https://raw.githubusercontent.com/SocialGouv/kali-data/master/data/i
 CONV_RE = re.compile(
     r"packages/code-du-travail-modeles/src/modeles/conventions/(\d+)_([^/]+)/"
 )
+
+
+# Mots vides qui allongent le slug sans le rendre plus lisible. Les mots de
+# deux lettres ou moins (de, du, la, le, et, en) sont déjà écartés par la
+# longueur minimale.
+_SLUG_STOPWORDS = frozenset(
+    {
+        "pour",
+        "les",
+        "des",
+        "aux",
+        "avec",
+        "dans",
+        "sur",
+        "par",
+        "une",
+        "sans",
+        "sous",
+        "entre",
+        "chez",
+        "leurs",
+        "nationale",
+        "nationaux",
+        "collective",
+    }
+)
+
+
+def _slugify(text: str, max_words: int = 5) -> str:
+    """Titre officiel -> slug d'URL, dans le style des slugs publicodes.
+
+    Les slugs des conventions issues de publicodes viennent de l'amont et sont
+    stables. Ceux-ci sont dérivés du titre kali : si le titre officiel changeait,
+    l'URL changerait aussi. Le risque est accepté pour le petit nombre de
+    conventions concernées, mais toute reprise de cette fonction doit prévoir
+    une redirection.
+    """
+    norm = unicodedata.normalize("NFKD", text)
+    norm = "".join(c for c in norm if not unicodedata.combining(c)).lower()
+    words = [
+        w
+        for w in re.split(r"[^a-z0-9]+", norm)
+        if w and len(w) > 2 and w not in _SLUG_STOPWORDS
+    ]
+    return "_".join(words[:max_words]) or "convention"
 
 
 def _extract_factors(yaml_text: str) -> list[str]:
@@ -135,7 +181,41 @@ class CdtnConventionsScraper(BaseScraper):
                     "factors": factors,
                 }
             )
-        self.log.info("parsed %d conventions (meta + factors)", len(convs))
+        # Les conventions ci-dessus sont celles qui disposent d'un modèle
+        # publicodes. kali-data en référence quelques autres, parfois très
+        # importantes : IDCC 413 couvre 430 000 salariés, davantage que la
+        # propreté. Les ignorer revenait à priver le site de ses pages sans
+        # autre raison que l'absence de modèle de calcul en amont.
+        #
+        # Ces pages n'affichent pas de facteurs de calcul conventionnel, la
+        # section correspondante étant conditionnelle, mais elles servent
+        # l'intention majoritaire mesurée en Search Console : accéder au texte
+        # officiel de la convention.
+        for idcc, meta in sorted(kali.items()):
+            if idcc in seen:
+                continue
+            kid = meta.get("id")
+            official = str(meta.get("shortTitle") or "").strip()
+            if not kid or not official:
+                self.log.info("kali %s ignorée : métadonnées insuffisantes", idcc)
+                continue
+            eff = meta.get("effectif")
+            convs.append(
+                {
+                    "idcc": idcc,
+                    "slug": _slugify(official),
+                    "name": official,
+                    "full_name": str(meta.get("title") or "").strip() or None,
+                    "legifrance_url": f"https://www.legifrance.gouv.fr/conv_coll/id/{kid}",
+                    "effectif": int(eff) if isinstance(eff, (int, float)) and eff else None,
+                    "factors": [],
+                }
+            )
+            self.log.info("kali-seule ajoutée : IDCC %s — %s", idcc, official[:60])
+
+        self.log.info(
+            "parsed %d conventions (%d avec modèle publicodes)", len(convs), len(seen)
+        )
         return {"conventions": convs}
 
     def write(self, raw: dict[str, Any]) -> tuple[int, str]:
