@@ -1,0 +1,70 @@
+---
+title: "Moins de 11 salariés : ce que le barème change vraiment"
+description: "Dans les entreprises de moins de onze salariés, seul le plancher du barème Macron est réduit, et seulement jusqu'à dix ans d'ancienneté. Le plafond, lui, ne bouge pas."
+hub: bareme
+tags: ["prud'hommes", "barème Macron", "TPE"]
+datePublished: "2026-09-09"
+dateModified: "2026-09-09"
+draft: false
+---
+
+import bareme from '../../data/bareme-macron.json';
+import { formatNumber } from '../../lib/locale';
+
+export const mois = (n) => `${formatNumber(n, n % 1 === 0 ? 0 : 1)} mois`;
+
+Une idée circule chez les salariés de très petites entreprises : le barème Macron y serait globalement plus bas, plafond compris. C'est inexact, et la confusion peut conduire à renoncer à une action qui gardait tout son intérêt.
+
+## Le plafond est le même partout
+
+L'article L1235-3 du Code du travail fixe un plafond d'indemnité qui dépend de la seule ancienneté. La taille de l'entreprise n'entre pas dans ce calcul.
+
+Un salarié de six ans d'ancienneté peut donc se voir accorder jusqu'à {bareme.standard.find((r) => r.anciennete === 6).plafond} mois de salaire brut, que l'entreprise compte huit salariés ou huit cents.
+
+## Seul le plancher est abaissé
+
+La différence porte sur le minimum que le juge doit accorder. Dans les entreprises de moins de onze salariés, ce plancher est réduit :
+
+<table>
+  <thead>
+    <tr>
+      <th>Ancienneté</th>
+      <th>Plancher, 11 salariés et plus</th>
+      <th>Plancher, moins de 11 salariés</th>
+    </tr>
+  </thead>
+  <tbody>
+    {bareme.petite_entreprise_plancher
+      .filter((r) => r.anciennete >= 1 && r.anciennete <= 10)
+      .map((r) => (
+        <tr key={r.anciennete}>
+          <td>{r.anciennete} an{r.anciennete > 1 ? 's' : ''}</td>
+          <td>{mois(bareme.standard.find((s) => s.anciennete === r.anciennete).plancher)}</td>
+          <td>{mois(r.plancher)}</td>
+        </tr>
+      ))}
+  </tbody>
+</table>
+
+## La réduction s'arrête à dix ans
+
+Point décisif et rarement précisé : cette minoration du plancher ne joue que de zéro à dix ans d'ancienneté. Au-delà, le plancher de droit commun s'applique, quelle que soit la taille de l'entreprise.
+
+Un salarié de quinze ans d'ancienneté dans une entreprise de six personnes relève donc exactement du même encadrement qu'un salarié d'un grand groupe : même plancher, même plafond.
+
+## Ce que cela signifie pour une action
+
+Le plancher est le minimum, pas le montant attendu. Le juge fixe librement l'indemnité à l'intérieur de la fourchette, en fonction du préjudice démontré : durée du chômage qui a suivi, âge, situation familiale, difficultés de reclassement.
+
+Un plancher plus bas n'annonce donc pas une indemnité plus faible. Il élargit la fourchette vers le bas, sans toucher à ce que le juge peut accorder au maximum.
+
+## Et si le licenciement est nul
+
+Lorsque le licenciement est nul, pour discrimination, harcèlement ou atteinte à une liberté fondamentale, le barème est écarté : l'indemnité ne peut être inférieure à {bareme.licenciement_nul_plancher_mois} mois de salaire, sans plafond. Là encore, la taille de l'entreprise ne change rien.
+
+[Estimer ma fourchette selon l'effectif](/calcul-bareme-macron) · [Les cas où le plafond ne s'applique pas](/dossiers/bareme-macron-cas-sans-plafond)
+
+## Sources
+
+- Barème d'indemnité pour licenciement sans cause réelle et sérieuse, article L1235-3 du Code du travail : [code.travail.gouv.fr](https://code.travail.gouv.fr/code-du-travail/l1235-3)
+- [service-public.gouv.fr — Licenciement nul, sans cause réelle et sérieuse ou irrégulier](https://www.service-public.gouv.fr/particuliers/vosdroits/F1848)

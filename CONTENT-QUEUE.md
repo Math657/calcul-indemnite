@@ -10,9 +10,9 @@ frontmatter of `src/content/dossiers/*.mdx`.
 
 - **Today**: 2026-07-29
 - **Published**: 15
-- **Scheduled (drip queue)**: 10
+- **Scheduled (drip queue)**: 14
 - **Drafts**: 0
-- **Total tracked articles**: 25
+- **Total tracked articles**: 29
 
 ## Planned (not yet written)
 <!-- planned:start -->
@@ -33,6 +33,10 @@ _Aucun guide prévu non écrit pour le moment. Liste à compléter à la main en
 | 2026-08-22 | [Réforme du chômage 2026 : combien elle vous coûte, en euros](src/content/dossiers/reforme-chomage-2026-combien-ca-coute.mdx) | rupture |
 | 2026-08-26 | [Négocier plus d'indemnité retarde votre premier versement](src/content/dossiers/differe-specifique-indemnisation-rupture-conventionnelle.mdx) | rupture |
 | 2026-08-29 | [Rupture conventionnelle individuelle ou collective : la réforme trie](src/content/dossiers/rupture-conventionnelle-individuelle-ou-collective.mdx) | rupture |
+| 2026-09-02 | [Contester son licenciement : le délai de 12 mois à ne pas rater](src/content/dossiers/delai-contestation-licenciement-prudhommes.mdx) | bareme |
+| 2026-09-05 | [Barème Macron : les sommes qui s'ajoutent, et celles qui non](src/content/dossiers/ce-qui-sajoute-indemnite-bareme-macron.mdx) | bareme |
+| 2026-09-09 | [Moins de 11 salariés : ce que le barème change vraiment](src/content/dossiers/bareme-macron-entreprise-moins-11-salaries.mdx) | bareme |
+| 2026-09-12 | [Trouver sa convention collective sur son bulletin de paie](src/content/dossiers/trouver-sa-convention-collective-bulletin-paie.mdx) | conventions |
 
 ## Published — live on the site
 
