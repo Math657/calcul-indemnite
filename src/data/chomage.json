@@ -9,7 +9,10 @@
     "allocation_min_journaliere": 32.13,
     "jours_mois_moyen": 30.42,
     "revalorisation": "2025-07-01",
+    "revalorisation_verifiee_le": "2026-07-29",
+    "plafond_salaire_reference_pmss": 4,
     "notes": [
+      "Le salaire de référence ne retient que les rémunérations soumises aux contributions d'assurance chômage, elles-mêmes plafonnées à 4 fois le plafond mensuel de la Sécurité sociale. Le montant de ce plafond est calculé à partir du PMSS courant (parametres-sociaux.json), et non figé dans ce fichier.",
       "L'allocation journalière brute retient la formule la plus favorable entre 40,4 % du salaire journalier de référence (SJR) majoré de la partie fixe, et 57 % du SJR.",
       "Elle ne peut être inférieure à l'allocation minimale ni supérieure à 75 % du SJR.",
       "Le SJR est ici approché à partir d'un salaire mensuel brut stable sur 12 mois ; France Travail le calcule sur les salaires réellement perçus pendant la période de référence.",
@@ -46,8 +49,12 @@
       "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F14860"
     },
     {
-      "objet": "Allocation d'aide au retour à l'emploi — Unédic",
+      "objet": "Allocation d'aide au retour à l'emploi — Unédic (barème par tranche de salaire de référence, plafond des contributions)",
       "url": "https://www.unedic.org/la-reglementation/fiches-thematiques/allocation-d-aide-au-retour-a-l-emploi-are"
+    },
+    {
+      "objet": "Absence de revalorisation des allocations au 1ᵉʳ juillet 2026 (partie fixe 13,18 € et allocation minimale 32,13 € inchangées)",
+      "url": "https://www.unedic.org/actualites/allocations-dassurance-chomage-pas-de-revalorisation-au-1er-juillet-2026"
     },
     {
       "objet": "Réforme de l'indemnisation chômage après rupture conventionnelle (en vigueur le 1ᵉʳ septembre 2026)",

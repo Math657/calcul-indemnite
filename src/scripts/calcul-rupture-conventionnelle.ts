@@ -13,10 +13,22 @@
  * navigateur — le calcul est entièrement local.
  */
 import data from '../data/chomage.json';
+import social from '../data/parametres-sociaux.json';
 import { formatEUR, formatNumber } from '../lib/locale';
 
 const ARE = data.are;
 const DUREE = data.reforme_2026.duree_max_mois;
+
+/**
+ * Plafond du salaire de référence : seules les rémunérations soumises aux
+ * contributions d'assurance chômage sont retenues, et ces contributions sont
+ * plafonnées à 4 fois le plafond mensuel de la Sécurité sociale. Le PMSS vient
+ * du scraper URSSAF, donc le plafond suit les revalorisations sans redéploiement.
+ * Null si le PMSS n'est pas disponible — dans ce cas on n'applique aucun plafond
+ * plutôt que d'en inventer un.
+ */
+const PLAFOND_SR: number | null =
+  social.pmss?.mensuel != null ? social.pmss.mensuel * ARE.plafond_salaire_reference_pmss : null;
 
 interface Inputs {
   salaire: number;
@@ -32,6 +44,9 @@ interface Result {
   dureeMois: number;
   totalPotentiel: number;
   tauxRemplacement: number;
+  /** Salaire mensuel effectivement retenu, après plafonnement éventuel. */
+  salaireRetenu: number;
+  plafonne: boolean;
 }
 
 /** Allocation journalière brute : meilleure formule, plancher, plafond 75 % SJR. */
@@ -50,6 +65,8 @@ function compute(i: Inputs): Result {
     dureeMois: 0,
     totalPotentiel: 0,
     tauxRemplacement: 0,
+    salaireRetenu: 0,
+    plafonne: false,
   };
 
   if (i.salaire <= 0) {
@@ -59,11 +76,16 @@ function compute(i: Inputs): Result {
     return { ...base, raison: 'Renseignez votre âge à la fin du contrat.' };
   }
 
-  const sjr = (i.salaire * 12) / 365;
+  const plafonne = PLAFOND_SR !== null && i.salaire > PLAFOND_SR;
+  const salaireRetenu = plafonne ? (PLAFOND_SR as number) : i.salaire;
+
+  const sjr = (salaireRetenu * 12) / 365;
   const areJour = Math.round(areJournaliere(sjr) * 100) / 100;
   const areMois = Math.round(areJour * ARE.jours_mois_moyen * 100) / 100;
   const dureeMois = i.age >= 55 ? DUREE['55_ans_et_plus'] : DUREE['moins_55_ans'];
   const totalPotentiel = Math.round(areMois * dureeMois * 100) / 100;
+  // Taux de remplacement rapporté au salaire réel, pas au salaire plafonné :
+  // c'est la perte de revenu ressentie qui intéresse l'utilisateur.
   const tauxRemplacement = (areMois / i.salaire) * 100;
 
   return {
@@ -74,6 +96,8 @@ function compute(i: Inputs): Result {
     dureeMois,
     totalPotentiel,
     tauxRemplacement,
+    salaireRetenu,
+    plafonne,
   };
 }
 
@@ -115,6 +139,14 @@ function render(res: Result): string {
     </div>
     <table class="mt-4 w-full text-sm">
       <tbody>
+        ${
+          res.plafonne
+            ? `<tr class="border-b border-slate-100">
+          <td class="py-2 text-slate-600">Salaire mensuel retenu (plafonné)</td>
+          <td class="py-2 text-right font-medium">${formatEUR(res.salaireRetenu)}</td>
+        </tr>`
+            : ''
+        }
         <tr class="border-b border-slate-100">
           <td class="py-2 text-slate-600">Salaire journalier de référence (estimé)</td>
           <td class="py-2 text-right font-medium">${formatEUR(res.sjr)}</td>
@@ -129,6 +161,11 @@ function render(res: Result): string {
         </tr>
       </tbody>
     </table>
+    ${
+      res.plafonne
+        ? `<p class="mt-3 text-xs text-slate-500">Votre salaire dépasse le plafond des contributions d’assurance chômage (${formatEUR(PLAFOND_SR as number)} par mois, soit 4 fois le plafond mensuel de la Sécurité sociale). L’allocation est calculée sur ce plafond.</p>`
+        : ''
+    }
     <p class="mt-3 text-xs text-slate-500">Durée applicable aux ruptures conventionnelles individuelles à compter du 1ᵉʳ septembre 2026. La durée réelle dépend du nombre de jours travaillés et ne peut pas dépasser ce plafond.</p>`;
 }
 

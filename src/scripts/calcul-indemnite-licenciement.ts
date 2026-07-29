@@ -11,11 +11,20 @@
  * enters their own salaire de référence; nothing is sent to a server.
  */
 import data from '../data/indemnite-licenciement.json';
+import social from '../data/parametres-sociaux.json';
 import { formatEUR } from '../lib/locale';
 
 const SEUIL_MOIS = data.anciennete_minimale_mois;
 const T1 = data.taux.jusqua_10_ans;
 const T2 = data.taux.au_dela_10_ans;
+
+/**
+ * SMIC mensuel brut temps plein, issu du scraper URSSAF. Sert de repère de
+ * saisie : un salaire de référence en dessous est légitime à temps partiel,
+ * mais signale souvent un net ou un taux horaire saisi par erreur. Aucun
+ * plancher légal n'existe sur l'indemnité — on avertit, on ne corrige pas.
+ */
+const SMIC_MENSUEL: number | null = social.smic?.mensuel_brut ?? null;
 
 interface Inputs {
   salaireRef: number;
@@ -31,6 +40,8 @@ interface Result {
   moisAuDela: number;
   totalMois: number;
   indemnite: number;
+  /** Salaire de référence sous le SMIC mensuel temps plein — repère de saisie. */
+  sousSmic: boolean;
 }
 
 function compute(i: Inputs): Result {
@@ -43,6 +54,7 @@ function compute(i: Inputs): Result {
     moisAuDela: 0,
     totalMois: 0,
     indemnite: 0,
+    sousSmic: false,
   };
 
   if (i.salaireRef <= 0 || ancienneteMois <= 0) {
@@ -67,6 +79,7 @@ function compute(i: Inputs): Result {
     moisAuDela,
     totalMois,
     indemnite,
+    sousSmic: SMIC_MENSUEL !== null && i.salaireRef < SMIC_MENSUEL,
   };
 }
 
@@ -125,7 +138,12 @@ function render(res: Result): string {
           <td class="py-2 text-right font-bold">${moisLabel(res.totalMois)}</td>
         </tr>
       </tbody>
-    </table>`;
+    </table>
+    ${
+      res.sousSmic
+        ? `<p class="mt-3 text-xs text-slate-500">Le salaire saisi est inférieur au SMIC mensuel brut à temps plein (${formatEUR(SMIC_MENSUEL as number)}). C’est normal à temps partiel ; sinon, vérifiez qu’il s’agit bien d’un salaire <strong>brut mensuel</strong> et non d’un net ou d’un taux horaire.</p>`
+        : ''
+    }`;
 }
 
 function recompute(): void {
