@@ -19,10 +19,12 @@ from __future__ import annotations
 from .base import BaseScraper
 from .cdtn_conventions import CdtnConventionsScraper
 from .cdtn_watch import CdtnWatchScraper
+from .reforme_watch import ReformeWatchScraper
 from .social_params import SocialParamsScraper
 
 REGISTRY: dict[str, type[BaseScraper]] = {
     "cdtn_conventions": CdtnConventionsScraper,
     "cdtn_watch": CdtnWatchScraper,
+    "reforme_watch": ReformeWatchScraper,
     "social_params": SocialParamsScraper,
 }
