@@ -18,18 +18,83 @@ CRON_FILE="/etc/cron.d/indemnite-pg-backup"
 
 cat > "${BACKUP_SCRIPT}" <<'BACKUP'
 #!/usr/bin/env bash
+# Dump quotidien de la base indemnite.
+#
+# Écrit d'abord dans un fichier .part, vérifie que le résultat est exploitable,
+# et ne le publie sous son nom définitif qu'ensuite. Une redirection directe
+# vers le nom final crée le fichier avant même que pg_dump ne tourne : base
+# indisponible, on obtient un dump de 0 octet que la rétention compte ensuite
+# comme une sauvegarde valide. C'est arrivé du 21 au 27 juillet 2026 pendant
+# l'indisponibilité du VPS, sept jours sans sauvegarde exploitable et sans
+# le moindre signal.
 set -euo pipefail
 BACKUP_DIR="/var/backups/postgres"
 DB_NAME="indemnite"
 RETENTION_DAYS=14
+MIN_BYTES=1024
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 DUMP_FILE="${BACKUP_DIR}/${DB_NAME}-${TIMESTAMP}.sql.gz"
+TMP_FILE="${DUMP_FILE}.part"
 
-sudo -u postgres pg_dump -Fc "${DB_NAME}" | gzip -9 > "${DUMP_FILE}"
+# Le répertoire des dumps n'est lisible que par postgres. Cet état, lui, est
+# lisible par le health check (qui tourne en ubuntu) et lui sert de compte rendu.
+STATUS_DIR="/var/lib/indemnite"
+STATUS_FILE="${STATUS_DIR}/backup-status.json"
+mkdir -p "${STATUS_DIR}"
+chmod 755 "${STATUS_DIR}"
+
+trap 'rm -f "${TMP_FILE}"' EXIT
+
+write_status() {
+  local status="$1" bytes="$2" detail="$3"
+  cat > "${STATUS_FILE}" <<STATUS
+{
+  "db": "${DB_NAME}",
+  "at": "$(date -u +%Y-%m-%dT%H:%M:%S+00:00)",
+  "status": "${status}",
+  "bytes": ${bytes},
+  "file": "$(basename "${DUMP_FILE}")",
+  "detail": "${detail}"
+}
+STATUS
+  chmod 644 "${STATUS_FILE}"
+}
+
+fail() {
+  logger -t indemnite-pg-backup -p user.err "$1"
+  write_status "failed" 0 "$1"
+  echo "$1" >&2
+  exit 1
+}
+
+if ! sudo -u postgres pg_dump -Fc "${DB_NAME}" | gzip -9 > "${TMP_FILE}"; then
+  fail "pg_dump a échoué pour ${DB_NAME} — aucune sauvegarde écrite"
+fi
+
+SIZE=$(stat -c %s "${TMP_FILE}" 2>/dev/null || echo 0)
+if [[ "${SIZE}" -lt "${MIN_BYTES}" ]]; then
+  fail "dump suspect pour ${DB_NAME} : ${SIZE} octets (< ${MIN_BYTES}) — rejeté"
+fi
+
+if ! gzip -t "${TMP_FILE}" 2>/dev/null; then
+  fail "archive gzip corrompue pour ${DB_NAME} — rejetée"
+fi
+
+MAGIC=$(gzip -dc "${TMP_FILE}" 2>/dev/null | head -c 5 || true)
+if [[ "${MAGIC}" != "PGDMP" ]]; then
+  fail "en-tête pg_dump absent pour ${DB_NAME} (lu: '${MAGIC}') — rejeté"
+fi
+
+mv "${TMP_FILE}" "${DUMP_FILE}"
 chmod 600 "${DUMP_FILE}"
+
+# Purge les dumps vides laissés par l'ancienne version du script, qui seraient
+# sinon retenus 14 jours en se faisant passer pour des sauvegardes.
+find "${BACKUP_DIR}" -name "${DB_NAME}-*.sql.gz" -size -1k -delete
 find "${BACKUP_DIR}" -name "${DB_NAME}-*.sql.gz" -mtime +${RETENTION_DAYS} -delete
 
-logger -t indemnite-pg-backup "wrote ${DUMP_FILE}"
+write_status "ok" "${SIZE}" "dump vérifié (gzip + en-tête PGDMP)"
+logger -t indemnite-pg-backup "wrote ${DUMP_FILE} (${SIZE} octets)"
 BACKUP
 
 chmod 700 "${BACKUP_SCRIPT}"

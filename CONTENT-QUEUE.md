@@ -8,9 +8,9 @@ and preserved across regenerations — list there what you intend to write
 but haven't started yet. Everything below it is derived from the MDX
 frontmatter of `src/content/dossiers/*.mdx`.
 
-- **Today**: 2026-06-08
-- **Published**: 2
-- **Scheduled (drip queue)**: 17
+- **Today**: 2026-07-29
+- **Published**: 15
+- **Scheduled (drip queue)**: 4
 - **Drafts**: 0
 - **Total tracked articles**: 19
 
@@ -23,19 +23,6 @@ _Aucun guide prévu non écrit pour le moment. Liste à compléter à la main en
 
 | Date | Title | Hub |
 |---|---|---|
-| 2026-06-11 | [Salaire de référence : comment le calculer pour l'indemnité](src/content/dossiers/salaire-de-reference-indemnite-licenciement.mdx) | licenciement |
-| 2026-06-15 | [Solde de tout compte : que doit-il contenir et que vérifier ?](src/content/dossiers/solde-de-tout-compte-que-verifier.mdx) | licenciement |
-| 2026-06-18 | [Licenciement pour faute grave : quelles conséquences sur vos indemnités ?](src/content/dossiers/faute-grave-consequences-indemnites.mdx) | licenciement |
-| 2026-06-22 | [Licenciement économique : indemnité et contrat de sécurisation (CSP)](src/content/dossiers/licenciement-economique-csp.mdx) | licenciement |
-| 2026-06-26 | [Rupture conventionnelle ou licenciement : quelles différences ?](src/content/dossiers/rupture-conventionnelle-ou-licenciement.mdx) | rupture |
-| 2026-06-30 | [Licenciement pour inaptitude : quelles indemnités selon l'origine ?](src/content/dossiers/licenciement-inaptitude-indemnites.mdx) | licenciement |
-| 2026-07-03 | [Barème Macron : dans quels cas le plafond ne s'applique pas](src/content/dossiers/bareme-macron-cas-sans-plafond.mdx) | bareme |
-| 2026-07-07 | [Congés payés non pris : l'indemnité compensatrice à la rupture](src/content/dossiers/conges-payes-non-pris-indemnite-compensatrice.mdx) | licenciement |
-| 2026-07-10 | [Ancienneté : comment se calcule-t-elle pour l'indemnité ?](src/content/dossiers/anciennete-calcul-indemnite-licenciement.mdx) | licenciement |
-| 2026-07-14 | [Rupture conventionnelle : montant minimum et marge de négociation](src/content/dossiers/rupture-conventionnelle-montant-minimum-negocier.mdx) | rupture |
-| 2026-07-18 | [Prime de précarité : l'indemnité de fin de CDD expliquée](src/content/dossiers/prime-precarite-fin-cdd.mdx) | — |
-| 2026-07-22 | [Préavis de licenciement des cadres : la règle des 3 mois](src/content/dossiers/preavis-cadres-trois-mois.mdx) | licenciement |
-| 2026-07-26 | [Rupture pendant la période d'essai : indemnité et délai de prévenance](src/content/dossiers/licenciement-periode-essai-indemnite.mdx) | licenciement |
 | 2026-07-30 | [Indemnité légale ou conventionnelle : laquelle s'applique ?](src/content/dossiers/indemnite-legale-ou-conventionnelle-licenciement.mdx) | licenciement |
 | 2026-08-03 | [Licenciement et chômage : les conditions pour toucher l'ARE](src/content/dossiers/licenciement-chomage-are-conditions.mdx) | licenciement |
 | 2026-08-07 | [Démission : a-t-on droit à une indemnité de licenciement ?](src/content/dossiers/demission-indemnite-licenciement.mdx) | licenciement |
@@ -45,7 +32,20 @@ _Aucun guide prévu non écrit pour le moment. Liste à compléter à la main en
 
 | Date | Title | Hub |
 |---|---|---|
-| 2026-06-08 | [Préavis de licenciement : quelle durée selon l'ancienneté ?](src/content/dossiers/preavis-licenciement-duree-anciennete.mdx) | licenciement |
+| 2026-07-26 | [Rupture pendant la période d'essai : indemnité et délai de prévenance](src/content/dossiers/licenciement-periode-essai-indemnite.mdx) | licenciement |
+| 2026-07-22 | [Préavis de licenciement des cadres : la règle des 3 mois](src/content/dossiers/preavis-cadres-trois-mois.mdx) | preavis |
+| 2026-07-18 | [Prime de précarité : l'indemnité de fin de CDD expliquée](src/content/dossiers/prime-precarite-fin-cdd.mdx) | — |
+| 2026-07-14 | [Rupture conventionnelle : montant minimum et marge de négociation](src/content/dossiers/rupture-conventionnelle-montant-minimum-negocier.mdx) | rupture |
+| 2026-07-10 | [Ancienneté : comment se calcule-t-elle pour l'indemnité ?](src/content/dossiers/anciennete-calcul-indemnite-licenciement.mdx) | licenciement |
+| 2026-07-07 | [Congés payés non pris : l'indemnité compensatrice à la rupture](src/content/dossiers/conges-payes-non-pris-indemnite-compensatrice.mdx) | solde |
+| 2026-07-03 | [Barème Macron : dans quels cas le plafond ne s'applique pas](src/content/dossiers/bareme-macron-cas-sans-plafond.mdx) | bareme |
+| 2026-06-30 | [Licenciement pour inaptitude : quelles indemnités selon l'origine ?](src/content/dossiers/licenciement-inaptitude-indemnites.mdx) | licenciement |
+| 2026-06-26 | [Rupture conventionnelle ou licenciement : quelles différences ?](src/content/dossiers/rupture-conventionnelle-ou-licenciement.mdx) | rupture |
+| 2026-06-22 | [Licenciement économique : indemnité et contrat de sécurisation (CSP)](src/content/dossiers/licenciement-economique-csp.mdx) | licenciement |
+| 2026-06-18 | [Licenciement pour faute grave : quelles conséquences sur vos indemnités ?](src/content/dossiers/faute-grave-consequences-indemnites.mdx) | licenciement |
+| 2026-06-15 | [Solde de tout compte : que doit-il contenir et que vérifier ?](src/content/dossiers/solde-de-tout-compte-que-verifier.mdx) | solde |
+| 2026-06-11 | [Salaire de référence : comment le calculer pour l'indemnité](src/content/dossiers/salaire-de-reference-indemnite-licenciement.mdx) | licenciement |
+| 2026-06-08 | [Préavis de licenciement : quelle durée selon l'ancienneté ?](src/content/dossiers/preavis-licenciement-duree-anciennete.mdx) | preavis |
 | 2026-06-08 | [Rupture conventionnelle et chômage : ce qui change en septembre 2026](src/content/dossiers/rupture-conventionnelle-chomage-septembre-2026.mdx) | rupture |
 
 ## Drafts — `draft: true`, excluded from build
