@@ -8,11 +8,11 @@ and preserved across regenerations — list there what you intend to write
 but haven't started yet. Everything below it is derived from the MDX
 frontmatter of `src/content/dossiers/*.mdx`.
 
-- **Today**: 2026-07-29
-- **Published**: 15
-- **Scheduled (drip queue)**: 14
+- **Today**: 2026-08-03
+- **Published**: 17
+- **Scheduled (drip queue)**: 13
 - **Drafts**: 0
-- **Total tracked articles**: 29
+- **Total tracked articles**: 30
 
 ## Planned (not yet written)
 <!-- planned:start -->
@@ -23,8 +23,6 @@ _Aucun guide prévu non écrit pour le moment. Liste à compléter à la main en
 
 | Date | Title | Hub |
 |---|---|---|
-| 2026-07-30 | [Indemnité légale ou conventionnelle : laquelle s'applique ?](src/content/dossiers/indemnite-legale-ou-conventionnelle-licenciement.mdx) | licenciement |
-| 2026-08-03 | [Licenciement et chômage : les conditions pour toucher l'ARE](src/content/dossiers/licenciement-chomage-are-conditions.mdx) | licenciement |
 | 2026-08-07 | [Démission : a-t-on droit à une indemnité de licenciement ?](src/content/dossiers/demission-indemnite-licenciement.mdx) | licenciement |
 | 2026-08-11 | [Indemnité de licenciement à temps partiel : comment la calculer](src/content/dossiers/indemnite-licenciement-temps-partiel.mdx) | licenciement |
 | 2026-08-13 | [Signer avant le 1ᵉʳ septembre 2026 : la date qui compte vraiment](src/content/dossiers/rupture-conventionnelle-signer-avant-septembre-2026.mdx) | rupture |
@@ -37,11 +35,14 @@ _Aucun guide prévu non écrit pour le moment. Liste à compléter à la main en
 | 2026-09-05 | [Barème Macron : les sommes qui s'ajoutent, et celles qui non](src/content/dossiers/ce-qui-sajoute-indemnite-bareme-macron.mdx) | bareme |
 | 2026-09-09 | [Moins de 11 salariés : ce que le barème change vraiment](src/content/dossiers/bareme-macron-entreprise-moins-11-salaries.mdx) | bareme |
 | 2026-09-12 | [Trouver sa convention collective sur son bulletin de paie](src/content/dossiers/trouver-sa-convention-collective-bulletin-paie.mdx) | conventions |
+| 2026-09-16 | [Créer son entreprise après une rupture : ARE maintenue ou ARCE](src/content/dossiers/creer-entreprise-apres-rupture-conventionnelle-arce.mdx) | rupture |
 
 ## Published — live on the site
 
 | Date | Title | Hub |
 |---|---|---|
+| 2026-08-03 | [Licenciement et chômage : les conditions pour toucher l'ARE](src/content/dossiers/licenciement-chomage-are-conditions.mdx) | licenciement |
+| 2026-07-30 | [Indemnité légale ou conventionnelle : laquelle s'applique ?](src/content/dossiers/indemnite-legale-ou-conventionnelle-licenciement.mdx) | licenciement |
 | 2026-07-26 | [Rupture pendant la période d'essai : indemnité et délai de prévenance](src/content/dossiers/licenciement-periode-essai-indemnite.mdx) | licenciement |
 | 2026-07-22 | [Préavis de licenciement des cadres : la règle des 3 mois](src/content/dossiers/preavis-cadres-trois-mois.mdx) | preavis |
 | 2026-07-18 | [Prime de précarité : l'indemnité de fin de CDD expliquée](src/content/dossiers/prime-precarite-fin-cdd.mdx) | — |
