@@ -70,3 +70,7 @@ env/
 Queries.csv
 Pages.csv
 gsc/
+
+# Fichiers temporaires de verification
+t.html
+*.tmp
