@@ -64,6 +64,22 @@ _SLUG_STOPWORDS = frozenset(
 )
 
 
+# Intitulés de repli pour les conventions qui disposent d'un modèle publicodes
+# mais d'aucune entrée kali-data. Sans cela, le nom est dérivé du slug et
+# s'affiche sans accents, ce qui fait négligé sur une page publique.
+#
+# Volontairement limité au nom : aucune URL Légifrance n'est renseignée ici.
+# Pour l'IDCC 1740, les sources secondaires rattachent deux conteneurs KALI
+# différents au même IDCC (un texte « ouvriers » de 1993, un texte de 1962
+# couvrant aussi ETAM et cadres), et Légifrance bloque les robots, donc la
+# question n'est pas tranchable depuis la source primaire. L'intitulé retenu
+# est exact sous les deux lectures ; le lien reste absent tant que le doute
+# n'est pas levé.
+NOMS_MANUELS: dict[int, str] = {
+    1740: "Bâtiment de la région parisienne",
+}
+
+
 def _slugify(text: str, max_words: int = 5) -> str:
     """Titre officiel -> slug d'URL, dans le style des slugs publicodes.
 
@@ -152,7 +168,11 @@ class CdtnConventionsScraper(BaseScraper):
         for idcc, slug in sorted(seen.items()):
             meta = kali.get(idcc, {})
             official = str(meta.get("shortTitle") or "").strip()
-            name = official or slug.replace("_", " ").strip().capitalize()
+            name = (
+                official
+                or NOMS_MANUELS.get(idcc)
+                or slug.replace("_", " ").strip().capitalize()
+            )
             full_name = str(meta.get("title") or "").strip() or None
             kid = meta.get("id")
             legifrance_url = (
