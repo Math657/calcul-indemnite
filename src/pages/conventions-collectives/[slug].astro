@@ -31,9 +31,18 @@ const path = `/conventions-collectives/${conv.idcc}-${conv.slug.replace(/_/g, '-
  * convention (« télécharger convention collective idcc NNNN »), première
  * famille de requêtes du site mais bloquée au-delà de la position 30.
  */
+// Le titre ne promet le texte officiel que si la page le propose réellement.
+// IDCC 1740 n'a pas d'entrée kali-data, donc pas d'URL Légifrance : lui
+// annoncer un texte officiel serait faux.
+const aTexteOfficiel = Boolean((conv as any).legifrance_url);
+
 const seo = {
-  title: `${conv.name} (IDCC ${conv.idcc}) — indemnité et texte officiel`,
-  description: `Convention collective ${conv.name}, IDCC ${conv.idcc} : consulter le texte officiel sur Légifrance, indemnité légale de licenciement et règles conventionnelles applicables.`,
+  title: aTexteOfficiel
+    ? `${conv.name} (IDCC ${conv.idcc}) — indemnité et texte officiel`
+    : `${conv.name} (IDCC ${conv.idcc}) — indemnité de licenciement`,
+  description: aTexteOfficiel
+    ? `Convention collective ${conv.name}, IDCC ${conv.idcc} : consulter le texte officiel sur Légifrance, indemnité légale de licenciement et règles conventionnelles applicables.`
+    : `Convention collective ${conv.name}, IDCC ${conv.idcc} : indemnité légale de licenciement, règles conventionnelles applicables et calcul officiel.`,
   path,
 };
 
