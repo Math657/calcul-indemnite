@@ -1,7 +1,7 @@
 {
   "source": "SocialGouv — code-du-travail (modèles publicodes)",
   "source_url": "https://github.com/SocialGouv/code-du-travail-numerique",
-  "source_verified_at": "2026-07-29T13:06:11.106810+00:00",
+  "source_verified_at": "2026-08-03T09:00:12.372059+00:00",
   "count": 50,
   "conventions": [
     {
@@ -355,7 +355,7 @@
     {
       "idcc": 1740,
       "slug": "batiment_region_parisienne",
-      "name": "Batiment region parisienne",
+      "name": "Bâtiment de la région parisienne",
       "full_name": null,
       "legifrance_url": null,
       "effectif": null,
