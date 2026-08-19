@@ -22,7 +22,7 @@ export const SITE = {
      * Empty string = component renders "Bientôt" placeholder.
      */
     provider: 'buttondown' as const,
-    username: '',
+    username: 'mda6',
   },
 };
 
